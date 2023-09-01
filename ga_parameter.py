@@ -125,6 +125,9 @@ class parameter:
         #Returns lower, upper bound in that order 
         return self.curr_lower_bound, self.curr_upper_bound
 
+    def return_name(self):
+        return self.name 
+
     def print_full(self):
         print(f"Name: {self.name}")
         print(f"Type: {self.type}")
@@ -145,7 +148,8 @@ class parameter:
         print(f"Curr Upper Bound {self.curr_upper_bound}")
         print()
 
-
+    def print_name(self):
+        print(f"Name {self.name}")
         
 
 

@@ -6,7 +6,8 @@ import copy
 import time 
 
 #CHANGE 
-import ga_parameter
+#import ga_parameter
+import ga_rule
 
 #https://www.statology.org/pandas-select-rows-without-nan/
 
@@ -123,13 +124,16 @@ features_dict = calc_parameters(list_features_dict, default_parameter_dict, df, 
 #print(json.dumps(features_dict, indent=4))
 
 
-#param_name = "WS_ms_75cm_Max"
-param_name = "Air_TempC_Max"
-param = ga_parameter.parameter(param_name, features_dict)
-#param.print_full()
-param.print_current()
-param.mutate()
-param.print_current()
+# #param_name = "WS_ms_75cm_Max"
+# param_name = "Air_TempC_Max"
+# param = ga_parameter.parameter(param_name, features_dict)
+# #param.print_full()
+# param.print_current()
+# param.mutate()
+# param.print_current()
+
+the_rule = ga_rule.rule(default_parameter_dict, features_dict, None)
+the_rule.print_full()
 #You end up with a list of features that NO longer need the default dict on 
 #A per-feature basis 
 #But you still need the default dict for non-feature specific things. 
