@@ -5,13 +5,14 @@ Contains ALL the data for the given task.
 Assumptions:
 * Data is all-numeric. Boolean values should be 0 or 1. Categorical variables should be coded.  
 
-## Global Parameter Dict 
+## Default Parameter Dict 
 Contains:
 (Required: The following MUST be provided)
 * mutation_rate: Upper and Lower Bound (Can be the same) of amount of individuals in a population to mutate 
 * mutation_amount: Upper and Lower Bound (Can be the same) for percent amount of mutation. By default, the upper and lower bound are percentages of the standard deviation for that metric. 
 * range_restriction: upper, lower bound (can be same) of % of stdev of range to constrain value in. Only valid for continuous values.
-
+(Optional)
+* index_key: for sequences, if necessary  
 
 ## Feature-Specific Parameter Dict
 Contains:  
@@ -27,12 +28,12 @@ NOTE: You need to figure out a way to make the mutation rate be based on somethi
 
 (Added: These are added by calculation by the system)
 * mean: Mean value of feature (if continuous)
-* mode: 
-* maximum: max value of feature
-* minimum: min value of feature
+* mode: ? No. 
+* upper_bound: max value of feature
+* lower_bound: min value of feature
 * stdev: standard deviation of feature 
 * mutation_method: (Fill in later)
-* included_records: List of key values of records in main dataframe that contain the parameter. (Might be "ALL"?)
+* present_keys: List of key values of records in main dataframe that contain the parameter. (Might be "ALL"?)
 
 
 ## Consequent Dict 
@@ -56,7 +57,6 @@ Assuming nominal variable is coded (discrete). Stdev is percent of change, round
 ### Boolean Variable
 Upper and Lower Bound are percent of chance of flipping its value (0 or 1 or 1 to 0)
 
-
 ## Parameter Class: 
 
 ### Initalization: 
@@ -69,3 +69,52 @@ Takes in:
 
 
         
+## Whole Process 
+Create an initial population of rules 
+    To create a rule:
+        Consequent always the same (for now)
+        Antencedent Randomly Initialized
+            Range of allowed values in a rule (or penalty, or something)
+            1+ Parameters
+                Parameter Boundaries randomly initialized
+            Could chromosome with all parameters? Not sure we want to
+
+Evaluate the fitness of the rules. Keep the N best rules in a list of some kind 
+
+For each generation:
+    Evaluate each rule based on fitness (rule-wise)
+    Get rid of any "dominated" population rules (population-wise, rule-wise)
+    Update the 10 best rules list (population-wise, rule-wise)
+    Replace "dead" population members: (population-wise, -> rule, -> param init (potentially))
+        Slim chance: By one of the 10 best rules
+        Much higher chance: Random init. 
+    
+    Next generation of population ideas: (population-wise)
+        Randomly kill select percentage, reseed?
+        Tournament Selection?
+        Crossover?
+
+    Mutate percentage of the population (pop-rule-parameter)
+
+    Repeat 
+
+A parameter needs to be able to:
+    Give its current values
+    Mutate Itself (Check!)
+    Probably print itself too 
+
+A rule needs to be able to:
+    Randomly init itself
+        1+ parameters in antecedent 
+        
+    Mutate Itself:
+        Randomly add or drop parameters
+        Randomly change the bounds on parameters
+    Print itself
+    Give its fitness 
+
+A population needs to be able to: 
+    ? 
+
+
+    

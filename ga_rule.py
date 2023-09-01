@@ -7,8 +7,11 @@ import copy
 
 #######################       RULE CLASS             #########################################
 class rule:
-    def __init__(self, df, mod_parameter_pool, precedent=None):
-        self.df = df 
+    def __init__(self, default_parameter_dict, features_dict, precedent):
+        self.features_dict = features_dict.copy()
+
+        self.mutation_rate = default_parameter_dict["mutation_rate"]
+        
         self.mod_parameter_pool = mod_parameter_pool.copy()
         #This will be a list of parameter classes 
         self.antecedent = self.random_init()
