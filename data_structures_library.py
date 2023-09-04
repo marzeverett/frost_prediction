@@ -12,10 +12,14 @@ import ga_rule
 #https://www.statology.org/pandas-select-rows-without-nan/
 
 default_parameter_dict = {
-    "mutation_rate": [20, 20],
-    "mutation_amount": [30, 30],
-    "range_restriction": [30, 30],
-    "index_key": "Date_datetime"
+    "mutation_rate": 20,
+    "mutation_amount": 20,
+    "range_restriction": 50,
+    "index_key": "Date_datetime",
+    "add_subtract_percent": 30,
+    "change_percent": 70,
+    "max_mutation_tries": 10
+
 }
 
 consequent_dict = {
@@ -102,6 +106,8 @@ def calc_parameters(feature_dict, default_parameter_dict, df, key):
             feature["mutation_amount"] = default_parameter_dict["mutation_amount"]
         if "range_restriction" not in list(feature.keys()):
             feature["range_restriction"] = default_parameter_dict["range_restriction"]
+        if "max_mutation_tries" not in list(feature.keys()):
+            feature["max_mutation_tries"] = default_parameter_dict["max_mutation_tries"]
         #Get max and min value for feature if they were not provided
         if "lower_bound" not in list(feature.keys()):
             feature["lower_bound"] = df[feature["name"]].min()
@@ -124,6 +130,16 @@ features_dict = calc_parameters(list_features_dict, default_parameter_dict, df, 
 #print(json.dumps(features_dict, indent=4))
 
 
+
+def calc_consequent_support(consequent_dict, df):
+    param_name = consequent_dict['name']
+    lower_bound = consequent_dict['lower_bound']
+    upper_bound = consequent_dict['upper_bound']
+    query = f'{param_name} >= {lower_bound} & {param_name} <= {upper_bound}'
+    sub_df = df.eval(query)
+    num_consequent = sub_df.sum()
+    consequent_support = num_consequent/len(df.index)
+    return consequent_support, num_consequent 
 # #param_name = "WS_ms_75cm_Max"
 # param_name = "Air_TempC_Max"
 # param = ga_parameter.parameter(param_name, features_dict)
@@ -132,8 +148,14 @@ features_dict = calc_parameters(list_features_dict, default_parameter_dict, df, 
 # param.mutate()
 # param.print_current()
 
-the_rule = ga_rule.rule(default_parameter_dict, features_dict, None)
-the_rule.print_full()
+consequent_support, num_consequent = calc_consequent_support(consequent_dict, df)
+print(consequent_support)
+the_rule = ga_rule.rule(default_parameter_dict, features_dict, consequent_dict, consequent_support, num_consequent, df)
+the_rule.print_self()
+#the_rule.print_fitness_metrics()
+print("After Mutation")
+the_rule.mutate(df)
+the_rule.print_self()
+#the_rule.print_fitness_metrics()
 #You end up with a list of features that NO longer need the default dict on 
 #A per-feature basis 
-#But you still need the default dict for non-feature specific things. 

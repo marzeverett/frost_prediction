@@ -8,9 +8,9 @@ Assumptions:
 ## Default Parameter Dict 
 Contains:
 (Required: The following MUST be provided)
-* mutation_rate: Upper and Lower Bound (Can be the same) of amount of individuals in a population to mutate 
-* mutation_amount: Upper and Lower Bound (Can be the same) for percent amount of mutation. By default, the upper and lower bound are percentages of the standard deviation for that metric. 
-* range_restriction: upper, lower bound (can be same) of % of stdev of range to constrain value in. Only valid for continuous values.
+* mutation_rate: % of amount of individuals in a population to mutate 
+* mutation_amount: % for percent amount of mutation. By default, the upper and lower bound are percentages of the standard deviation for that metric. 
+* range_restriction: % of % of stdev of range to constrain value in. Only valid for continuous values.
 (Optional)
 * index_key: for sequences, if necessary  
 

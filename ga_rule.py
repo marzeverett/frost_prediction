@@ -14,35 +14,37 @@ import ga_parameter
 
 #This is probably the place where most of the optimizations will need to take place
 #Look at this article for queries: https://saturncloud.io/blog/the-fastest-way-to-perform-complex-search-on-pandas-dataframe/ 
+#https://stackoverflow.com/questions/41125909/find-elements-in-one-list-that-are-not-in-the-other
+
 #######################       RULE CLASS             #########################################
 class rule:
-    def __init__(self, default_parameter_dict, features_dict, precedent):
+    def __init__(self, default_parameter_dict, features_dict, consequent, consequent_support, num_consequent, df):
         self.features_dict = features_dict.copy()
         self.parameter_list = list(self.features_dict.keys())
         self.mutation_rate = default_parameter_dict["mutation_rate"]
+        self.add_subtract_percent = default_parameter_dict['add_subtract_percent']
+        self.change_percent = default_parameter_dict['change_percent']
         self.init_max_params = math.ceil(0.6*len(self.parameter_list))
+        self.consequent_dict = consequent
+        self.consequent_support = consequent_support
+        self.num_consequent = num_consequent
+        self.total_records = len(df.index)
         self.rule_dict = {}
         self.active_parameters = []
+        self.last_mutation_type = None
+        
+        #Make sure we initialize the rule to something actually in the dataset 
+        self.antecedent_support = 0
+        while self.antecedent_support <= 0.0:
+            self.random_init()
+            self.calc_antecedent_support(df)
+        #Then, calculate the rule's fitness 
+        self.calc_fitness(df)
 
-        # #This will be a list of parameter classes 
-        # self.antecedent = self.random_init()
-        # #This will be the precedent of interest 
-        # self.precedent = precedent
-        # self.present_antecedent = self.present_params()
-
-        self.random_init()
-
-
-        #These are rule metrics 
-        self.support = None
-        self.support_num = None
-        self.confidence = None
-        self.lift = None
-        self.score = None
-        self.num_antecedent=None
-        self.num_precedent=None
 
     def random_init(self):
+        self.rule_dict = {}
+        self.active_parameters = []
         #One rule
         #Pick a number of parameters
         num = random.uniform(0, self.init_max_params)
@@ -62,168 +64,144 @@ class rule:
             self.active_parameters.append(parameter_name)
             
 
-    # def mutate(self): 
-    #     #Pick ONE of the rules in the antecedent
-    #     #Another hyperparameter, but lets make a 70% chance it will mutate a bound
-    #     #And a 30% chance it will change the presence/absence of a rule
-    #     #But lets still limit to one rule? 
-    #     #Might need to fix this, a bit odd 
-    #     self.present_antecedent = self.present_params_mutate()
-    #     #print("Present Before")
-    #     #print(len(self.present_antecedent))
-    #     present_mutation_rule = random.choice(self.present_antecedent)
-    #     all_mutation_rule = random.choice(self.antecedent)
-    #     kind_of_mutation = random.choices(["present", "all"], weights=[70, 30], k=1)[0]
-    #     #Mutate that rule 
-    #     #print("********************Kind of mutation ", kind_of_mutation)
-    #     num_in_present = len(self.present_antecedent)
-    #     #print(num_in_present)
-    #     if kind_of_mutation == "present":
-    #         present_mutation_rule.mutate(presence=False, num_in_present=num_in_present)
-    #     else:
-    #         all_mutation_rule.mutate(presence=True, num_in_present=num_in_present)
-    #     self.present_antecedent = self.present_params_mutate()
 
-    # def calc_score(self): 
-    #     #This is where we will fill in confidence, lift, and support! 
-    #     #Figure out exactly how we want to score? 
-    #     #Start with quantminer -- ? or if can't find, start with equal weighting. 
-    #     #Pretty naiive right now! - just adding each 
-    #     #OLD - plain vanilla no special score run 
-    #     #score = self.calc_support_percent() + self.calc_confidence() + self.calc_lift()
-    #     score = 5*self.calc_support_percent() + self.calc_confidence() + 5*(abs(1-self.calc_lift()))
+    def build_rule_antecedent_query(self):
+        query_string = ''
+        first = 1
+        for item in list(self.rule_dict.keys()):
+            lower, upper = self.rule_dict[item].return_bounds()
+            if not first:
+                query_string = query_string + ' & '
+            query_string = query_string + f'{item} >= {lower} & {item} <= {upper}'
+            first = 0
+        self.antecedent_support_query = query_string
+        return query_string
 
-    #     self.score = score
-    #     return score 
-
-    # #Returns list of parameter objects that are actually present 
-    # def present_params(self):
-    #     return_list = []
-    #     for item in self.antecedent:
-    #         if item.curr_present == True:
-    #             return_list.append(item)
-    #     if len(return_list) > 1:
-    #         actual_list = random.sample(return_list, 2)
-    #         for item in return_list:
-    #             if item not in actual_list:
-    #                 item.curr_present = False
-    #         return actual_list
-    #     #If return list is still empty 
-    #     if return_list == []:
-    #         item = random.choice(self.antecedent)
-    #         item.curr_present = True
-    #         return_list.append(item)
-    #         return return_list
-    #     else:
-    #         return return_list
-
-    # def present_params_mutate(self):
-    #     return_list = []
-    #     for item in self.antecedent:
-    #         if item.curr_present == True:
-    #             return_list.append(item)
-    #     return return_list
+    def build_consequent_query(self):
+        param_name = self.consequent_dict['name']
+        lower_bound = self.consequent_dict['lower_bound']
+        upper_bound = self.consequent_dict['upper_bound']
+        query = f'{param_name} >= {lower_bound} & {param_name} <= {upper_bound}'
+        self.consequent_support_query = query
+        return query 
 
 
-    # def num_containing_antecedent_only(self):
-    #     next_filter = self.df
-    #     for item in self.present_antecedent:
-    #         next_filter = next_filter.loc[(next_filter[item.name] >= item.curr_lower_bound) & (next_filter[item.name] <= item.curr_upper_bound)]
-    #     self.num_antecedent = len(next_filter.index)
-    #     return len(next_filter.index)
+    def calc_antecedent_support(self, df):
+        #Takes in itself and the dataframe, and calculates its support 
+        antecedent_support_query = self.build_rule_antecedent_query()
+        sub_df = df.eval(antecedent_support_query)
+        self.num_antecedent = sub_df.sum()
+        self.antecedent_support = self.num_antecedent/self.total_records
 
-    # def num_containing_precedent_only(self):
-    #     next_filter = self.df
-    #     if isinstance(self.precedent, list):
-    #         for item in self.precedent:
-    #             next_filter = next_filter.loc[(next_filter[item.name] == item.static_val)]
-    #     else:
-    #         item = self.precedent
-    #         next_filter = next_filter.loc[(next_filter[item.name] == item.static_val)]
-    #     self.num_precedent = len(next_filter.index)
-    #     return len(next_filter.index)
 
-    # def calc_support_percent(self):
-    #     #Make it percent of total. 
-    #     #calculate the NUMBER of rules in the database that have the antecedent and precedent which meet the criteria!!! 
-    #     # a / b : 
-    #     # a - number containing ALL items appearing in rule
-    #     # b - total groups considered 
-    #     num_obs = len(self.df)
-    #     next_filter = self.df
-    #     for item in self.present_antecedent:
-    #         next_filter = next_filter.loc[(next_filter[item.name] >= item.curr_lower_bound) & (next_filter[item.name] <= item.curr_upper_bound)]
-    #     if isinstance(self.precedent, list):
-    #         for item in self.precedent:
-    #             next_filter = next_filter.loc[(next_filter[item.name] == item.static_val)]
-    #     else:
-    #         item = self.precedent
-    #         next_filter = next_filter.loc[(next_filter[item.name] == item.static_val)]
-    #     self.support_num = len(next_filter.index)
-    #     self.support = len(next_filter.index)/num_obs
-    #     return len(next_filter.index)/num_obs
+    def calc_overall_support(self, df):
+        #Assumes you have already built the antecedent and consequent support queries
+        overall_support_query =f"{self.antecedent_support_query} & {self.consequent_support_query}"
+        sub_df = df.eval(overall_support_query)
+        self.num_whole_rule = sub_df.sum()
+        self.support = self.num_whole_rule/self.total_records
 
-    # def calc_support_num(self):
-    #     num_obs = len(self.df)
-    #     next_filter = self.df
-    #     for item in self.present_antecedent:
-    #         next_filter = next_filter.loc[(next_filter[item.name] >= item.curr_lower_bound) & (next_filter[item.name] <= item.curr_upper_bound)]
-    #     if isinstance(self.precedent, list):
-    #         for item in self.precedent:
-    #             next_filter = next_filter.loc[(next_filter[item.name] == item.static_val)]
-    #     else:
-    #         item = self.precedent
-    #         next_filter = next_filter.loc[(next_filter[item.name] == item.static_val)]
-    #     self.support_num = len(next_filter.index)
-    #     return len(next_filter.index)
+    def calc_confidence(self):
+        if self.num_antecedent != 0:
+            self.confidence = self.num_whole_rule/self.num_antecedent
+        else:
+            self.confidence = 0.0
 
-    # def calc_confidence(self):
-    #     confidence = 0.0
-    #     #Ratio m/n
-    #     #m - number of groups containing both rule head and rule body
-    #     #n - number of groups containing just rule body 
-    #     m = self.calc_support_num()
-    #     n = self.num_containing_antecedent_only()
-    #     if n > 0:
-    #         confidence =  m/n
-    #     else:
-    #         confidence = 0.0 
-    #     self.confidence = confidence
-    #     return confidence 
+    def calc_lift(self):
+        self.lift = self.confidence/self.consequent_support
+       
 
-    # def calc_lift(self):
-    #     lift = 0.0
-    #     conf = self.calc_confidence()
-    #     supp_head = self.num_containing_antecedent_only()
-    #     if supp_head > 0:
-    #         lift =  conf/supp_head
-    #     self.lift = lift
-    #     return lift
+    def calc_fitness(self, df):
+        #Build the queries 
+        self.build_rule_antecedent_query()
+        self.build_consequent_query()
+        #Get the metrics you need for calculations
+        self.calc_antecedent_support(df)
+        self.calc_overall_support(df)
+        self.calc_antecedent_support(df)
+        #We don't need the dataframe for the last one since we have already calculated what we need 
+        self.calc_confidence()
+        self.calc_lift()
 
-    # def print_self(self):
-    #     print("RULE: ")
-    #     print("Antecedent")
-    #     for item in self.present_antecedent:
-    #         #item.print_self()
-    #         item.print_basics()
-    #     print("Precedent")
-    #     #self.precedent.print_self()
-    #     self.precedent.print_precedent_basics()
+        
+    def print_fitness_metrics(self):
+        print(f"Antecedent Support {self.antecedent_support}")
+        print(f"Consequent Support {self.consequent_support}")
+        print(f"Overall Support {self.support}")
+        print(f"Confidence {self.confidence}")
+        print(f"Lift {self.lift}")
 
-    # def print_metrics(self):
-    #     print(f"Support: {self.support}")
-    #     print(f"Confidence: {self.confidence}")
-    #     print(f"Lift: {self.lift}")
-    #     print(f"Overall Score: {self.score}")
+    def add_parameter(self):
+        #Get the parameters we aren't currently using
+        non_included_params = list(set(self.parameter_list) - set(self.active_parameters))
+        #Pick a random one
+        new_param = random.choice(non_included_params)
+        #Init and add it 
+        self.rule_dict[new_param] = ga_parameter.parameter(new_param, self.features_dict)
+        self.active_parameters.append(new_param)
+
+
+    def subtract_parameter(self):
+        #Pick a param in the rule 
+        delete_param = random.choice(self.active_parameters)
+        self.active_parameters.remove(delete_param)
+        self.rule_dict.pop(delete_param)
+
+        
+    #Get rid of print statements here eventually! 
+    def mutate(self, df, kind=None): 
+        #Use the percentages to figure out what kinds of mutation to do 
+        #kind_of_mutation = random.choices(["add_subtract", "change"], weights=[self.add_subtract_percent, self.change_percent], k=1)[0]
+        if kind == None:
+            kind_of_mutation = random.choices(["add_subtract", "add_subtract"], weights=[self.add_subtract_percent, self.change_percent], k=1)[0]
+            print("Kind of mutation", kind_of_mutation)
+        #START HERE! 
+        #Add or subtract 
+        if kind_of_mutation == "add_subtract":
+            self.last_mutation_type = "add_subtract"
+            #Only subtract if there is more than one parameter
+            if len(self.active_parameters) < 2:
+                self.add_parameter()
+                print("Add here")
+            #Otherwise, random choice of add or subtract 
+            else:
+                new_choice = random.choice(['add', 'subtract'])
+                print(new_choice)
+                if new_choice == 'add':
+                    self.add_parameter()
+                else:
+                    self.subtract_parameter()
+        #Or, change the boundaries 
+        else:
+            self.last_mutation_type = "change"
+            mutate_param = random.choice(self.active_parameters)
+            print("Going to mutate", mutate_param)
+            self.rule_dict[mutate_param].mutate()
+        self.calc_fitness(df)
+        #If we mutated into something not present, try again. 
+        if self.antecedent_support <= 0.0:
+            print("Try Again")
+            self.mutate(df)
+        
+    
+
 
     def print_full(self):
         print(f"Mutation Rate {self.mutation_rate}")
         print(f"Maximum allowed initial parameters {self.init_max_params}")
+        print(f"Last Mutation {self.last_mutation_type}")
         print(f"Active parameters {self.active_parameters}")
         for rule in self.active_parameters:
             self.rule_dict[rule].print_name()
             self.rule_dict[rule].print_current()
+        self.print_fitness_metrics()
 
+    def print_self(self):
+        print(f"Last Mutation {self.last_mutation_type}")
+        print(f"Active parameters {self.active_parameters}")
+        for rule in self.active_parameters:
+            self.rule_dict[rule].print_name()
+            self.rule_dict[rule].print_current()
      
 
     # def __lt__(self, other):

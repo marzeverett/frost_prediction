@@ -20,6 +20,7 @@ class parameter:
         self.upper_bound = feature_dict["upper_bound"]
         self.lower_bound = feature_dict["lower_bound"]
         self.range_restriction = feature_dict["range_restriction"]
+        self.max_mutation_tries = feature_dict["max_mutation_tries"]
         self.mutation_amount = feature_dict["mutation_amount"]
         self.present_keys = feature_dict["present_keys"]
         if self.type == "continuous":
@@ -72,7 +73,7 @@ class parameter:
 
     def get_random_mutation_amount(self):
         #Random positive or negative amount
-        percent_change = self.mutation_amount[0]/100
+        percent_change = self.mutation_amount/100
         sign = random.choice([-1, 1])
         mutation_val = random.uniform(0, percent_change*self.stdev)
         if self.type == "nominal":
@@ -89,7 +90,11 @@ class parameter:
 
     def mutate(self):
         if self.type == "continuous" or self.type == "nominal":
-            self.mutate_bounds()
+            tries = 0
+            success = 0
+            while success == 0 and tries < self.max_mutation_tries:
+                success = self.mutate_bounds()
+                tries += 1 
         else:
             self.mutate_bool()
 
@@ -109,10 +114,12 @@ class parameter:
             self.curr_lower_bound = temp 
 
         #If this violates the rules, don't mutate it! 
-        if self.upper_bound - self.lower_bound > (self.range_restriction[0]/100)*self.stdev:
+        #CHange here 
+        if self.curr_upper_bound - self.curr_lower_bound > (self.range_restriction/100)*self.stdev:
             self.curr_lower_bound = old_lower
             self.curr_upper_bound = old_upper
-
+            return False
+        return True
         
     def mutate_bool(self):
         if self.curr_lower_bound == 0:
