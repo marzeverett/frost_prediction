@@ -24,6 +24,7 @@ class rule:
         self.mutation_rate = default_parameter_dict["mutation_rate"]
         self.add_subtract_percent = default_parameter_dict['add_subtract_percent']
         self.change_percent = default_parameter_dict['change_percent']
+        self.max_mutation_tries = default_parameter_dict["max_mutation_tries"]
         self.init_max_params = math.ceil(0.6*len(self.parameter_list))
         self.consequent_dict = consequent
         self.consequent_support = consequent_support
@@ -147,41 +148,55 @@ class rule:
         self.active_parameters.remove(delete_param)
         self.rule_dict.pop(delete_param)
 
+
+    def perform_mutation(self, df, kind=None):
+        add_chance = self.add_subtract_percent/2
+        subtract_chance = add_chance
+        change_chance = self.change_percent 
+        if kind == None:
+            kind_of_mutation = random.choices(["add", "subtract", "change"], weights=[add_chance, subtract_chance, change_chance], k=1)[0]
+        else:
+            kind_of_mutation = kind
+        #START HERE! 
+        #Add or subtract 
+        if kind_of_mutation == "add":
+            self.add_parameter()
+            self.last_mutation_type = "add"
+        elif kind_of_mutation == "subtract":
+            #Only subtract if there is more than one parameter. Otherwise add
+            if len(self.active_parameters) < 2:
+                self.last_mutation_type = "add"
+                self.add_parameter()
+            #Otherwise, random choice of add or subtract 
+            else:
+                self.last_mutation_type = "subtract"
+                self.subtract_parameter()
+        #Or, change the boundaries 
+        else:
+            self.last_mutation_type = "change"
+            mutate_param = random.choice(self.active_parameters)
+            self.rule_dict[mutate_param].mutate()
+        return kind_of_mutation
+        
+
         
     #Get rid of print statements here eventually! 
     def mutate(self, df, kind=None): 
         #Use the percentages to figure out what kinds of mutation to do 
         #kind_of_mutation = random.choices(["add_subtract", "change"], weights=[self.add_subtract_percent, self.change_percent], k=1)[0]
-        if kind == None:
-            kind_of_mutation = random.choices(["add_subtract", "add_subtract"], weights=[self.add_subtract_percent, self.change_percent], k=1)[0]
-            print("Kind of mutation", kind_of_mutation)
-        #START HERE! 
-        #Add or subtract 
-        if kind_of_mutation == "add_subtract":
-            self.last_mutation_type = "add_subtract"
-            #Only subtract if there is more than one parameter
-            if len(self.active_parameters) < 2:
-                self.add_parameter()
-                print("Add here")
-            #Otherwise, random choice of add or subtract 
-            else:
-                new_choice = random.choice(['add', 'subtract'])
-                print(new_choice)
-                if new_choice == 'add':
-                    self.add_parameter()
-                else:
-                    self.subtract_parameter()
-        #Or, change the boundaries 
-        else:
-            self.last_mutation_type = "change"
-            mutate_param = random.choice(self.active_parameters)
-            print("Going to mutate", mutate_param)
-            self.rule_dict[mutate_param].mutate()
+        old_rule_dict = self.rule_dict.copy()
+        old_active_params = self.active_parameters.copy()
+        kind_of_mutation = self.perform_mutation(df)
         self.calc_fitness(df)
+        tries = 0 
         #If we mutated into something not present, try again. 
-        if self.antecedent_support <= 0.0:
-            print("Try Again")
-            self.mutate(df)
+        if self.antecedent_support <= 0.0 and tries < self.max_mutation_tries:
+            tries += 1
+            self.rule_dict = old_rule_dict
+            self.active_parameters = old_active_params
+            self.perform_mutation(df, kind=kind_of_mutation)
+            self.calc_fitness(df)
+            
         
     
 
