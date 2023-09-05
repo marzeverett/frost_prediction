@@ -25,17 +25,14 @@ class population:
         self.mutation_rate = self.default_parameter_dict['mutation_rate']
         self.population_size = self.default_parameter_dict["population_size"]
         self.num_top_rules = self.default_parameter_dict["top_rules"]
+        self.generations = self.default_parameter_dict["generations"]
         self.mutation_number = math.ceil(self.population_size*(self.mutation_rate/100))
-        
         
         #List of rules 
         self.rules_pop = self.init_rules_pop()
         self.top_rules = []
 
-        self.prev_rules_pop = []
-        self.global_top_rules = []
-        self.global_top_rules_scores = []
-
+        #Dominance Dict 
         self.dominance_dict = {}
         self.dominance_fitness_dict = {}
         
@@ -181,15 +178,11 @@ class population:
 
     #NOTE: YOU MIGHT WANT TO DELETE 0 FITNESS INDIVIDUALS
     def run_generation(self):
-        #Population is already scored. 
-
         #Update dominance dict and Kill dominated rules
         self.update_dominance_dict()
         self.kill_dominated()
-
         #Update the top rules
         self.update_top_rules()
-
         #Replace dead population members
         num_replacements = self.population_size - len(self.rules_pop)
         for i in range(0, num_replacements):
@@ -202,78 +195,29 @@ class population:
                 new_rule = new_rule = ga_rule.rule(self.default_parameter_dict, self.features_dict, self.consequent_dict, self.consequent_support, self.num_consequent, self.df)
             self.rules_pop.append(new_rule)
         #Create the next generation
-
+        #Note: What's the plan here? 
         #Mutate percentage of population
         self.mutate_population() 
 
 
-        
-        # #copy current generation to the prev generation - eventually add tournament selection 
-        # self.prev_rules_pop = copy.deepcopy(self.rules_pop)
-        # #Mutate any current gen with a score of 0
-        # for i in range(0, len(self.rules_pop)):
-        #     if self.rules_pop[i].score <= 0.00:
-        #         self.rules_pop[i].mutate()
-        # #Mutate an additional mutation_rate% (want in-place, so don't copy here)
-        # mutate_list = random.sample(self.rules_pop, self.mutation_number)
-        # for rule in mutate_list:
-        #     #print("Before")
-        #     #rule.print_self()
-        #     rule.mutate()
-        #     #print("After")
-        #     #rule.print_self()
-        # #May add this later!! 
-        # self.score_population()
-        #self.rules_pop[-self.top_keep:] = copy.deepcopy(self.top_rules)
-
-    # def save_rules_to_csv(self, name, which="global", k=10):
-    #     if which=="global":
-    #         working_list = self.global_top_rules
-    #     else:
-    #         working_list = self.rules_pop
-    #     #Take top k rules 
-    #     saving_list = working_list[:k]
-    #     all_rules_list = [] 
-    #     for rule in saving_list:
-    #         rule_list = []
-    #         rule_list.append("SCORES: s, c, l, score")
-    #         rule_list.append(rule.support)
-    #         rule_list.append(rule.confidence)
-    #         rule_list.append(rule.lift)
-    #         rule_list.append(rule.score)
-    #         rule_list.append("RULES")
-    #         for item in rule.present_antecedent:
-    #             rule_list.append(item.name)
-    #             rule_list.append(item.curr_lower_bound)
-    #             rule_list.append(item.curr_upper_bound)
-    #         all_rules_list.append(rule_list)
-
-    #     df = pd.DataFrame(all_rules_list)
-    #     #print(df.head())
-    #     save_name = name+".csv"
-    #     df.to_csv(save_name)
+    def save_top_rules(self, name=None):
+        list_of_rules = []
+        for rule in self.top_rules:
+            list_of_rules.append(rule.get_rule_dict_all_numeric())
+        rule_save = json.dumps(list_of_rules, indent=4)
+        save_string = f"top_rules_{name}.json"
+        with open(save_string, "w") as f:
+            f.write(rule_save) 
 
 
-    # def run_experiment(self, generations, status=False):
-    #     for i in range(0, generations):
-    #         if status:
-    #             print(f" Generation {i}")
-    #         self.run_generation()
-    #         if status:
-    #             print(f"Global Top rules scores: {self.global_top_rules_scores}")
-    #             print(f"Local Top rules scores: {self.top_rules_scores}")
-
-    #     #Add back in later!!! 
-    #     print("Global top rules scores")
-    #     print(self.global_top_rules_scores)
-    #     print("Current top rules scores")
-    #     print(self.global_top_rules_scores)
-    #     print("Top Rules: ")
-    #     for rule in self.global_top_rules:
-    #         print()
-    #         rule.print_self()
-    #         rule.print_metrics()
-        
+    def run_experiment(self, status=False, name=None):
+        #Run the generations 
+        for i in range(0, self.generations):
+            if status:
+                print(f" Generation {i}")
+            self.run_generation()
+        #Save the rules 
+        self.save_top_rules(name=name)
 
     def print_self(self):
         print(f"Pop size: ", self.population_size)

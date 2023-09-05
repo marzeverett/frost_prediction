@@ -21,7 +21,8 @@ default_parameter_dict = {
     "change_percent": 70,
     "max_mutation_tries": 10,
     "population_size": 20, 
-    "top_rules": 3
+    "top_rules": 3,
+    "generations": 3
 
 }
 consequent_dict = {
@@ -162,25 +163,28 @@ def calc_consequent_support(consequent_dict, df):
 
 
 pop = ga_population.population(default_parameter_dict, consequent_dict, list_features_dict, key, df)
-#pop.print_self()
-#pop.print_rules()
-#pop.print_rules_and_fitness()
-pop.run_generation()
-#pop.print_dominance_dict()
-pop.print_top_rules_and_fitness()
-#time.sleep(5)
-print("-------------------------------")
-pop.run_generation()
-pop.run_generation()
+pop.run_experiment()
+
+
+# #pop.print_self()
+# #pop.print_rules()
+# #pop.print_rules_and_fitness()
+# pop.run_generation()
+# #pop.print_dominance_dict()
+# pop.print_top_rules_and_fitness()
+# #time.sleep(5)
+# print("-------------------------------")
 # pop.run_generation()
 # pop.run_generation()
-# pop.run_generation()
-# pop.run_generation()
-# pop.run_generation()
-# pop.run_generation()
-# pop.run_generation()
-# pop.run_generation()
-# pop.run_generation()
-# pop.run_generation()
-# pop.run_generation()
-pop.print_top_rules_and_fitness()
+# # pop.run_generation()
+# # pop.run_generation()
+# # pop.run_generation()
+# # pop.run_generation()
+# # pop.run_generation()
+# # pop.run_generation()
+# # pop.run_generation()
+# # pop.run_generation()
+# # pop.run_generation()
+# # pop.run_generation()
+# # pop.run_generation()
+# pop.print_top_rules_and_fitness()

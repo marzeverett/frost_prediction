@@ -3,6 +3,7 @@ import pickle
 import numpy as np 
 
 #https://www.dataquest.io/blog/tutorial-add-column-pandas-dataframe-based-on-if-else-condition/
+#https://stackoverflow.com/questions/13413590/how-to-drop-rows-of-pandas-dataframe-whose-value-in-a-certain-column-is-nan
 
 separate_data_streams = {
     "temp_hum": ['Air_TempC_Avg', 'Air_TempC_Max', 'Air_TempC_Min', 'Relative_Humidity_Avg', 'Relative_Humidity_Max', 'Relative_Humidity_Min'],
@@ -47,3 +48,15 @@ def make_set():
         create_formatted_csv_from_jornada_df(site_name, site)
 
 #make_set()
+
+
+def make_shifted_csvs():
+    for name in npp_named_sites:
+        path = f"frost_csvs/old/{name}.csv"
+        df = pd.read_csv(path)
+        df["frost"].shift(-1)
+        df = df[df["frost"].notna()]
+        save_name = f"frost_csvs/{name}.csv"
+        df.to_csv(save_name)
+
+#make_shifted_csvs()

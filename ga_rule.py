@@ -132,6 +132,19 @@ class rule:
     def get_rule_dict(self):
         return self.rule_dict.copy()
 
+    def get_rule_dict_all_numeric(self):
+        new_rule_dict = {}
+        for param in list(self.rule_dict.keys()):
+            #Solve this? 
+            new_rule_dict[param] = {}
+            new_rule_dict[param]["lower_bound"] = self.rule_dict[param].curr_lower_bound
+            new_rule_dict[param]["upper_bound"] = self.rule_dict[param].curr_upper_bound
+        new_rule_dict["support"] = self.support
+        new_rule_dict["confidence"] = self.confidence
+        new_rule_dict["lift"] = self.lift
+        new_rule_dict["fitness"] = self.fitness
+        return new_rule_dict
+
     def get_bounds_list(self):
         bounds_list = []
         rule_keys = list(self.rule_dict.copy())
