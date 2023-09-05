@@ -22,7 +22,6 @@ class parameter:
         self.range_restriction = feature_dict["range_restriction"]
         self.max_mutation_tries = feature_dict["max_mutation_tries"]
         self.mutation_amount = feature_dict["mutation_amount"]
-        self.present_keys = feature_dict["present_keys"]
         if self.type == "continuous":
             self.mean = feature_dict["mean"]
             self.stdev = feature_dict["stdev"]

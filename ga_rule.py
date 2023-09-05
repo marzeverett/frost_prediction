@@ -134,11 +134,13 @@ class rule:
 
     def get_rule_dict_all_numeric(self):
         new_rule_dict = {}
+        new_rule_dict["parameters"] = {}
         for param in list(self.rule_dict.keys()):
             #Solve this? 
-            new_rule_dict[param] = {}
-            new_rule_dict[param]["lower_bound"] = self.rule_dict[param].curr_lower_bound
-            new_rule_dict[param]["upper_bound"] = self.rule_dict[param].curr_upper_bound
+            new_rule_dict["parameters"][param] = {}
+            new_rule_dict["parameters"][param]["lower_bound"] = self.rule_dict[param].curr_lower_bound
+            new_rule_dict["parameters"][param]["upper_bound"] = self.rule_dict[param].curr_upper_bound
+
         new_rule_dict["support"] = self.support
         new_rule_dict["confidence"] = self.confidence
         new_rule_dict["lift"] = self.lift

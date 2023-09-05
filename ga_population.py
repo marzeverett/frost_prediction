@@ -5,6 +5,7 @@ import math
 import copy 
 #from copy import deepcopy
 import ga_rule
+import os 
 #d = deepcopy(c
 
 
@@ -83,8 +84,6 @@ class population:
             #Add the keys were the feature is present
             #Need to fix this part 
             df_keys = df[~df[feature["name"]].isna()]
-            #Chance you might want to keep this as a Series and not a list 
-            feature["present_keys"] = df_keys[key].values.tolist()
         return feature_dict
 
     
@@ -205,7 +204,23 @@ class population:
         for rule in self.top_rules:
             list_of_rules.append(rule.get_rule_dict_all_numeric())
         rule_save = json.dumps(list_of_rules, indent=4)
-        save_string = f"top_rules_{name}.json"
+        start_string = f"generated_files/{name}/"
+        if not os.path.exists(start_string):
+            os.makedirs(start_string)
+        save_string = f"{start_string}top_rules.json"
+        with open(save_string, "w") as f:
+            f.write(rule_save) 
+
+
+    def save_all_rules(self, name=None):
+        list_of_rules = []
+        for rule in self.rules_pop:
+            list_of_rules.append(rule.get_rule_dict_all_numeric())
+        rule_save = json.dumps(list_of_rules, indent=4)
+        start_string = f"generated_files/{name}/"
+        if not os.path.exists(start_string):
+            os.makedirs(start_string)
+        save_string = f"{start_string}all_rules.json"
         with open(save_string, "w") as f:
             f.write(rule_save) 
 
@@ -218,6 +233,7 @@ class population:
             self.run_generation()
         #Save the rules 
         self.save_top_rules(name=name)
+        self.save_all_rules(name=name)
 
     def print_self(self):
         print(f"Pop size: ", self.population_size)

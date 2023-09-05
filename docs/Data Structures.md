@@ -12,7 +12,26 @@ Contains:
 * mutation_amount: % for percent amount of mutation. By default, the upper and lower bound are percentages of the standard deviation for that metric. 
 * range_restriction: % of % of stdev of range to constrain value in. Only valid for continuous values.
 (Optional)
-* index_key: for sequences, if necessary  
+* index_key: for sequences, if necessary,
+* add_subtract percent: the percent chance of adding or subtracting a parameter when mutating
+* change percent: the percent chance of change a parameter bounds when mutating
+* max_mutation_tries: the maximum number of tries to mutate a parameter legally before giving up and not mutating
+* population_size: the size of the population 
+* top rules: the number of top rules (by fitness) to keep track of
+* generations: the number of generations to run the algorithm for  
+
+    default_parameter_dict = {
+        "mutation_rate": 20,
+        "mutation_amount": 20,
+        "range_restriction": 50,
+        "index_key": "Date_datetime",
+        "add_subtract_percent": 30,
+        "change_percent": 70,
+        "max_mutation_tries": 10,
+        "population_size": 20, 
+        "top_rules": 3,
+        "generations": 3
+    }
 
 ## Feature-Specific Parameter Dict
 Contains:  
