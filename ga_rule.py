@@ -123,14 +123,25 @@ class rule:
         #We don't need the dataframe for the last one since we have already calculated what we need 
         self.calc_confidence()
         self.calc_lift()
+        #This is a dummy for now! 
+        self.fitness = self.support * self.confidence * self.lift
 
-        
-    def print_fitness_metrics(self):
-        print(f"Antecedent Support {self.antecedent_support}")
-        print(f"Consequent Support {self.consequent_support}")
-        print(f"Overall Support {self.support}")
-        print(f"Confidence {self.confidence}")
-        print(f"Lift {self.lift}")
+    def get_fitness(self):
+        return self.fitness
+    
+    def get_rule_dict(self):
+        return self.rule_dict.copy()
+
+    def get_bounds_list(self):
+        bounds_list = []
+        rule_keys = list(self.rule_dict.copy())
+        rule_keys = sorted(rule_keys)
+        for key in rule_keys:
+            bounds_list.append(self.rule_dict[key].curr_lower_bound)
+            bounds_list.append(self.rule_dict[key].curr_upper_bound)
+        return bounds_list
+    def get_active_parameters(self):
+        return self.active_parameters
 
     def add_parameter(self):
         #Get the parameters we aren't currently using
@@ -178,12 +189,9 @@ class rule:
             self.rule_dict[mutate_param].mutate()
         return kind_of_mutation
         
-
-        
     #Get rid of print statements here eventually! 
     def mutate(self, df, kind=None): 
         #Use the percentages to figure out what kinds of mutation to do 
-        #kind_of_mutation = random.choices(["add_subtract", "change"], weights=[self.add_subtract_percent, self.change_percent], k=1)[0]
         old_rule_dict = self.rule_dict.copy()
         old_active_params = self.active_parameters.copy()
         kind_of_mutation = self.perform_mutation(df)
@@ -196,11 +204,8 @@ class rule:
             self.active_parameters = old_active_params
             self.perform_mutation(df, kind=kind_of_mutation)
             self.calc_fitness(df)
-            
-        
-    
 
-
+                    
     def print_full(self):
         print(f"Mutation Rate {self.mutation_rate}")
         print(f"Maximum allowed initial parameters {self.init_max_params}")
@@ -217,8 +222,29 @@ class rule:
         for rule in self.active_parameters:
             self.rule_dict[rule].print_name()
             self.rule_dict[rule].print_current()
+
+    def print_fitness_metrics(self):
+        print(f"Antecedent Support {self.antecedent_support}")
+        print(f"Consequent Support {self.consequent_support}")
+        print(f"Overall Support {self.support}")
+        print(f"Confidence {self.confidence}")
+        print(f"Lift {self.lift}")
+        print(f"Overall Fitness {self.fitness}")
+
+    def elegant_print(self):
+        for item in list(self.rule_dict.keys()):
+            print(f"{item}: [{round(self.rule_dict[item].curr_lower_bound, 3)}, {round(self.rule_dict[item].curr_upper_bound, 3)}]")
      
 
-    # def __lt__(self, other):
-    #     return self.score < other.score
+    #I think we need this in order to be able to sort...
+    def __lt__(self, other):
+         return self.fitness < other.fitness
+
+    # def __eq__(self, other):
+    #     #NOTE - this is making a pretty big assumption! 
+    #     #Maybe CHANGE later 
+    #     if self.active_parameters == other.active_parameters and self.support == other.support and self.confidence == other.confidence and self.lift == other.lift:
+    #         return True
+    #     else:
+    #         return False
 

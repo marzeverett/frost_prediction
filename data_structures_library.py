@@ -7,7 +7,8 @@ import time
 
 #CHANGE 
 #import ga_parameter
-import ga_rule
+#import ga_rule
+import ga_population
 
 #https://www.statology.org/pandas-select-rows-without-nan/
 
@@ -18,10 +19,11 @@ default_parameter_dict = {
     "index_key": "Date_datetime",
     "add_subtract_percent": 30,
     "change_percent": 70,
-    "max_mutation_tries": 10
+    "max_mutation_tries": 10,
+    "population_size": 20, 
+    "top_rules": 3
 
 }
-
 consequent_dict = {
     "name": "frost",
     "type": "boolean",
@@ -148,14 +150,37 @@ def calc_consequent_support(consequent_dict, df):
 # param.mutate()
 # param.print_current()
 
-consequent_support, num_consequent = calc_consequent_support(consequent_dict, df)
-print(consequent_support)
-the_rule = ga_rule.rule(default_parameter_dict, features_dict, consequent_dict, consequent_support, num_consequent, df)
-the_rule.print_self()
-#the_rule.print_fitness_metrics()
-print("After Mutation")
-the_rule.mutate(df)
-the_rule.print_self()
-#the_rule.print_fitness_metrics()
-#You end up with a list of features that NO longer need the default dict on 
-#A per-feature basis 
+
+# consequent_support, num_consequent = calc_consequent_support(consequent_dict, df)
+# print(consequent_support)
+# #Init'ing a rule automatucally calculates its fitness, and so 
+# #Does mutating a rule. 
+# the_rule = ga_rule.rule(default_parameter_dict, features_dict, consequent_dict, consequent_support, num_consequent, df)
+# the_rule.print_self()
+# the_rule.mutate(df)
+# the_rule.print_self()
+
+
+pop = ga_population.population(default_parameter_dict, consequent_dict, list_features_dict, key, df)
+#pop.print_self()
+#pop.print_rules()
+#pop.print_rules_and_fitness()
+pop.run_generation()
+#pop.print_dominance_dict()
+pop.print_top_rules_and_fitness()
+#time.sleep(5)
+print("-------------------------------")
+pop.run_generation()
+pop.run_generation()
+# pop.run_generation()
+# pop.run_generation()
+# pop.run_generation()
+# pop.run_generation()
+# pop.run_generation()
+# pop.run_generation()
+# pop.run_generation()
+# pop.run_generation()
+# pop.run_generation()
+# pop.run_generation()
+# pop.run_generation()
+pop.print_top_rules_and_fitness()
