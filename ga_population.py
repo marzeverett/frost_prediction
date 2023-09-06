@@ -37,6 +37,7 @@ class population:
         self.num_top_rules = self.default_parameter_dict["top_rules"]
         self.generations = self.default_parameter_dict["generations"]
         self.tournament_size = self.default_parameter_dict["tournament_size"]
+        self.dominance = self.default_parameter_dict["dominance"]
         self.mutation_number = math.ceil(self.population_size*(self.mutation_rate/100))
         
         #List of rules 
@@ -214,13 +215,13 @@ class population:
     def run_generation(self):
         #Update dominance dict and Kill dominated rules
         #Take another look at this - might incorporate into fitness 
-        #CHANGE HERE - JUST CHECKING
-        # self.update_dominance_dict()
-        # self.kill_dominated()
-        
-        #OR - ALTERNATIVELY 
-        self.rules_pop.sort()
-        self.rules_pop = self.rules_pop[math.ceil(len(self.rules_pop)*.20):]
+        if self.dominance:
+            self.update_dominance_dict()
+            self.kill_dominated()
+        #Kill lowest 20% of rules - MAGIC NUMBER ALERT 
+        else:  
+            self.rules_pop.sort()
+            self.rules_pop = self.rules_pop[math.ceil(len(self.rules_pop)*.20):]
 
         #Update the top rules
         self.update_top_rules()

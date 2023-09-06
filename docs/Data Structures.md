@@ -17,8 +17,11 @@ Contains:
 * change percent: the percent chance of change a parameter bounds when mutating
 * max_mutation_tries: the maximum number of tries to mutate a parameter legally before giving up and not mutating
 * population_size: the size of the population 
-* top rules: the number of top rules (by fitness) to keep track of
+* top_rules: the number of top rules (by fitness) to keep track of
 * generations: the number of generations to run the algorithm for  
+* tournament_size: the size of the tournament pool when selecting the next generation
+* dominance: whether to get rid of dominanted rules. If False, bottom 20% fitness rules are dropped from the population. 
+
 
     default_parameter_dict = {
         "mutation_rate": 20,
@@ -30,7 +33,9 @@ Contains:
         "max_mutation_tries": 10,
         "population_size": 20, 
         "top_rules": 3,
-        "generations": 3
+        "generations": 3.
+        "tournament_size": 15,
+        "dominance": True
     }
 
 ## Feature-Specific Parameter Dict

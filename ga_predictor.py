@@ -100,6 +100,15 @@ def ensemble_learn_or(list_of_rules, test_df):
     return first_predictions 
 
 
+def get_unique_fitness_rules(list_of_rules):
+    fitness_list = [round(list_of_rules[0]["fitness"], 4)]
+    unique_fitness_rules =  [list_of_rules[0]]
+    for i in range(1, len(list_of_rules)):
+        if round(list_of_rules[i]["fitness"], 4) not in fitness_list:
+            fitness_list.append(round(list_of_rules[i]["fitness"], 4))
+            unique_fitness_rules.append(list_of_rules[i])
+    return unique_fitness_rules
+
 
 def complete_eval_top_rules(filepath_start, key, df):
     filename = f"{filepath_start}top_rules.json"
@@ -119,6 +128,16 @@ def complete_eval_top_rules(filepath_start, key, df):
     #Ensemble of best rules - Or 
     predict_df = ensemble_learn_or(rules_list, df)
     eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_or")
+    eval_dict_list.append(eval_dict)
+    #Get best rules with unique fitness 
+    best_unique_rules = get_unique_fitness_rules(rules_list)
+    #Ensemble of best unique rules - average
+    predict_df = ensemble_learn(best_unique_rules, df)
+    eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_uniq_avg")
+    eval_dict_list.append(eval_dict)
+    #Ensemble of best unique rules - or
+    predict_df = ensemble_learn_or(best_unique_rules, df)
+    eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_uniq_or")
     eval_dict_list.append(eval_dict)
 
     eval_df = pd.DataFrame(eval_dict_list)

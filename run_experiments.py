@@ -18,7 +18,8 @@ def return_default_parameter_dict():
         "population_size": 20, 
         "top_rules": 3,
         "generations": 3,
-        "tournament_size": 15
+        "tournament_size": 15,
+        "dominance": False
     }
     return parameter_dict.copy()
 
