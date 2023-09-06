@@ -15,7 +15,13 @@ default_parameter_dict = {
     "top_rules": 10,
     "generations": 100
 }
-npp_named_sites = ['npp_c_cali', 'npp_c_grav', 'npp_c_sand', 'npp_g_basn', 'npp_g_ibpe', 'npp_g_summ', 'npp_m_nort', 'npp_m_rabb', 'npp_m_well', 'npp_p_coll', 'npp_p_smal', 'npp_p_tobo', 'npp_t_east', 'npp_t_tayl', 'npp_t_west']
+
+#m_nort
+#p_coll
+#p_small?
+#npp_named_sites = ['npp_c_cali', 'npp_c_grav', 'npp_c_sand', 'npp_g_basn', 'npp_g_ibpe', 'npp_g_summ', 'npp_m_nort', 'npp_m_rabb', 'npp_m_well', 'npp_p_coll', 'npp_p_smal', 'npp_p_tobo', 'npp_t_east', 'npp_t_tayl', 'npp_t_west']
+
+npp_named_sites = ['npp_p_smal']
 
 name = "Initial_Run_1"
 #npp_named_sites = ['npp_c_cali', 'npp_c_grav']

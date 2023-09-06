@@ -11,12 +11,9 @@ Go back through the literature. Figure out non-dominance rules, other stuff
 Figure out what you are going to do in terms of metrics and data wrangling. Some of this data is already wrangled, so that is helpful. 
 
 
-2 weeks (at least)
-If could get rid of convolutional requirement, would likely be worth it. 
 
-Not sure if committee is going to like that. 
 
-How are we going to work out the time value of this?????????
+
 
 
 
@@ -57,3 +54,4 @@ General frost prediction modeling.
 Site-specific frost prediction modeling, altogether.
 
 If time, repitelos por la modificacion temporal 
+

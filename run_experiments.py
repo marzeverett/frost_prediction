@@ -17,7 +17,8 @@ def return_default_parameter_dict():
         "max_mutation_tries": 10,
         "population_size": 20, 
         "top_rules": 3,
-        "generations": 3
+        "generations": 3,
+        "tournament_size": 15
     }
     return parameter_dict.copy()
 

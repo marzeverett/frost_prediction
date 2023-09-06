@@ -6,7 +6,9 @@ import copy
 #from copy import deepcopy
 import ga_rule
 import os 
-#d = deepcopy(c
+#d = deepcopy
+#https://stackoverflow.com/questions/5326112/how-to-round-each-item-in-a-list-of-floats-to-2-decimal-places 
+
 
 
 
@@ -17,16 +19,24 @@ import os
 class population:
     def __init__(self, default_parameter_dict, consequent_dict, feature_dict, key, df):
         #Passes parameters
+        #Magic number for now 
+        self.round_num = 2
+
         self.df = df 
         self.default_parameter_dict = default_parameter_dict.copy()
         self.consequent_dict = consequent_dict.copy()
         self.key = key 
+        for item in list(feature_dict.keys()):
+            if item not in list(self.df.columns):
+                feature_dict.pop(item) 
         self.features_dict = self.calc_parameters(feature_dict, self.default_parameter_dict, self.df, self.key)
+         
         self.consequent_support, self.num_consequent = self.calc_consequent_support(self.consequent_dict, self.df)
         self.mutation_rate = self.default_parameter_dict['mutation_rate']
         self.population_size = self.default_parameter_dict["population_size"]
         self.num_top_rules = self.default_parameter_dict["top_rules"]
         self.generations = self.default_parameter_dict["generations"]
+        self.tournament_size = self.default_parameter_dict["tournament_size"]
         self.mutation_number = math.ceil(self.population_size*(self.mutation_rate/100))
         
         #List of rules 
@@ -38,7 +48,6 @@ class population:
         self.dominance_fitness_dict = {}
         
     
-
     def init_rules_pop(self):
         rules_pop = []
         for i in range(0, self.population_size):
@@ -105,10 +114,15 @@ class population:
                     active_params = rule.get_active_parameters()
                     other_active_params = other_rule.get_active_parameters()
                     bounds = rule.get_bounds_list()
+                    bounds = [round(item, self.round_num) for item in bounds]
                     other_bounds = other_rule.get_bounds_list()
+                    other_bounds = [round(item, self.round_num) for item in other_bounds]
                     if active_params == other_active_params and bounds == other_bounds:
                         same = True
-                if not same:
+                    #CHANGE here - not sure if good or not. 
+                    elif active_params == other_active_params and rule.get_fitness() < other_rule.get_fitness():
+                        same = True
+                if same == False:
                     new_pop_top_rules.append(rule)
                     
             temp_top_list = self.top_rules + new_pop_top_rules
@@ -138,7 +152,7 @@ class population:
                 dominated = True
                 for param in list(rule_dict.keys()):
                     #But if it is NOT dominated on anything:
-                    if rule_dict[param].upper_bound > compare_rule_dict[param].upper_bound and rule_dict[param].lower_bound < compare_rule_dict[param].lower_bound:
+                    if round(rule_dict[param].upper_bound, self.round_num) > round(compare_rule_dict[param].upper_bound, self.round_num) and round(rule_dict[param].lower_bound, self.round_num) < round(compare_rule_dict[param].lower_bound, self.round_num):
                         dominated = False
                 if dominated == False:
                     self.dominance_dict[rule_string] = copy.deepcopy(rule_dict)
@@ -157,14 +171,16 @@ class population:
             dominated = True
             for param in list(rule_dict.keys()):
                 #But if it is NOT dominated on anything:
-                if rule_dict[param].curr_upper_bound >= compare_rule_dict[param].curr_upper_bound and rule_dict[param].curr_lower_bound <= compare_rule_dict[param].curr_lower_bound:
+                #CHANGE HERE - potentially a VERY bad one. 
+                if rule_dict[param].curr_upper_bound > compare_rule_dict[param].curr_upper_bound and rule_dict[param].curr_lower_bound < compare_rule_dict[param].curr_lower_bound:
                     dominated = False
             if dominated == False:
                 self.dominance_dict[rule_string] = copy.deepcopy(rule_dict)
             #Add it if it's fitness is higher!
             if dominated:
                 #Only keep if it has a higher fitness
-                if rule.fitness >= self.dominance_fitness_dict[rule_string]:
+                #Another potentially bad change! 
+                if rule.fitness > self.dominance_fitness_dict[rule_string]:
                     new_rules_pop_list.append(rule)
                 else:
                     #print("Killing ")
@@ -174,14 +190,41 @@ class population:
                 new_rules_pop_list.append(rule)
         self.rules_pop = new_rules_pop_list
 
+    def tournament_competition(self): 
+        #Randomly pick 4 of the rules from the rule pool
+        competitors = random.sample(self.rules_pop, self.tournament_size)
+        fittest = competitors[0]
+        fittest_fitness = competitors[0].get_fitness()
+        for i in range(1, self.tournament_size):
+            curr_fitness = competitors[i].get_fitness()
+            if curr_fitness > fittest_fitness:
+                fittest_fitness = curr_fitness
+                fittest = competitors[i]
+        return copy.deepcopy(fittest)
+
+    def tournament_selection(self):
+        new_pop = []
+        for i in range(0, self.population_size):
+            offspring = self.tournament_competition()
+            new_pop.append(offspring)
+        self.rules_pop = new_pop 
+
 
     #NOTE: YOU MIGHT WANT TO DELETE 0 FITNESS INDIVIDUALS
     def run_generation(self):
         #Update dominance dict and Kill dominated rules
-        self.update_dominance_dict()
-        self.kill_dominated()
+        #Take another look at this - might incorporate into fitness 
+        #CHANGE HERE - JUST CHECKING
+        # self.update_dominance_dict()
+        # self.kill_dominated()
+        
+        #OR - ALTERNATIVELY 
+        self.rules_pop.sort()
+        self.rules_pop = self.rules_pop[math.ceil(len(self.rules_pop)*.20):]
+
         #Update the top rules
         self.update_top_rules()
+
         #Replace dead population members
         num_replacements = self.population_size - len(self.rules_pop)
         for i in range(0, num_replacements):
@@ -194,7 +237,7 @@ class population:
                 new_rule = new_rule = ga_rule.rule(self.default_parameter_dict, self.features_dict, self.consequent_dict, self.consequent_support, self.num_consequent, self.df)
             self.rules_pop.append(new_rule)
         #Create the next generation
-        #Note: What's the plan here? 
+        self.tournament_selection()
         #Mutate percentage of population
         self.mutate_population() 
 

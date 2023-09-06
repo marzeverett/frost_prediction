@@ -124,7 +124,10 @@ class rule:
         self.calc_confidence()
         self.calc_lift()
         #This is a dummy for now! 
-        self.fitness = self.support * self.confidence * self.lift
+
+        #self.fitness = self.support * self.confidence * self.lift
+        #Also kind of a dummy. Need to re-look at dominance 
+        self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))*self.confidence
 
     def get_fitness(self):
         return self.fitness
@@ -162,10 +165,15 @@ class rule:
         #Get the parameters we aren't currently using
         non_included_params = list(set(self.parameter_list) - set(self.active_parameters))
         #Pick a random one
-        new_param = random.choice(non_included_params)
-        #Init and add it 
-        self.rule_dict[new_param] = ga_parameter.parameter(new_param, self.features_dict)
-        self.active_parameters.append(new_param)
+        try:
+            new_param = random.choice(non_included_params)
+            #Init and add it 
+            self.rule_dict[new_param] = ga_parameter.parameter(new_param, self.features_dict)
+            self.active_parameters.append(new_param)
+        except Exception as e:
+            pass 
+            #This probably means we already have all parameters - so skip 
+            #Mutation for now. 
 
 
     def subtract_parameter(self):
@@ -254,12 +262,3 @@ class rule:
     #I think we need this in order to be able to sort...
     def __lt__(self, other):
          return self.fitness < other.fitness
-
-    # def __eq__(self, other):
-    #     #NOTE - this is making a pretty big assumption! 
-    #     #Maybe CHANGE later 
-    #     if self.active_parameters == other.active_parameters and self.support == other.support and self.confidence == other.confidence and self.lift == other.lift:
-    #         return True
-    #     else:
-    #         return False
-

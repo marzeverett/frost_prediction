@@ -84,6 +84,21 @@ def ensemble_learn(list_of_rules, test_df):
     first_predictions.loc[first_predictions["predictions"] < 0.5, "predictions"] = 0
     return first_predictions 
 
+def ensemble_learn_or(list_of_rules, test_df):
+    #Get the predictions for each rule in the list
+    num_models = len(list_of_rules)
+    prediction_list = []
+    #Get all the prediction dfs for a single rule 
+    for single_rule in list_of_rules:
+        sub_df = get_predictions_from_rule(single_rule, test_df)
+        prediction_list.append(sub_df)
+
+    first_predictions = prediction_list[0]
+    for i in range(1, len(prediction_list)):
+        first_predictions["predictions"] = first_predictions["predictions"] | prediction_list[i]["predictions"]
+
+    return first_predictions 
+
 
 
 def complete_eval_top_rules(filepath_start, key, df):
@@ -97,10 +112,15 @@ def complete_eval_top_rules(filepath_start, key, df):
         eval_dict = evaluate_prediction_model(predict_df, key, model_index=model_index)
         eval_dict_list.append(eval_dict)
         model_index += 1
-    #Ensemble of best rules 
+    #Ensemble of best rules - average 
     predict_df = ensemble_learn(rules_list, df)
-    eval_dict = evaluate_prediction_model(predict_df, key, model_index="All")
+    eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_avg")
     eval_dict_list.append(eval_dict)
+    #Ensemble of best rules - Or 
+    predict_df = ensemble_learn_or(rules_list, df)
+    eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_or")
+    eval_dict_list.append(eval_dict)
+
     eval_df = pd.DataFrame(eval_dict_list)
     save_name = f"{filepath_start}rule_predictor_evaluation.csv"
     eval_df.to_csv(save_name)
