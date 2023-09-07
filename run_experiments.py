@@ -103,7 +103,7 @@ def return_default_list_features_dict():
     return list_features_dict.copy()
 
 
-def run_experiments(default_parameter_dict, name, sites, key=None):
+def run_experiments(phase_name, default_parameter_dict, name, sites, key=None):
     default_dict = return_default_parameter_dict()
     default_dict.update(default_parameter_dict)
     list_features_dict = return_default_list_features_dict()
@@ -125,7 +125,7 @@ def run_experiments(default_parameter_dict, name, sites, key=None):
         pop = ga_population.population(default_dict, consequent_dict, list_features_dict, key, train_df)
         pop.run_experiment(name=full_name)
         #Eval - For each top rule and for the ensemble classifiers
-        filename = f"generated_files/{full_name}/"
+        filename = f"generated_files/{phase_name}/{full_name}/"
         ga_predictor.complete_eval_top_rules(filename, key, test_df)
 
 

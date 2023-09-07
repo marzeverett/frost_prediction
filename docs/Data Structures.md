@@ -142,3 +142,10 @@ A population needs to be able to:
 
 
     
+## Saving Scheme
+For a particular Phase, Parameter, and Run
+Saved in folder: {Phase_Name}_{Parameter_Index}_{Run}
+    Files:
+    Top Rules (List)
+    All Rules (List)
+    Rule Predictor Evaluation 
