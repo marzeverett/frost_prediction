@@ -1,3 +1,4 @@
 pickled_datasets/*
 frost_csvs/*
 generated_files/*
+data_analysis/generated_files/*
