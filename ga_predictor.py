@@ -3,6 +3,7 @@ import pandas as pd
 import random 
 import math 
 import copy 
+import os 
 
 from sklearn import metrics 
 
@@ -112,8 +113,8 @@ def get_unique_fitness_rules(list_of_rules):
 
 def complete_eval_top_rules(filepath_start, key, df):
     filename = f"{filepath_start}top_rules.json"
-    if not os.path.exist(filename):
-        os.mkdirs(filename)
+    if not os.path.exists(filepath_start):
+        os.makedirs(filepath_start)
     rules_list = load_rules(filename)
     eval_dict_list = []
     #The individual rules 

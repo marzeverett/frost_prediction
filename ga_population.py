@@ -232,7 +232,7 @@ class population:
             #How will we make the next seed?
             #Magic NUMBER ALERT - CHECK 
             seed = kind_of_mutation = random.choices(["best", "new"], weights=[10, 90], k=1)[0]
-            if seed == "best":
+            if seed == "best" and len(self.top_rules) > 0:
                 new_rule = copy.deepcopy(random.choice(self.top_rules))
             else:
                 new_rule = new_rule = ga_rule.rule(self.default_parameter_dict, self.features_dict, self.consequent_dict, self.consequent_support, self.num_consequent, self.df)
@@ -306,9 +306,4 @@ class population:
     def print_dominance_dict(self):
         for item in list(self.dominance_dict.keys()):
             print(self.dominance_dict[item].keys())
-
-    # def print_global_top_rules_metrics(self):
-    #     print("Global top rules metrics")
-    #     for rule in self.global_top_rules:
-    #         rule.print_metrics()
 

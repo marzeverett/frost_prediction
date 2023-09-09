@@ -13,6 +13,7 @@ param_dict_1 = {
     "population_size": 100, 
     "top_rules": 10,
     "generations": 100,
+    "tournament_size": 15,
     "dominance": False
 }
 
@@ -27,6 +28,7 @@ param_dict_2 = {
     "population_size": 100, 
     "top_rules": 10,
     "generations": 100,
+    "tournament_size": 15,
     "dominance": True
 }
 
@@ -42,6 +44,7 @@ param_dict_3 = {
     "population_size": 200, 
     "top_rules": 10,
     "generations": 200,
+    "tournament_size": 15,
     "dominance": False
 }
 
@@ -56,6 +59,7 @@ param_dict_4 = {
     "population_size": 200, 
     "top_rules": 10,
     "generations": 200,
+    "tournament_size": 15,
     "dominance": True
 }
 
