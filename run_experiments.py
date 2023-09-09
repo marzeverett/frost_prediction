@@ -1,9 +1,9 @@
 import pandas as pd 
 import math 
-
-
 import ga_population
 import ga_predictor 
+
+#Help from hee: https://www.geeksforgeeks.org/python-intersection-two-lists/
 
 
 def return_default_parameter_dict():
@@ -125,6 +125,10 @@ def create_merged_df(specific_site, sites, parameter_dict, key):
         df = pd.read_csv(df_path)
         if site == specific_site:
             keep_column = df[key]
+        
+        initial_cols = list(df.columns)
+        features_to_use = list(set(features_to_use) & set(initial_cols))
+
         prefix_df = df[features_to_use]
         prefix_df = prefix_df.add_prefix(site)
         if site == specific_site:
