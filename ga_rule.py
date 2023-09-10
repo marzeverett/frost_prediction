@@ -33,7 +33,7 @@ class rule:
         self.rule_dict = {}
         self.active_parameters = []
         self.last_mutation_type = None
-        self.max_init_tries = 20
+        self.max_init_tries = 5
         
         #Make sure we initialize the rule to something actually in the dataset 
         self.antecedent_support = 0
