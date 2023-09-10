@@ -13,7 +13,8 @@ param_dict_1 = {
     "population_size": 200, 
     "top_rules": 10,
     "generations": 200,
-    "dominance": False
+    "dominance": False,
+    "sequence": False
 }
 
 param_dict_2 = {
@@ -27,7 +28,8 @@ param_dict_2 = {
     "population_size": 200, 
     "top_rules": 10,
     "generations": 200,
-    "dominance": True
+    "dominance": True,
+    "sequence": False
 }
 
 
@@ -42,7 +44,8 @@ param_dict_3 = {
     "population_size": 200, 
     "top_rules": 10,
     "generations": 200,
-    "dominance": False
+    "dominance": False,
+    "sequence": False
 }
 
 param_dict_4 = {
@@ -56,7 +59,8 @@ param_dict_4 = {
     "population_size": 200, 
     "top_rules": 10,
     "generations": 200,
-    "dominance": True
+    "dominance": True,
+    "sequence": False
 }
 
 
