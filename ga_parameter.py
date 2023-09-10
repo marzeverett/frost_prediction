@@ -22,6 +22,14 @@ class parameter:
         self.range_restriction = feature_dict["range_restriction"]
         self.max_mutation_tries = feature_dict["max_mutation_tries"]
         self.mutation_amount = feature_dict["mutation_amount"]
+        #For sequence extension 
+        if feature_dict["sequence"] == True:
+            self.sequence = True
+            self.sequence_limit = feature_dict["sequence_limit"]
+        else:
+            self.sequence = False 
+        
+
         if self.type == "continuous":
             self.mean = feature_dict["mean"]
             self.stdev = feature_dict["stdev"]
@@ -32,6 +40,19 @@ class parameter:
             self.random_bounds()
         else:
             self.random_bool()
+        if self.sequence:
+            self.random_sequence() 
+
+    
+    def random_sequence(self):
+        bound_1 = random.randint(0, self.sequence_limit)
+        bound_2 = random.randint(0, self.sequence_limit)
+        if bound_1 > bound_2:
+            self.curr_sequence_upper = bound_1
+            self.curr_sequence_lower = bound_2
+        else:
+            self.curr_sequence_upper = bound_2
+            self.curr_sequence_lower = bound_1
 
     def random_bool(self):
         self.upper_bound = random.randint((0,1))
@@ -87,7 +108,7 @@ class parameter:
         return value
 
 
-    def mutate(self):
+    def mutate_value(self):
         if self.type == "continuous" or self.type == "nominal":
             tries = 0
             success = 0
@@ -96,6 +117,19 @@ class parameter:
                 tries += 1 
         else:
             self.mutate_bool()
+
+    def mutate(self):
+        #If we are also mutating sequences
+        if self.sequence:
+            choice = random.choice(["sequence", "value"])
+            if choice == "sequence":
+                self.mutate_sequence()
+            else:
+                self.mutate_value()
+        #Otherwise just mutate the rule value 
+        else:
+            self.mutate_value()
+        
 
     def mutate_bounds(self):
         old_lower = self.curr_lower_bound
@@ -127,9 +161,40 @@ class parameter:
             self.curr_lower_bound = 0
         self.curr_upper_bound = self.curr_lower_bound
 
+    
+    def mutate_sequence(self):
+        #Mutate 1-2 days at a time, only. 
+        tries = 0
+        success = 0
+        while success == 0 and tries < self.max_mutation_tries:
+            tries += 1
+            days_to_mutate = random.choice([1,2,-1,-2])
+            bound_to_mutate = random.choice(["upper", "lower"])
+            if bound_to_mutate == "upper":
+                upper_bound = self.curr_sequence_upper + days_to_mutate
+                lower_bound = self.curr_sequence_lower
+            else:
+                lower_bound = self.curr_sequence_lower + days_to_mutate
+                upper_bound = self.curr_sequence_upper
+            if lower_bound > upper_bound:
+                temp = lower_bound
+                lower_bound = upper_bound
+                upper_bound = temp
+            if upper_bound > self.sequence_limit or lower_bound < 0:
+                success = 0
+            else:
+                success = 1
+                self.curr_sequence_lower = lower_bound
+                self.curr_sequence_upper = upper_bound
+        # if success == 0:
+        #     print("Could not successfully mutate")
+
     def return_bounds(self):
         #Returns lower, upper bound in that order 
         return self.curr_lower_bound, self.curr_upper_bound
+
+    def return_seq_bounds(self):
+        return self.curr_sequence_lower, self.curr_sequence_upper
 
     def return_name(self):
         return self.name 
@@ -141,6 +206,9 @@ class parameter:
         print(f"Max Upper Bound: {self.upper_bound}")
         print(f"Curr Lower Bound {self.curr_lower_bound}")
         print(f"Curr Upper Bound {self.curr_upper_bound}")
+        if self.sequence:
+            print(f"Curr Sequence Upper Bound {self.curr_sequence_upper}")
+            print(f"Curr Sequence Lower Bound {self.curr_sequence_lower}")
         print(f"Mutation Amount: {self.mutation_amount}")
         print(f"Range Restriction {self.range_restriction}")
         if self.type == "continuous" or self.type == "nominal":
@@ -152,6 +220,9 @@ class parameter:
     def print_current(self):
         print(f"Curr Lower Bound {self.curr_lower_bound}")
         print(f"Curr Upper Bound {self.curr_upper_bound}")
+        if self.sequence:
+            print(f"Curr Sequence Upper Bound {self.curr_sequence_upper}")
+            print(f"Curr Sequence Lower Bound {self.curr_sequence_lower}")
         print()
 
     def print_name(self):
