@@ -33,12 +33,15 @@ class rule:
         self.rule_dict = {}
         self.active_parameters = []
         self.last_mutation_type = None
+        self.max_init_tries = 20
         
         #Make sure we initialize the rule to something actually in the dataset 
         self.antecedent_support = 0
-        while self.antecedent_support <= 0.0:
+        init_initial = 0
+        while self.antecedent_support <= 0.0 and init_initial <= self.max_init_tries:
             self.random_init()
             self.calc_antecedent_support(df)
+            init_initial += 1
         #Then, calculate the rule's fitness 
         self.calc_fitness(df)
 

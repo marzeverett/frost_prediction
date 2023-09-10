@@ -84,6 +84,6 @@ for param_dict_index in list(params_dicts.keys()):
     for run_index in list(runs.keys()):
         name = f'{phase_name}_{param_dict_index}_{run_index}'
         run_experiments.run_experiments(phase_name, params_dicts[param_dict_index], name, npp_named_sites, key=key, all_data=True)
-
+        print("Finished run...")
 
 
