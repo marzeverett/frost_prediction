@@ -81,6 +81,11 @@ class population:
                 feature["range_restriction"] = default_parameter_dict["range_restriction"]
             if "max_mutation_tries" not in list(feature.keys()):
                 feature["max_mutation_tries"] = default_parameter_dict["max_mutation_tries"]
+            if "sequence" not in list(feature.keys()):
+                feature["sequence"] = default_parameter_dict["sequence"]
+            if feature["sequence"]:
+                if "sequence_limit" not in list(feature.keys()):
+                    feature["sequence_limit"] = default_parameter_dict["sequence_limit"]
             #Get max and min value for feature if they were not provided
             if "lower_bound" not in list(feature.keys()):
                 feature["lower_bound"] = df[feature["name"]].min()
