@@ -12,12 +12,12 @@ param_dict_1 = {
     "change_percent": 50,
     "max_mutation_tries": 10,
     "population_size": 150, 
-    "top_rules": 10,
-    "generations": 150,
+    "top_rules": 15,
+    "generations": 15,
     "sequence": True,
     "sequence_limit": 20,
     "tournament_size": 15,
-    "dominance": False
+    "dominance": True
 }
 
 
