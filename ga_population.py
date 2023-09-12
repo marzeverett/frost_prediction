@@ -31,7 +31,7 @@ class population:
                 feature_dict.pop(item) 
         self.features_dict = self.calc_parameters(feature_dict, self.default_parameter_dict, self.df, self.key)
          
-        self.consequent_support, self.num_consequent = self.calc_consequent_support(self.consequent_dict, self.df)
+        self.consequent_support, self.num_consequent, self.consequent_indexes = self.calc_consequent_support(self.consequent_dict, self.df)
         self.mutation_rate = self.default_parameter_dict['mutation_rate']
         self.population_size = self.default_parameter_dict["population_size"]
         self.num_top_rules = self.default_parameter_dict["top_rules"]
@@ -52,7 +52,7 @@ class population:
     def init_rules_pop(self):
         rules_pop = []
         for i in range(0, self.population_size):
-            new_rule = ga_rule.rule(self.default_parameter_dict, self.features_dict, self.consequent_dict, self.consequent_support, self.num_consequent, self.df)
+            new_rule = ga_rule.rule(self.default_parameter_dict, self.features_dict, self.consequent_dict, self.consequent_support, self.num_consequent, self.consequent_indexes, self.df)
             #new_rule.random_init()
             rules_pop.append(new_rule)
         return rules_pop
@@ -65,7 +65,9 @@ class population:
         sub_df = df.eval(query)
         num_consequent = sub_df.sum()
         consequent_support = num_consequent/len(df.index)
-        return consequent_support, num_consequent 
+        indexes = sub_df[sub_df].index
+        index_list = indexes.tolist()
+        return consequent_support, num_consequent, index_list
 
 
     def calc_parameters(self, feature_dict, default_parameter_dict, df, key):
@@ -240,7 +242,7 @@ class population:
             if seed == "best" and len(self.top_rules) > 0:
                 new_rule = copy.deepcopy(random.choice(self.top_rules))
             else:
-                new_rule = new_rule = ga_rule.rule(self.default_parameter_dict, self.features_dict, self.consequent_dict, self.consequent_support, self.num_consequent, self.df)
+                new_rule = new_rule = ga_rule.rule(self.default_parameter_dict, self.features_dict, self.consequent_dict, self.consequent_support, self.num_consequent, self.consequent_indexes, self.df)
             self.rules_pop.append(new_rule)
         #Create the next generation
         self.tournament_selection()

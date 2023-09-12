@@ -18,22 +18,29 @@ import ga_parameter
 
 #######################       RULE CLASS             #########################################
 class rule:
-    def __init__(self, default_parameter_dict, features_dict, consequent, consequent_support, num_consequent, df):
+    def __init__(self, default_parameter_dict, features_dict, consequent, consequent_support, num_consequent, consequent_indexes, df):
         self.features_dict = features_dict.copy()
         self.parameter_list = list(self.features_dict.keys())
         self.mutation_rate = default_parameter_dict["mutation_rate"]
         self.add_subtract_percent = default_parameter_dict['add_subtract_percent']
         self.change_percent = default_parameter_dict['change_percent']
         self.max_mutation_tries = default_parameter_dict["max_mutation_tries"]
-        self.init_max_params = math.ceil(0.6*len(self.parameter_list))
+        self.sequence = default_parameter_dict["sequence"]
+        if "initial_rule_limit" in list(default_parameter_dict.keys()):
+            self.init_max_params = default_parameter_dict["initial_rule_limit"]
+        else:
+            self.init_max_params = math.ceil(0.6*len(self.parameter_list))
         self.consequent_dict = consequent
         self.consequent_support = consequent_support
         self.num_consequent = num_consequent
+        self.consequent_indexes = consequent_indexes
         self.total_records = len(df.index)
         self.rule_dict = {}
         self.active_parameters = []
         self.last_mutation_type = None
+        #CHECK: Magic Number Alert 
         self.max_init_tries = 5
+        
         
         #Make sure we initialize the rule to something actually in the dataset 
         self.antecedent_support = 0
@@ -42,7 +49,6 @@ class rule:
             self.random_init()
             self.calc_antecedent_support(df)
             init_initial += 1
-        #Then, calculate the rule's fitness 
         self.calc_fitness(df)
 
 
@@ -90,7 +96,81 @@ class rule:
         return query 
 
 
-    def calc_antecedent_support(self, df):
+    def build_param_specific_query(self, param_name):
+        parameter = self.rule_dict[param_name]
+        lower, upper = parameter.return_bounds()
+        query = f'{param_name} >= {lower} & {param_name} <= {upper}'
+        return query  
+
+    #This is going to have to change for the consequent 
+    def check_all_in_slice(self, param_list, df, start_offset):
+        #For each other param
+        for param_name in param_list:
+            latest, earliest = self.rule_dict[param_name].return_seq_bounds()
+            param_range = earliest - latest
+            start_val = start_offset - earliest
+            end_val = start_val + param_range
+            #Get the slice that this param represents         
+            df_slice = df.iloc[start_val:end_val+1, :]
+            query = self.build_param_specific_query(param_name)
+            #If ANY are within the values for this slice, good to go. 
+            sub_df = df_slice.eval(query)
+            if sub_df.sum() < 1:
+                return False
+        return True
+
+
+
+    def count_params_fitting_indexes(self, df, total_range, index_list, param_list, earliest):
+        num_true = 0
+        for index_val in index_list:
+            try:
+                end_val = index_val + total_range
+                df_slice = df.iloc[index_val:end_val+1, :] 
+                result = self.check_all_in_slice(param_list, df_slice, earliest)
+                if result:
+                    num_true += 1
+            except Exception as e:
+                pass 
+                #print(f"Couldn't slice this {index_val} {total_range+1}: {e}")
+        return num_true
+
+
+    #Get the support of the antecedent for a sequence. 
+    def calc_antecedent_support_sequence(self, df):
+        earliest, latest, earliest_param_name = self.get_rule_sequence_bounds_and_earliest_param()
+        total_range = earliest - latest 
+        if earliest - latest > 0:
+            total_applicable = math.floor(len(df.index)/(earliest-latest))
+        else:
+            total_applicable = len(df.index)
+        #If there is only one parameter in the rule, or if somehow only one slice of the sequence is present 
+        if total_range == 0 or len(self.active_parameters) < 2:
+            #Then its just going to be the normal non-sequence support calc
+            self.calc_antecedent_support_non_sequence(df)
+            if total_applicable > 0:
+                self.antecedent_support = self.num_antecedent/total_applicable
+        else:
+            #Find everywhere in the dataframe (each time sequence index) where it occurs
+            query = self.build_param_specific_query(earliest_param_name)
+            bool_df = df.eval(query)
+            indexes = bool_df[bool_df].index
+            index_list = indexes.tolist()
+            remaining_params = self.active_parameters.copy()
+            remaining_params.remove(earliest_param_name)
+            #Get the count
+            num_true = self.count_params_fitting_indexes(df, total_range, index_list, remaining_params, earliest)
+            self.num_antecedent = num_true
+            if total_applicable > 0:
+                self.antecedent_support = self.num_antecedent/total_applicable
+            else:
+                self.antecedent_support = 0
+
+
+
+
+
+    def calc_antecedent_support_non_sequence(self, df):
         #Takes in itself and the dataframe, and calculates its support 
         antecedent_support_query = self.build_rule_antecedent_query()
         sub_df = df.eval(antecedent_support_query)
@@ -98,12 +178,43 @@ class rule:
         self.antecedent_support = self.num_antecedent/self.total_records
 
 
-    def calc_overall_support(self, df):
+    def calc_antecedent_support(self, df):
+        if self.sequence:
+            self.calc_antecedent_support_sequence(df)
+        else:
+            self.calc_antecedent_support_non_sequence(df)
+
+    
+    def calc_overall_support_sequence(self, df):
+        earliest, latest, earliest_param_name = self.get_rule_sequence_bounds_and_earliest_param()
+        if earliest - latest > 0:
+            total_applicable = math.floor(len(df.index)/(earliest-latest))
+        else:
+            total_applicable = len(df.index)
+        #Might want to make this something that is always calculated 
+        total_range = earliest - latest 
+        remaining_params = self.active_parameters.copy()
+        num_true  = self.count_params_fitting_indexes(df, total_range, self.consequent_indexes, remaining_params, earliest)
+        self.num_whole_rule = num_true
+        if total_applicable > 0:
+            self.support = self.num_whole_rule/total_applicable
+        else:
+            self.support = 0
+
+
+    def calc_overall_support_non_sequence(self, df):
         #Assumes you have already built the antecedent and consequent support queries
         overall_support_query =f"{self.antecedent_support_query} & {self.consequent_support_query}"
         sub_df = df.eval(overall_support_query)
         self.num_whole_rule = sub_df.sum()
         self.support = self.num_whole_rule/self.total_records
+
+
+    def calc_overall_support(self, df):
+        if self.sequence:
+            self.calc_overall_support_sequence(df)
+        else:
+            self.calc_antecedent_support_non_sequence(df)
 
     def calc_confidence(self):
         if self.num_antecedent != 0:
@@ -113,7 +224,6 @@ class rule:
 
     def calc_lift(self):
         self.lift = self.confidence/self.consequent_support
-       
 
     def calc_fitness(self, df):
         #Build the queries 
@@ -132,6 +242,28 @@ class rule:
         #Also kind of a dummy. Need to re-look at dominance 
         self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))*self.confidence
 
+    #Gets the earliest sequence value (higher number), latest sequence value (lower number), and param with earliest sequence number 
+    def get_rule_sequence_bounds_and_earliest_param(self):
+        if self.sequence:
+            latest = None
+            earliest = None 
+            earliest_param_name = None
+            for item in list(self.rule_dict.keys()):
+                sub_latest, sub_earliest = self.rule_dict[item].return_seq_bounds()
+                if latest == None:
+                    latest = sub_latest
+                    earliest = sub_earliest
+                    earliest_param_name = item
+                else:
+                    if sub_earliest > earliest:
+                        earliest = sub_earliest
+                        earliest_param_name = item
+                    if sub_latest < latest:
+                        latest = sub_latest
+            return earliest, latest, earliest_param_name
+        else:
+            return False, False, False
+    
     def get_fitness(self):
         return self.fitness
     
@@ -146,7 +278,9 @@ class rule:
             new_rule_dict["parameters"][param] = {}
             new_rule_dict["parameters"][param]["lower_bound"] = self.rule_dict[param].curr_lower_bound
             new_rule_dict["parameters"][param]["upper_bound"] = self.rule_dict[param].curr_upper_bound
-
+            if self.sequence:
+                new_rule_dict["parameters"][param]["seq_lower_bound"] = self.rule_dict[param].curr_sequence_lower
+                new_rule_dict["parameters"][param]["seq_upper_bound"] = self.rule_dict[param].curr_sequence_upper
         new_rule_dict["support"] = self.support
         new_rule_dict["confidence"] = self.confidence
         new_rule_dict["lift"] = self.lift
@@ -258,8 +392,12 @@ class rule:
         print(f"Overall Fitness {self.fitness}")
 
     def elegant_print(self):
-        for item in list(self.rule_dict.keys()):
-            print(f"{item}: [{round(self.rule_dict[item].curr_lower_bound, 3)}, {round(self.rule_dict[item].curr_upper_bound, 3)}]")
+        if self.sequence:
+            for item in list(self.rule_dict.keys()):
+                print(f"{item}: [{round(self.rule_dict[item].curr_lower_bound, 3)}, {round(self.rule_dict[item].curr_upper_bound, 3)}]  [{self.rule_dict[item].curr_sequence_lower}, {self.rule_dict[item].curr_sequence_upper}]")
+        else:
+            for item in list(self.rule_dict.keys()):
+                print(f"{item}: [{round(self.rule_dict[item].curr_lower_bound, 3)}, {round(self.rule_dict[item].curr_upper_bound, 3)}]")
      
 
     #I think we need this in order to be able to sort...

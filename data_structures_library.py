@@ -7,15 +7,17 @@ import time
 
 #CHANGE 
 import ga_parameter
-#import ga_rule
-#import ga_population
+import ga_rule
+import ga_population
+import ga_predictor
 
 #https://www.statology.org/pandas-select-rows-without-nan/
 
 default_parameter_dict = {
     "mutation_rate": 20,
     "mutation_amount": 20,
-    "range_restriction": 50,
+    "range_restriction": 300,
+    "initial_rule_limit": 2,
     "index_key": "Date_datetime",
     "add_subtract_percent": 30,
     "change_percent": 70,
@@ -24,7 +26,9 @@ default_parameter_dict = {
     "top_rules": 3,
     "generations": 3,
     "sequence": True,
-    "sequence_limit": 10
+    "sequence_limit": 10,
+    "tournament_size": 15,
+    "dominance": False
 }
 
 consequent_dict = {
@@ -135,21 +139,50 @@ def calc_parameters(feature_dict, default_parameter_dict, df, key):
         return feature_dict
 
 
+def calc_consequent_support(consequent_dict, df):
+    param_name = consequent_dict['name']
+    lower_bound = consequent_dict['lower_bound']
+    upper_bound = consequent_dict['upper_bound']
+    query = f'{param_name} >= {lower_bound} & {param_name} <= {upper_bound}'
+    sub_df = df.eval(query)
+    num_consequent = sub_df.sum()
+    consequent_support = num_consequent/len(df.index)
+    indexes = sub_df[sub_df].index
+    index_list = indexes.tolist()
+    return consequent_support, num_consequent, index_list
+
+
 
 df = pd.read_csv("frost_csvs/npp_c_cali.csv")
 features_dict = calc_parameters(list_features_dict, default_parameter_dict, df, key)
-param_name = "Air_TempC_Avg"
-param = ga_parameter.parameter(param_name, features_dict)
-param.print_current()
-param.mutate()
-param.print_current()
+key = "frost"
+consequent_support, num_consequent, consequent_indexes = calc_consequent_support(consequent_dict, df)
+
+
+##Params 
+# param_name = "Air_TempC_Avg"
+# param = ga_parameter.parameter(param_name, features_dict)
+# param.print_current()
+# param.mutate()
+# param.print_current()
 #print(json.dumps(features_dict, indent=4))
 
 
+##Rules 
+# the_rule = ga_rule.rule(default_parameter_dict, features_dict, consequent_dict, consequent_support, num_consequent, consequent_indexes, df)
+# the_rule.elegant_print()
+# the_rule.print_fitness_metrics()
+# the_rule.mutate(df)
+# print("After Mutation")
+# the_rule.elegant_print
+# the_rule.print_fitness_metrics()
+# the_rule.print_self()
+
+# #Population 
+# pop = ga_population.population(default_parameter_dict, consequent_dict, list_features_dict, key, df)
+# pop.run_experiment()
 
 
-
-
-#pop = ga_population.population(default_parameter_dict, consequent_dict, list_features_dict, key, df)
-#pop.run_experiment()
-
+# filename = f"generated_files/None/"
+# key = "frost"
+# ga_predictor.complete_eval_top_rules(filename, key, df, sequence=True)

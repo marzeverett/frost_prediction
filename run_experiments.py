@@ -148,7 +148,7 @@ def create_merged_df(specific_site, sites, parameter_dict, key):
 
 
 
-def run_experiments(phase_name, default_parameter_dict, name, sites, key=None, all_data=False):
+def run_experiments(phase_name, default_parameter_dict, name, sites, key=None, all_data=False, sequence=False):
     default_dict = return_default_parameter_dict()
     default_dict.update(default_parameter_dict)
     if key == None:
@@ -178,7 +178,7 @@ def run_experiments(phase_name, default_parameter_dict, name, sites, key=None, a
         pop.run_experiment(name=full_name)
         #Eval - For each top rule and for the ensemble classifiers
         filename = f"generated_files/{full_name}/"
-        ga_predictor.complete_eval_top_rules(filename, key, test_df)
+        ga_predictor.complete_eval_top_rules(filename, key, test_df, sequence=sequence)
 
 
 
