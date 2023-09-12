@@ -223,14 +223,13 @@ class population:
         #Update dominance dict and Kill dominated rules
         #Take another look at this - might incorporate into fitness 
 
-        if self.sequence:
-            if self.dominance:
-                self.update_dominance_dict()
-                self.kill_dominated()
-            #Kill lowest 20% of rules - MAGIC NUMBER ALERT 
-            else:  
-                self.rules_pop.sort()
-                self.rules_pop = self.rules_pop[math.ceil(len(self.rules_pop)*.20):]
+        if self.dominance:
+            self.update_dominance_dict()
+            self.kill_dominated()
+        #Kill lowest 20% of rules - MAGIC NUMBER ALERT 
+        else:  
+            self.rules_pop.sort()
+            self.rules_pop = self.rules_pop[math.ceil(len(self.rules_pop)*.20):]
 
         #Update the top rules
         self.update_top_rules()
