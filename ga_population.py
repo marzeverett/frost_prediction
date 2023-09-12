@@ -222,13 +222,15 @@ class population:
     def run_generation(self):
         #Update dominance dict and Kill dominated rules
         #Take another look at this - might incorporate into fitness 
-        if self.dominance:
-            self.update_dominance_dict()
-            self.kill_dominated()
-        #Kill lowest 20% of rules - MAGIC NUMBER ALERT 
-        else:  
-            self.rules_pop.sort()
-            self.rules_pop = self.rules_pop[math.ceil(len(self.rules_pop)*.20):]
+
+        if self.sequence:
+            if self.dominance:
+                self.update_dominance_dict()
+                self.kill_dominated()
+            #Kill lowest 20% of rules - MAGIC NUMBER ALERT 
+            else:  
+                self.rules_pop.sort()
+                self.rules_pop = self.rules_pop[math.ceil(len(self.rules_pop)*.20):]
 
         #Update the top rules
         self.update_top_rules()
@@ -238,11 +240,14 @@ class population:
         for i in range(0, num_replacements):
             #How will we make the next seed?
             #Magic NUMBER ALERT - CHECK 
-            seed = kind_of_mutation = random.choices(["best", "new"], weights=[10, 90], k=1)[0]
-            if seed == "best" and len(self.top_rules) > 0:
-                new_rule = copy.deepcopy(random.choice(self.top_rules))
-            else:
-                new_rule = new_rule = ga_rule.rule(self.default_parameter_dict, self.features_dict, self.consequent_dict, self.consequent_support, self.num_consequent, self.consequent_indexes, self.df)
+            #CHANGE Here - Don't re-seed with best CHECK if doing another run like 1/2
+            # seed = random.choices(["best", "new"], weights=[10, 90], k=1)[0]
+            # if seed == "best" and len(self.top_rules) > 0:
+            #     new_rule = copy.deepcopy(random.choice(self.top_rules))
+            # else:
+            #     new_rule = ga_rule.rule(self.default_parameter_dict, self.features_dict, self.consequent_dict, self.consequent_support, self.num_consequent, self.consequent_indexes, self.df)
+            
+            new_rule = ga_rule.rule(self.default_parameter_dict, self.features_dict, self.consequent_dict, self.consequent_support, self.num_consequent, self.consequent_indexes, self.df)
             self.rules_pop.append(new_rule)
         #Create the next generation
         self.tournament_selection()
