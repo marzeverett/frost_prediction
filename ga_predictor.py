@@ -137,9 +137,12 @@ def evaluate_prediction_model(predict_df, key, model_index=0, first_valid_index=
 
     pred = eval_df["predictions"].values.tolist()
     true = eval_df[key].values.tolist()
+    print(len(predict_df.index))
+    print(first_valid_index)
+    print(len(eval_df.index))
 
-    print(pred)
-    print(true)
+    #print(pred)
+    #print(true)
 
     eval_dict["Accuracy"] = metrics.accuracy_score(true, pred)
     confusion_matrix = metrics.confusion_matrix(true, pred)
@@ -216,19 +219,20 @@ def complete_eval_top_rules(filepath_start, key, df, sequence=False):
         eval_dict = evaluate_prediction_model(predict_df, key, model_index=model_index, first_valid_index=first_valid_index)
         eval_dict_list.append(eval_dict)
         model_index += 1
+    best_unique_rules = get_unique_fitness_rules(rules_list)
     #Ensemble of best rules - average 
-    predict_df, first_valid_index = ensemble_learn(rules_list, df, sequence=sequence)
-    eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_avg", first_valid_index=first_valid_index)
-    eval_dict_list.append(eval_dict)
+    if not sequence:
+        predict_df, first_valid_index = ensemble_learn(rules_list, df, sequence=sequence)
+        eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_avg", first_valid_index=first_valid_index)
+        eval_dict_list.append(eval_dict)
+        #Get best rules with unique fitness 
+        #Ensemble of best unique rules - average
+        predict_df, first_valid_index = ensemble_learn(best_unique_rules, df, sequence=sequence)
+        eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_uniq_avg", first_valid_index=first_valid_index)
+        eval_dict_list.append(eval_dict)
     #Ensemble of best rules - Or 
     predict_df, first_valid_index = ensemble_learn_or(rules_list, df, sequence=sequence)
     eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_or", first_valid_index=first_valid_index)
-    eval_dict_list.append(eval_dict)
-    #Get best rules with unique fitness 
-    best_unique_rules = get_unique_fitness_rules(rules_list)
-    #Ensemble of best unique rules - average
-    predict_df, first_valid_index = ensemble_learn(best_unique_rules, df, sequence=sequence)
-    eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_uniq_avg", first_valid_index=first_valid_index)
     eval_dict_list.append(eval_dict)
     #Ensemble of best unique rules - or
     predict_df, first_valid_index = ensemble_learn_or(best_unique_rules, df, sequence=sequence)
