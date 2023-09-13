@@ -116,6 +116,7 @@ def get_predictions_from_rule(rule, test_df, sequence=False):
         predict_df, first_valid_index = get_sequence_predictions(rule, test_df)
         #Fill any NaN with 0  
         predict_df.fillna(0, inplace=True)
+        predict_df["predictions"] = predict_df["predictions"].astype(int)
     else:
         query = build_rule_prediction_query(rule)
         predict_df = test_df.assign(predictions=test_df.eval(query))
@@ -212,21 +213,21 @@ def complete_eval_top_rules(filepath_start, key, df, sequence=False):
         eval_dict_list.append(eval_dict)
         model_index += 1
     #Ensemble of best rules - average 
-    predict_df, first_valid_index = ensemble_learn(rules_list, df)
+    predict_df, first_valid_index = ensemble_learn(rules_list, df, sequence=sequence)
     eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_avg", first_valid_index=first_valid_index)
     eval_dict_list.append(eval_dict)
     #Ensemble of best rules - Or 
-    predict_df, first_valid_index = ensemble_learn_or(rules_list, df)
+    predict_df, first_valid_index = ensemble_learn_or(rules_list, df, sequence=sequence)
     eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_or", first_valid_index=first_valid_index)
     eval_dict_list.append(eval_dict)
     #Get best rules with unique fitness 
     best_unique_rules = get_unique_fitness_rules(rules_list)
     #Ensemble of best unique rules - average
-    predict_df, first_valid_index = ensemble_learn(best_unique_rules, df)
+    predict_df, first_valid_index = ensemble_learn(best_unique_rules, df, sequence=sequence)
     eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_uniq_avg", first_valid_index=first_valid_index)
     eval_dict_list.append(eval_dict)
     #Ensemble of best unique rules - or
-    predict_df, first_valid_index = ensemble_learn_or(best_unique_rules, df)
+    predict_df, first_valid_index = ensemble_learn_or(best_unique_rules, df, sequence=sequence)
     eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_uniq_or", first_valid_index=first_valid_index)
     eval_dict_list.append(eval_dict)
 

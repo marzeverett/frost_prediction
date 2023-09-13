@@ -161,7 +161,6 @@ def run_experiments(phase_name, default_parameter_dict, name, sites, key=None, a
             list_features_dict = return_default_list_features_dict()
             df, list_features_dict = create_merged_df(site, sites, default_dict, key)
         else:
-            
             df_path = f"frost_csvs/{site}.csv"
             df = pd.read_csv(df_path)
             list_features_dict = return_default_list_features_dict()

@@ -240,8 +240,9 @@ class rule:
 
         #self.fitness = self.support * self.confidence * self.lift
         #Also kind of a dummy. Need to re-look at dominance 
-        self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))*self.confidence
-
+        #ANOTHER CHANGE HERE 
+        self.fitness = (2*self.support*(3*(self.num_whole_rule/self.num_consequent)))*(2*self.confidence)*(0.5*self.lift)
+        #self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))*self.confidence
     #Gets the earliest sequence value (higher number), latest sequence value (lower number), and param with earliest sequence number 
     def get_rule_sequence_bounds_and_earliest_param(self):
         if self.sequence:

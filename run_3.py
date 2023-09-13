@@ -10,16 +10,17 @@ param_dict_1 = {
     "index_key": "Date_datetime",
     "add_subtract_percent": 30,
     "change_percent": 70,
+    #"add_subtract_percent": 50,
+    #"change_percent": 50,
     "max_mutation_tries": 10,
     "population_size": 150, 
     "top_rules": 10,
-    "generations": 50,
+    "generations": 100,
+    "tournament_size": 4,
+    "dominance": True,
     "sequence": True,
-    "sequence_limit": 20,
-    "tournament_size": 15,
-    "dominance": True
+    "sequence_limit": 5 
 }
-
 
 npp_named_sites = ['npp_c_cali', 'npp_c_grav', 'npp_c_sand', 'npp_g_basn', 'npp_g_ibpe', 'npp_g_summ', 'npp_m_nort', 'npp_m_rabb', 'npp_m_well', 'npp_p_coll', 'npp_p_smal', 'npp_p_tobo', 'npp_t_east', 'npp_t_tayl', 'npp_t_west']
 #npp_named_sites = ['npp_c_cali']
@@ -53,3 +54,22 @@ for param_dict_index in list(params_dicts.keys()):
         run_experiments.run_experiments(phase_name, params_dicts[param_dict_index], name, npp_named_sites, key=key, sequence=sequence_val)
 
 
+
+
+# param_dict_1 = {
+#     "mutation_rate": 20,
+#     "mutation_amount": 20,
+#     "range_restriction": 300,
+#     "initial_rule_limit": 2,
+#     "index_key": "Date_datetime",
+#     "add_subtract_percent": 30,
+#     "change_percent": 70,
+#     "max_mutation_tries": 10,
+#     "population_size": 150, 
+#     "top_rules": 10,
+#     "generations": 50,
+#     "sequence": True,
+#     "sequence_limit": 20,
+#     "tournament_size": 15,
+#     "dominance": True
+# }

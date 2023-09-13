@@ -21,7 +21,6 @@ class population:
         #Passes parameters
         #Magic number for now 
         self.round_num = 2
-
         self.df = df 
         self.default_parameter_dict = default_parameter_dict.copy()
         self.consequent_dict = consequent_dict.copy()
@@ -105,6 +104,26 @@ class population:
 
     
 
+    def diversify_top_rules(self):
+        unique_rule_strings = {}
+        #Get highest fitness for given parameter set 
+        for rule in self.top_rules:
+            rule_string = str(sorted(list(rule.get_rule_dict().keys())))
+            if rule_string not in unique_rule_strings.keys():
+                unique_rule_strings[rule_string] = rule.get_fitness()
+            else:
+                fitness = rule.get_fitness()
+                if fitness > unique_rule_strings[rule_string]:
+                    unique_rule_strings[rule_string] = fitness
+        keep_list = []
+        for rule in self.top_rules:
+            rule_string = str(sorted(list(rule.get_rule_dict().keys())))
+            if rule.get_fitness() == unique_rule_strings[rule_string]:
+                keep_list.append(rule)
+        self.top_rules = keep_list
+
+            
+
     def update_top_rules(self):
         #get the top rules in the generation
         self.rules_pop.sort(reverse=True)
@@ -162,6 +181,7 @@ class population:
                     #But if it is NOT dominated on anything:
                     if round(rule_dict[param].upper_bound, self.round_num) > round(compare_rule_dict[param].upper_bound, self.round_num) and round(rule_dict[param].lower_bound, self.round_num) < round(compare_rule_dict[param].lower_bound, self.round_num):
                         dominated = False
+                #If its not dominated, we put the non dominated rule into the dict at these parameters 
                 if dominated == False:
                     self.dominance_dict[rule_string] = copy.deepcopy(rule_dict)
                     self.dominance_fitness_dict[rule_string] = rule.get_fitness()
@@ -189,6 +209,9 @@ class population:
                 #Only keep if it has a higher fitness
                 #Another potentially bad change! 
                 if rule.fitness > self.dominance_fitness_dict[rule_string]:
+                    #CHANGE HERE - not sure if good or not! 
+                    self.dominance_dict[rule_string] = copy.deepcopy(rule.get_rule_dict())
+                    self.dominance_fitness_dict[rule_string] = rule.fitness
                     new_rules_pop_list.append(rule)
                 else:
                     #print("Killing ")
@@ -222,14 +245,20 @@ class population:
     def run_generation(self):
         #Update dominance dict and Kill dominated rules
         #Take another look at this - might incorporate into fitness 
-
         if self.dominance:
             self.update_dominance_dict()
             self.kill_dominated()
+            #print(self.dominance_dict)
+
         #Kill lowest 20% of rules - MAGIC NUMBER ALERT 
         else:  
             self.rules_pop.sort()
             self.rules_pop = self.rules_pop[math.ceil(len(self.rules_pop)*.20):]
+
+
+        #CHANGE HERE
+        #This kills all but the best with the same parameters. Which might be an awful idea. 
+        self.diversify_top_rules()
 
         #Update the top rules
         self.update_top_rules()
