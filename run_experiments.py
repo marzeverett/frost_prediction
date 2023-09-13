@@ -173,8 +173,8 @@ def run_experiments(phase_name, default_parameter_dict, name, sites, key=None, a
         train_df = df.iloc[:split_index, :]
         test_df = df.iloc[split_index:, :]
         #Run the experiment
-        pop = ga_population.population(default_dict, consequent_dict, list_features_dict, key, train_df)
-        pop.run_experiment(name=full_name)
+        #pop = ga_population.population(default_dict, consequent_dict, list_features_dict, key, train_df)
+        #pop.run_experiment(name=full_name)
         #Eval - For each top rule and for the ensemble classifiers
         filename = f"generated_files/{full_name}/"
         ga_predictor.complete_eval_top_rules(filename, key, test_df, sequence=sequence)

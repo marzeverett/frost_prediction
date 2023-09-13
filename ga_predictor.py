@@ -120,6 +120,7 @@ def get_predictions_from_rule(rule, test_df, sequence=False):
     else:
         query = build_rule_prediction_query(rule)
         predict_df = test_df.assign(predictions=test_df.eval(query))
+        predict_df.fillna(0, inplace=True)
         predict_df["predictions"] = predict_df["predictions"].astype(int)
         first_valid_index = False
     return predict_df, first_valid_index
