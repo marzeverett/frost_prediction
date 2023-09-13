@@ -119,7 +119,7 @@ def best_per_site(file_start, phase, params, runs, sites):
         #print(json.dumps(agg_dict, indent=4))
         
 file_start = "generated_files/"
-phase_name = "Initial_1"
+phase_name = "Initial_2"
 param_indexes = [1, 2, 3, 4]
 run_indexes = [1, 2, 3]
 sites = ['npp_c_cali', 'npp_c_grav', 'npp_c_sand', 'npp_g_basn', 'npp_g_ibpe', 'npp_g_summ', 'npp_m_nort', 'npp_m_rabb', 'npp_m_well', 'npp_p_coll', 'npp_p_smal', 'npp_p_tobo', 'npp_t_east', 'npp_t_tayl', 'npp_t_west']

@@ -1,0 +1,2 @@
+,best_index,param_index,run,f1,accuracy,false_negatives
+0,"['ensemble_or', 'ensemble_uniq_or']",2,1,0.6278026905829597,"[0.8019093078758951, 0.8019093078758951]","[80, 80]"
