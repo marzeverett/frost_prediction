@@ -214,7 +214,7 @@ class rule:
         if self.sequence:
             self.calc_overall_support_sequence(df)
         else:
-            self.calc_antecedent_support_non_sequence(df)
+            self.calc_overall_support_non_sequence(df)
 
     def calc_confidence(self):
         if self.num_antecedent != 0:
