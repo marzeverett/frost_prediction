@@ -54,8 +54,6 @@ for param_dict_index in list(params_dicts.keys()):
         run_experiments.run_experiments(phase_name, params_dicts[param_dict_index], name, npp_named_sites, key=key, sequence=sequence_val)
 
 
-
-
 # param_dict_1 = {
 #     "mutation_rate": 20,
 #     "mutation_amount": 20,

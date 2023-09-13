@@ -248,8 +248,6 @@ class population:
         if self.dominance:
             self.update_dominance_dict()
             self.kill_dominated()
-            #print(self.dominance_dict)
-
         #Kill lowest 20% of rules - MAGIC NUMBER ALERT 
         else:  
             self.rules_pop.sort()

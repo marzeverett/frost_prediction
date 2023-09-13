@@ -82,13 +82,11 @@ def count_parameter_matches(rule, sub_df, earliest):
     return True
 
         
-
-
 #Takes in a sequence rules, a dataframe (to predict on)
 #Look at this for evaluations when it comes to ensemble rules as well. 
 def get_sequence_predictions(rule, test_df):
     predict_df = test_df.copy()
-    predict_df.assign(predictions=0)
+    predict_df = predict_df.assign(predictions=0)
     #You'll have to get the outer bounds for the rule again
     earliest, latest, earliest_param_name = get_rule_sequence_bounds_and_earliest(rule)
     #Get each row 
@@ -97,7 +95,9 @@ def get_sequence_predictions(rule, test_df):
     start_val = 0 
     end_val = start_val + total_range
     first_valid_index = end_val
+    counter = 0
     while end_val < len(test_df.index):
+        counter += 1
         #Slice the dataframe: 
         #iloc is exclusive on the end val 
         sub_df = test_df.iloc[start_val:end_val+1]
@@ -105,7 +105,8 @@ def get_sequence_predictions(rule, test_df):
         result = count_parameter_matches(rule, sub_df, earliest)
         if result == True:
             #Note sure this is the correct syntax 
-            predict_df.loc[end_val, "predictions"] = 1
+            #predict_df.loc[end_val, "predictions"] = 1
+            predict_df.at[end_val, "predictions"] = 1
         start_val += 1
         end_val += 1
     return predict_df, first_valid_index
@@ -128,6 +129,8 @@ def get_predictions_from_rule(rule, test_df, sequence=False):
 
 #Evaluate the prediction model 
 def evaluate_prediction_model(predict_df, key, model_index=0, first_valid_index=False):
+
+    
     eval_dict = {}
     eval_dict["Rule Index"] = model_index
     if first_valid_index:
@@ -137,13 +140,7 @@ def evaluate_prediction_model(predict_df, key, model_index=0, first_valid_index=
 
     pred = eval_df["predictions"].values.tolist()
     true = eval_df[key].values.tolist()
-    print(len(predict_df.index))
-    print(first_valid_index)
-    print(len(eval_df.index))
-
-    #print(pred)
-    #print(true)
-
+   
     eval_dict["Accuracy"] = metrics.accuracy_score(true, pred)
     confusion_matrix = metrics.confusion_matrix(true, pred)
     values_array = confusion_matrix.ravel()
