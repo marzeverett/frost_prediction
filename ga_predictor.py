@@ -138,6 +138,9 @@ def evaluate_prediction_model(predict_df, key, model_index=0, first_valid_index=
     pred = eval_df["predictions"].values.tolist()
     true = eval_df[key].values.tolist()
 
+    print(pred)
+    print(true)
+
     eval_dict["Accuracy"] = metrics.accuracy_score(true, pred)
     confusion_matrix = metrics.confusion_matrix(true, pred)
     values_array = confusion_matrix.ravel()
