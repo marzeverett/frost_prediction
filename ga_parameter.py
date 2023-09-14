@@ -29,7 +29,6 @@ class parameter:
         else:
             self.sequence = False 
         
-
         if self.type == "continuous":
             self.mean = feature_dict["mean"]
             self.stdev = feature_dict["stdev"]
@@ -148,10 +147,12 @@ class parameter:
 
         #If this violates the rules, don't mutate it! 
         #CHange here 
-        if self.curr_upper_bound - self.curr_lower_bound > (self.range_restriction/100)*self.stdev:
-            self.curr_lower_bound = old_lower
-            self.curr_upper_bound = old_upper
-            return False
+        #Check range restriction, if necessary 
+        if self.range_restriction:
+            if self.curr_upper_bound - self.curr_lower_bound > (self.range_restriction/100)*self.stdev:
+                self.curr_lower_bound = old_lower
+                self.curr_upper_bound = old_upper
+                return False
         return True
         
     def mutate_bool(self):
@@ -168,6 +169,7 @@ class parameter:
         success = 0
         while success == 0 and tries < self.max_mutation_tries:
             tries += 1
+            #Eventually may want to change this. 
             days_to_mutate = random.choice([1,2,-1,-2])
             bound_to_mutate = random.choice(["upper", "lower"])
             if bound_to_mutate == "upper":
@@ -180,8 +182,12 @@ class parameter:
                 temp = lower_bound
                 lower_bound = upper_bound
                 upper_bound = temp
-            if upper_bound > self.sequence_limit or lower_bound < 0:
-                success = 0
+            if lower_bound < 0:
+                lower_bound = 0
+            if self.sequence_limit:
+                #Latter half is extratemporaneous 
+                if upper_bound > self.sequence_limit or lower_bound < 0:
+                    success = 0
             else:
                 success = 1
                 self.curr_sequence_lower = lower_bound
@@ -189,12 +195,47 @@ class parameter:
         # if success == 0:
         #     print("Could not successfully mutate")
 
+    #Return bounds 
     def return_bounds(self):
         #Returns lower, upper bound in that order 
         return self.curr_lower_bound, self.curr_upper_bound
 
     def return_seq_bounds(self):
         return self.curr_sequence_lower, self.curr_sequence_upper
+
+    #Return bound ranges 
+    def return_bound_range(self):
+        return self.curr_upper_bound - self.curr_lower_bound
+
+    def return_sequence_range(self):
+        if self.sequence: 
+            return self.curr_sequence_upper - self.curr_sequence_lower
+        else:
+            return False 
+
+    def return_bound_amplitude_percent(self):
+        if not self.range_restriction:
+            total_range = self.upper_bound - self.lower_bound
+        else:
+            total_range = 2*self.stdev*self.range_restriction
+        current_range = self.curr_upper_bound - self.lower_bound
+        if total_range > 0:
+            #Percent of total range covered. 
+            return current_range/total_range
+        else:
+            return 0
+
+    def return_sequence_amplitude_percent(self):
+        if self.sequence_limit:
+            total_range = self.sequence_limit
+        else:
+            #Dummy -- not sure what to do here 
+            total_range = 1
+        curr_range = self.curr_sequence_upper - self.curr_sequence_lower
+        if total_range > 0:
+            return curr_range/total_range
+        else:
+            return 0 
 
     def return_name(self):
         return self.name 

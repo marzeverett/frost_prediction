@@ -5,17 +5,6 @@ A repo to look at site-specific frost prediction alternative to simple machine l
 ## Plan 
 Look at different weather parameters (temp/humidity, precipitation, wind speed, wind direction) and how they relate to each other using a quantitative analysis rules genetic algorithm. 
 
-Weekend Schedule:
-
-Go back through the literature. Figure out non-dominance rules, other stuff
-Figure out what you are going to do in terms of metrics and data wrangling. Some of this data is already wrangled, so that is helpful. 
-
-
-
-
-
-
-
 
 feature1[r1, r2][d1, d2] (days before) +- feature2[r1, r2][d1, d2]
 

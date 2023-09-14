@@ -3,7 +3,7 @@ import math
 import ga_population
 import ga_predictor 
 
-#Help from hee: https://www.geeksforgeeks.org/python-intersection-two-lists/
+#Help from here: https://www.geeksforgeeks.org/python-intersection-two-lists/
 
 
 def return_default_parameter_dict():

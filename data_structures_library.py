@@ -187,8 +187,8 @@ consequent_support, num_consequent, consequent_indexes = calc_consequent_support
 # key = "frost"
 # ga_predictor.complete_eval_top_rules(filename, key, df, sequence=True)
 
-# filename = f"generated_files/Sequence_1_1_1_npp_c_cali/"
-# key = "frost"
+filename = f"generated_files/Test_8_npp_c_cali/"
+key = "frost"
 
 # num_rows = len(df.index)
 # #0.1 - 10 percent training set - kind of a magic number 
@@ -200,4 +200,4 @@ consequent_support, num_consequent, consequent_indexes = calc_consequent_support
 # test_df = test_df.reset_index()
 # print(len(test_df.index))
 
-# ga_predictor.complete_eval_top_rules(filename, key, test_df, sequence=True)
+ga_predictor.complete_eval_top_rules(filename, key, df, sequence=True)

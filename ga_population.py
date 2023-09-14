@@ -79,14 +79,34 @@ class population:
             if "mutation_amount" not in list(feature.keys()):
                 feature["mutation_amount"] = default_parameter_dict["mutation_amount"]
             if "range_restriction" not in list(feature.keys()):
-                feature["range_restriction"] = default_parameter_dict["range_restriction"]
+                if "range_restriction" not in list(default_parameter_dict.keys()):
+                    feature["range_restriction"] = False
+                else:
+                    feature["range_restriction"] = default_parameter_dict["range_restriction"]
+            if "range_penalty" not in list(feature.keys()):
+                if "range_penalty" not in list(default_parameter_dict.keys()):
+                    feature["range_penalty"] = False
+                else:
+                    feature["range_penalty"] = default_parameter_dict["range_penalty"]
+            
             if "max_mutation_tries" not in list(feature.keys()):
                 feature["max_mutation_tries"] = default_parameter_dict["max_mutation_tries"]
             if "sequence" not in list(feature.keys()):
                 feature["sequence"] = default_parameter_dict["sequence"]
             if feature["sequence"]:
                 if "sequence_limit" not in list(feature.keys()):
-                    feature["sequence_limit"] = default_parameter_dict["sequence_limit"]
+                    if "sequence_limit" not in list(default_parameter_dict.keys()):
+                        feature["sequence_limit"] = False
+                    else:
+                        feature["sequence_limit"] = default_parameter_dict["sequence_limit"]
+
+                if "sequence_penalty" not in list(feature.keys()):
+                    if "sequence_penalty" not in list(default_parameter_dict.keys()):
+                        feature["sequence_penalty"] = False
+                    else:
+                        feature["sequence_penalty"] = default_parameter_dict["sequence_penalty"]
+
+            #Calculated Stuff!! 
             #Get max and min value for feature if they were not provided
             if "lower_bound" not in list(feature.keys()):
                 feature["lower_bound"] = df[feature["name"]].min()

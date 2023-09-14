@@ -57,3 +57,5 @@ for param_dict_index in list(params_dicts.keys()):
         print("Finished run...")
 
 
+#Same as run 2, but with diversity measures (non re-seeding with best, and 
+#diversifying the top rules.)

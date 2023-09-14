@@ -26,6 +26,14 @@ class rule:
         self.change_percent = default_parameter_dict['change_percent']
         self.max_mutation_tries = default_parameter_dict["max_mutation_tries"]
         self.sequence = default_parameter_dict["sequence"]
+        if "sequence_penalty" in list(default_parameter_dict.keys()):
+            self.sequence_penalty = default_parameter_dict["sequence_penalty"]
+        else:
+            self.sequence_penalty = False
+        if "range_penalty" in list(default_parameter_dict.keys()):
+            self.range_penalty = default_parameter_dict["range_penalty"]
+        else:
+            self.sequence_penalty = False
         if "initial_rule_limit" in list(default_parameter_dict.keys()):
             self.init_max_params = default_parameter_dict["initial_rule_limit"]
         else:
@@ -225,6 +233,24 @@ class rule:
     def calc_lift(self):
         self.lift = self.confidence/self.consequent_support
 
+    def get_average_penalty(self, kind):
+        penalty = 0
+        divisor = 0
+        for param in self.rule_dict:
+            if kind == "range":
+                penalty += self.rule_dict[param].return_bound_amplitude_percent()
+            elif kind == "sequence": 
+                penalty += self.rule_dict[param].return_sequence_amplitude_percent()
+            divisor += 1
+        return penalty/divisor
+
+    def calc_penalty(self, kind):
+        penalty = self.get_average_penalty(kind)
+        #Penalty gives us the percent of range. We want small ranges.
+        #So big ranges turn into smaller weights of the fitness. 
+        return 1-penalty
+        
+
     def calc_fitness(self, df):
         #Build the queries 
         self.build_rule_antecedent_query()
@@ -237,12 +263,16 @@ class rule:
         self.calc_confidence()
         self.calc_lift()
         #This is a dummy for now! 
-
         #self.fitness = self.support * self.confidence * self.lift
         #Also kind of a dummy. Need to re-look at dominance 
         #ANOTHER CHANGE HERE 
         #self.fitness = (2*self.support*(3*(self.num_whole_rule/self.num_consequent)))*(2*self.confidence)*(0.5*self.lift)
         self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))*self.confidence
+        if self.sequence_penalty:
+            self.fitness = self.fitness*(2*self.calc_penalty("sequence"))
+        if self.range_penalty:
+            self.fitness = self.fitness*self.calc_penalty("range")
+
     #Gets the earliest sequence value (higher number), latest sequence value (lower number), and param with earliest sequence number 
     def get_rule_sequence_bounds_and_earliest_param(self):
         if self.sequence:
