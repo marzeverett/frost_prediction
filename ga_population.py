@@ -276,7 +276,7 @@ class population:
 
         #CHANGE HERE
         #This kills all but the best with the same parameters. Which might be an awful idea. 
-        self.diversify_top_rules()
+        #self.diversify_top_rules()
 
         #Update the top rules
         self.update_top_rules()
