@@ -247,8 +247,8 @@ class rule:
     def calc_penalty(self, kind):
         penalty = self.get_average_penalty(kind)
         #Penalty gives us the percent of range. We want small ranges.
-        #So big ranges turn into smaller weights of the fitness. 
-        return 1-penalty
+        #So This returns a bigger number if percent is big, etc. 
+        return penalty
         
 
     def calc_fitness(self, df):
