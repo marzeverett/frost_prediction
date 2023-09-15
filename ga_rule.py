@@ -272,7 +272,7 @@ class rule:
             s_penalty = self.calc_penalty("sequence")
             #Need to think about this better. 
             if s_penalty > 0:
-                self.fitness = self.fitness*-1*(2*self.calc_penalty("sequence"))
+                self.fitness = self.fitness-1*(2*self.calc_penalty("sequence"))
         if self.range_penalty:
             r_penalty = self.calc_penalty("range")
             if r_penalty > 0:
