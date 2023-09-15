@@ -269,9 +269,14 @@ class rule:
         #self.fitness = (2*self.support*(3*(self.num_whole_rule/self.num_consequent)))*(2*self.confidence)*(0.5*self.lift)
         self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))*self.confidence
         if self.sequence_penalty:
-            self.fitness = self.fitness*(2*self.calc_penalty("sequence"))
+            s_penalty = self.calc_penalty("sequence")
+            #Need to think about this better. 
+            if s_penalty > 0:
+                self.fitness = self.fitness*-1*(2*self.calc_penalty("sequence"))
         if self.range_penalty:
-            self.fitness = self.fitness*self.calc_penalty("range")
+            r_penalty = self.calc_penalty("range")
+            if r_penalty > 0:
+                self.fitness = self.fitness-1*(self.calc_penalty("range"))
 
     #Gets the earliest sequence value (higher number), latest sequence value (lower number), and param with earliest sequence number 
     def get_rule_sequence_bounds_and_earliest_param(self):
