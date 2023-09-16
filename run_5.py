@@ -22,7 +22,7 @@ param_dict_1 = {
     "dominance": True,
     "sequence": True,
     "sequence_limit": 20,
-    "sequence_penalty": True
+    "sequence_penalty": True,
     "diversify_top_rules": True
 }
 
