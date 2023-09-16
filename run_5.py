@@ -23,6 +23,7 @@ param_dict_1 = {
     "sequence": True,
     "sequence_limit": 20,
     "sequence_penalty": True
+    "diversify_top_rules": True
 }
 
 npp_named_sites = ['npp_c_cali', 'npp_c_grav', 'npp_c_sand', 'npp_g_basn', 'npp_g_ibpe', 'npp_g_summ', 'npp_m_nort', 'npp_m_rabb', 'npp_m_well', 'npp_p_coll', 'npp_p_smal', 'npp_p_tobo', 'npp_t_east', 'npp_t_tayl', 'npp_t_west']

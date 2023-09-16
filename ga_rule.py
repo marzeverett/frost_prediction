@@ -124,17 +124,25 @@ class rule:
             #If ANY are within the values for this slice, good to go. 
             sub_df = df_slice.eval(query)
             if sub_df.sum() < 1:
+                #If any of the parameters aren't in the slice, it's a no-go.
                 return False
         return True
 
-
-
-    def count_params_fitting_indexes(self, df, total_range, index_list, param_list, earliest):
+    def count_params_fitting_indexes(self, df, total_range, index_list, param_list, earliest, consequent=False):
         num_true = 0
+        #For each index that the initial parameters fit - each "sub_slice" of the df 
         for index_val in index_list:
             try:
-                end_val = index_val + total_range
-                df_slice = df.iloc[index_val:end_val+1, :] 
+                #Get the slice f0r this initial parameter 
+                if consequent:
+                    start_val = index_val - total_range
+                    df_slice = df.iloc[start_val:index_val+1, :]
+                else:
+                    end_val = index_val + total_range
+                    #This DOES NOT WORK for the consequent 
+                    df_slice = df.iloc[index_val:end_val+1, :]
+                #Check to see if the other parameters are somehow also in the slice 
+                 
                 result = self.check_all_in_slice(param_list, df_slice, earliest)
                 if result:
                     num_true += 1
@@ -143,6 +151,17 @@ class rule:
                 #print(f"Couldn't slice this {index_val} {total_range+1}: {e}")
         return num_true
 
+
+
+    def get_full_possible_indexes(self, indexes, total_range):
+        full_indexes = []
+        for index in indexes:
+            index_range_1 = list(range(index, index+total_range))
+            index_range_2 = list(range(index-total_range, index))
+            full_indexes = full_indexes + index_range_1
+            full_indexes = full_indexes + index_range_2
+        full_indexes = [*set(full_indexes)]
+        return full_indexes
 
     #Get the support of the antecedent for a sequence. 
     def calc_antecedent_support_sequence(self, df):
@@ -154,7 +173,7 @@ class rule:
         else:
             total_applicable = len(df.index)
         #If there is only one parameter in the rule, or if somehow only one slice of the sequence is present 
-        if total_range == 0 or len(self.active_parameters) < 2:
+        if total_range == 0:
             #Then its just going to be the normal non-sequence support calc
             self.calc_antecedent_support_non_sequence(df)
             if total_applicable > 0:
@@ -165,18 +184,22 @@ class rule:
             bool_df = df.eval(query)
             indexes = bool_df[bool_df].index
             index_list = indexes.tolist()
+            full_indexes = self.get_full_possible_indexes(index_list, total_range)
             remaining_params = self.active_parameters.copy()
-            remaining_params.remove(earliest_param_name)
-            #Get the count
-            num_true = self.count_params_fitting_indexes(df, total_range, index_list, remaining_params, earliest)
+            #remaining_params.remove(earliest_param_name)
+            # if remaining_params == []:
+            #     print("One parameter rule")
+            #     num_true = len(indexes)
+            #else:
+                #Get the count
+                #num_true = self.count_params_fitting_indexes(df, total_range, index_list, remaining_params, earliest)
+            num_true = self.count_params_fitting_indexes(df, total_range, full_indexes, remaining_params, earliest)
             self.num_antecedent = num_true
             if total_applicable > 0:
                 self.antecedent_support = self.num_antecedent/total_applicable
+                self.total_records_antecedent = total_applicable
             else:
                 self.antecedent_support = 0
-
-
-
 
 
     def calc_antecedent_support_non_sequence(self, df):
@@ -204,10 +227,11 @@ class rule:
         #Might want to make this something that is always calculated 
         total_range = earliest - latest 
         remaining_params = self.active_parameters.copy()
-        num_true  = self.count_params_fitting_indexes(df, total_range, self.consequent_indexes, remaining_params, earliest)
+        num_true = self.count_params_fitting_indexes(df, total_range, self.consequent_indexes.copy(), remaining_params, earliest, consequent=True)
         self.num_whole_rule = num_true
         if total_applicable > 0:
             self.support = self.num_whole_rule/total_applicable
+            self.total_records_all = total_applicable 
         else:
             self.support = 0
 
@@ -260,7 +284,7 @@ class rule:
         #Get the metrics you need for calculations
         self.calc_antecedent_support(df)
         self.calc_overall_support(df)
-        self.calc_antecedent_support(df)
+        #self.calc_antecedent_support(df)
         #We don't need the dataframe for the last one since we have already calculated what we need 
         self.calc_confidence()
         self.calc_lift()
@@ -270,10 +294,10 @@ class rule:
         #ANOTHER CHANGE HERE 
         #Never used this i think?
         #self.fitness = (2*self.support*(3*(self.num_whole_rule/self.num_consequent)))*(2*self.confidence)*(0.5*self.lift)
-        #What we used for ALL 
-        #self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))*self.confidence
-        #7 and on?? 
-        self.fitness = (2*self.support * (3*self.num_whole_rule/self.num_consequent))*(2*self.confidence)
+        #What we used for ALL -- and 5 and 6 now 
+        self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))*self.confidence
+        #ONLY in 5 and 6 right now! 
+        #self.fitness = (2*self.support * (3*self.num_whole_rule/self.num_consequent))*(2*self.confidence)
         
         if self.sequence_penalty:
             s_penalty = self.calc_penalty("sequence")

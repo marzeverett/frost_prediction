@@ -37,6 +37,15 @@ class population:
         self.generations = self.default_parameter_dict["generations"]
         self.tournament_size = self.default_parameter_dict["tournament_size"]
         self.dominance = self.default_parameter_dict["dominance"]
+        if "diversify_top_rules" in list(self.default_parameter_dict.keys()):
+            self.diversify_top_rules = self.default_parameter_dict["diversify_top_rules"]
+        else:
+            self.diversify_top_rules = False
+        if "reseed_from_best" in list(self.default_parameter_dict.keys()):
+            self.reseed_from_best = self.default_parameter_dict["reseed_from_best"]
+        else:
+            self.reseed_from_best = False
+        
         self.mutation_number = math.ceil(self.population_size*(self.mutation_rate/100))
         
         #List of rules 
@@ -276,7 +285,8 @@ class population:
 
         #CHANGE HERE
         #This kills all but the best with the same parameters. Which might be an awful idea. 
-        #self.diversify_top_rules()
+        if self.diversify_top_rules():
+            #self.diversify_top_rules()
 
         #Update the top rules
         self.update_top_rules()
@@ -286,14 +296,14 @@ class population:
         for i in range(0, num_replacements):
             #How will we make the next seed?
             #Magic NUMBER ALERT - CHECK 
-            #CHANGE Here - Don't re-seed with best CHECK if doing another run like 1/2
-            # seed = random.choices(["best", "new"], weights=[10, 90], k=1)[0]
-            # if seed == "best" and len(self.top_rules) > 0:
-            #     new_rule = copy.deepcopy(random.choice(self.top_rules))
-            # else:
-            #     new_rule = ga_rule.rule(self.default_parameter_dict, self.features_dict, self.consequent_dict, self.consequent_support, self.num_consequent, self.consequent_indexes, self.df)
-            
-            new_rule = ga_rule.rule(self.default_parameter_dict, self.features_dict, self.consequent_dict, self.consequent_support, self.num_consequent, self.consequent_indexes, self.df)
+            if self.reseed_from_best:
+                seed = random.choices(["best", "new"], weights=[10, 90], k=1)[0]
+                if seed == "best" and len(self.top_rules) > 0:
+                    new_rule = copy.deepcopy(random.choice(self.top_rules))
+                else:
+                    new_rule = ga_rule.rule(self.default_parameter_dict, self.features_dict, self.consequent_dict, self.consequent_support, self.num_consequent, self.consequent_indexes, self.df)
+            else:
+                new_rule = ga_rule.rule(self.default_parameter_dict, self.features_dict, self.consequent_dict, self.consequent_support, self.num_consequent, self.consequent_indexes, self.df)
             self.rules_pop.append(new_rule)
         #Create the next generation
         self.tournament_selection()
