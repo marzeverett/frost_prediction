@@ -288,26 +288,24 @@ class rule:
         #We don't need the dataframe for the last one since we have already calculated what we need 
         self.calc_confidence()
         self.calc_lift()
-        #This is a dummy for now! 
-        #self.fitness = self.support * self.confidence * self.lift
-        #Also kind of a dummy. Need to re-look at dominance 
-        #ANOTHER CHANGE HERE 
         #Never used this i think?
         #self.fitness = (2*self.support*(3*(self.num_whole_rule/self.num_consequent)))*(2*self.confidence)*(0.5*self.lift)
-        #What we used for ALL -- and 5 and 6 now 
-        self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))*self.confidence
+        #What we used for ALL except 5 and 6  
+        #self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))*self.confidence
         #ONLY in 5 and 6 right now! 
+        self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))+self.confidence
         #self.fitness = (2*self.support * (3*self.num_whole_rule/self.num_consequent))*(2*self.confidence)
         
-        if self.sequence_penalty:
-            s_penalty = self.calc_penalty("sequence")
-            #Need to think about this better. 
-            if s_penalty > 0:
-                self.fitness = self.fitness-1*(2*self.calc_penalty("sequence"))
-        if self.range_penalty:
-            r_penalty = self.calc_penalty("range")
-            if r_penalty > 0:
-                self.fitness = self.fitness-1*(self.calc_penalty("range"))
+        if self.fitness > 0.0:
+            if self.sequence_penalty:
+                s_penalty = self.calc_penalty("sequence")
+                #Need to think about this better. 
+                if s_penalty > 0:
+                    self.fitness = self.fitness-1*(0.2*self.calc_penalty("sequence"))
+            if self.range_penalty:
+                r_penalty = self.calc_penalty("range")
+                if r_penalty > 0:
+                    self.fitness = self.fitness-1*(0.1*self.calc_penalty("range"))
 
     #Gets the earliest sequence value (higher number), latest sequence value (lower number), and param with earliest sequence number 
     def get_rule_sequence_bounds_and_earliest_param(self):
