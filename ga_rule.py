@@ -149,7 +149,8 @@ class rule:
         earliest, latest, earliest_param_name = self.get_rule_sequence_bounds_and_earliest_param()
         total_range = earliest - latest 
         if earliest - latest > 0:
-            total_applicable = math.floor(len(df.index)/(earliest-latest))
+            #total_applicable = math.floor(len(df.index)/(earliest-latest))
+            total_applicable = math.floor(len(df.index)-(earliest-latest))
         else:
             total_applicable = len(df.index)
         #If there is only one parameter in the rule, or if somehow only one slice of the sequence is present 
@@ -196,7 +197,8 @@ class rule:
     def calc_overall_support_sequence(self, df):
         earliest, latest, earliest_param_name = self.get_rule_sequence_bounds_and_earliest_param()
         if earliest - latest > 0:
-            total_applicable = math.floor(len(df.index)/(earliest-latest))
+            #total_applicable = math.floor(len(df.index)/(earliest-latest))
+            total_applicable = math.floor(len(df.index)-(earliest-latest))
         else:
             total_applicable = len(df.index)
         #Might want to make this something that is always calculated 
@@ -266,8 +268,13 @@ class rule:
         #self.fitness = self.support * self.confidence * self.lift
         #Also kind of a dummy. Need to re-look at dominance 
         #ANOTHER CHANGE HERE 
+        #Never used this i think?
         #self.fitness = (2*self.support*(3*(self.num_whole_rule/self.num_consequent)))*(2*self.confidence)*(0.5*self.lift)
-        self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))*self.confidence
+        #What we used for ALL 
+        #self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))*self.confidence
+        #7 and on?? 
+        self.fitness = (2*self.support * (3*self.num_whole_rule/self.num_consequent))*(2*self.confidence)
+        
         if self.sequence_penalty:
             s_penalty = self.calc_penalty("sequence")
             #Need to think about this better. 
