@@ -203,6 +203,9 @@ class parameter:
     def return_seq_bounds(self):
         return self.curr_sequence_lower, self.curr_sequence_upper
 
+    def return_bounds_difference(self):
+        return self.curr_upper_bound - self.curr_lower_bound
+
     #Return bound ranges 
     def return_bound_range(self):
         return self.curr_upper_bound - self.curr_lower_bound

@@ -151,6 +151,16 @@ class rule:
                 #print(f"Couldn't slice this {index_val} {total_range+1}: {e}")
         return num_true
 
+    def get_smallest_range(self):
+        min_distance = None
+        for rule_name in list(self.rule_dict.keys()):
+            bounds_diff = rule_dict[rule_name].return_bounds_difference()
+            if min_distance == None:
+                min_distance = bounds_diff
+            else:
+                if bounds_diff < min_distance:
+                    min_distance = bounds_diff
+        return min_distance
 
 
     def get_full_possible_indexes(self, indexes, total_range):
@@ -184,7 +194,8 @@ class rule:
             bool_df = df.eval(query)
             indexes = bool_df[bool_df].index
             index_list = indexes.tolist()
-            full_indexes = self.get_full_possible_indexes(index_list, total_range)
+            #full_indexes = self.get_full_possible_indexes(index_list, total_range)
+            full_indexes = index_list
             remaining_params = self.active_parameters.copy()
             #remaining_params.remove(earliest_param_name)
             # if remaining_params == []:
@@ -195,6 +206,9 @@ class rule:
                 #num_true = self.count_params_fitting_indexes(df, total_range, index_list, remaining_params, earliest)
             num_true = self.count_params_fitting_indexes(df, total_range, full_indexes, remaining_params, earliest)
             self.num_antecedent = num_true
+            #Change is here - Pseudometric!!!! 
+            if total_range != 0:
+                self.num_antecedent = self.num_antecedent*total_range*2
             if total_applicable > 0:
                 self.antecedent_support = self.num_antecedent/total_applicable
                 self.total_records_antecedent = total_applicable
