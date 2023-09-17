@@ -133,7 +133,7 @@ class population:
 
     
 
-    def diversify_top_rules(self):
+    def curb_diversify_top_rules(self):
         unique_rule_strings = {}
         #Get highest fitness for given parameter set 
         for rule in self.top_rules:
@@ -286,7 +286,7 @@ class population:
         #CHANGE HERE
         #This kills all but the best with the same parameters. Which might be an awful idea. 
         if self.diversify_top_rules:
-            self.diversify_top_rules()
+            self.curb_diversify_top_rules()
 
         #Update the top rules
         self.update_top_rules()
