@@ -133,7 +133,7 @@ class rule:
         #For each index that the initial parameters fit - each "sub_slice" of the df 
         for index_val in index_list:
             try:
-                #Get the slice f0r this initial parameter 
+                #Get the slice for this initial parameter 
                 if consequent:
                     start_val = index_val - total_range
                     df_slice = df.iloc[start_val:index_val+1, :]

@@ -15,9 +15,9 @@ default_parameter_dict = {
     #"add_subtract_percent": 50,
     #"change_percent": 50,
     "max_mutation_tries": 5,
-    "population_size": 20, 
+    "population_size": 50, 
     "top_rules": 3,
-    "generations": 10,
+    "generations": 20,
     "tournament_size": 4,
     "dominance": True,
     "sequence": True,
@@ -29,7 +29,7 @@ default_parameter_dict = {
 #npp_named_sites = ['npp_c_cali', 'npp_c_grav', 'npp_c_sand', 'npp_g_basn', 'npp_g_ibpe', 'npp_g_summ', 'npp_m_nort', 'npp_m_rabb', 'npp_m_well', 'npp_p_coll', 'npp_p_smal', 'npp_p_tobo', 'npp_t_east', 'npp_t_tayl', 'npp_t_west']
 
 phase = "Testing"
-name = "Test_11"
+name = "Test_12"
 #npp_named_sites = ['npp_c_cali', 'npp_c_grav']
 npp_named_sites = ['npp_c_cali']
 
