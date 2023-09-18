@@ -38,6 +38,11 @@ class rule:
             self.init_max_params = default_parameter_dict["initial_rule_limit"]
         else:
             self.init_max_params = math.ceil(0.6*len(self.parameter_list))
+
+        if "sequence_antecedent_heuristic" in list(default_parameter_dict.keys()):
+            self.sequence_antecedent_heuristic = default_parameter_dict["sequence_antecedent_heuristic"]
+        else:
+            self.sequence_antecedent_heuristic = False
         self.consequent_dict = consequent
         self.consequent_support = consequent_support
         self.num_consequent = num_consequent
@@ -142,7 +147,6 @@ class rule:
                     #This DOES NOT WORK for the consequent 
                     df_slice = df.iloc[index_val:end_val+1, :]
                 #Check to see if the other parameters are somehow also in the slice 
-                 
                 result = self.check_all_in_slice(param_list, df_slice, earliest)
                 if result:
                     num_true += 1
@@ -193,8 +197,10 @@ class rule:
             bool_df = df.eval(query)
             indexes = bool_df[bool_df].index
             index_list = indexes.tolist()
-            #full_indexes = self.get_full_possible_indexes(index_list, total_range)
-            full_indexes = index_list
+            if self.sequence_antecedent_heuristic == False:
+                full_indexes = self.get_full_possible_indexes(index_list, total_range)
+            else:
+                full_indexes = index_list
             remaining_params = self.active_parameters.copy()
             #remaining_params.remove(earliest_param_name)
             # if remaining_params == []:

@@ -15,16 +15,17 @@ default_parameter_dict = {
     #"add_subtract_percent": 50,
     #"change_percent": 50,
     "max_mutation_tries": 5,
-    "population_size": 3, 
+    "population_size": 10, 
     "top_rules": 3,
-    "generations": 1,
+    "generations": 10,
     "tournament_size": 2,
     "dominance": True,
     "sequence": True,
     "sequence_limit": 30,
     "sequence_penalty": True,
     "diversity_top_rules": True,
-    "reseed from_best": True
+    "reseed from_best": True,
+    "sequence_antecedent_heuristic": False
 }
 #npp_named_sites = ['npp_c_cali', 'npp_c_grav', 'npp_c_sand', 'npp_g_basn', 'npp_g_ibpe', 'npp_g_summ', 'npp_m_nort', 'npp_m_rabb', 'npp_m_well', 'npp_p_coll', 'npp_p_smal', 'npp_p_tobo', 'npp_t_east', 'npp_t_tayl', 'npp_t_west']
 
