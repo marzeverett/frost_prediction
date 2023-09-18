@@ -200,4 +200,4 @@ key = "frost"
 # test_df = test_df.reset_index()
 # print(len(test_df.index))
 
-ga_predictor.complete_eval_top_rules(filename, key, df, sequence=True)
+#ga_predictor.complete_eval_top_rules(filename, key, df, sequence=True)

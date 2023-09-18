@@ -162,7 +162,6 @@ class rule:
                     min_distance = bounds_diff
         return min_distance
 
-
     def get_full_possible_indexes(self, indexes, total_range):
         full_indexes = []
         for index in indexes:
@@ -208,7 +207,8 @@ class rule:
             self.num_antecedent = num_true
             #Change is here - Pseudometric!!!! 
             if total_range != 0:
-                self.num_antecedent = self.num_antecedent*total_range*2
+                self.num_antecedent = self.num_antecedent*(total_range + total_range+1)
+            #print("Num antecedent", self.num_antecedent)
             if total_applicable > 0:
                 self.antecedent_support = self.num_antecedent/total_applicable
                 self.total_records_antecedent = total_applicable
@@ -243,6 +243,7 @@ class rule:
         remaining_params = self.active_parameters.copy()
         num_true = self.count_params_fitting_indexes(df, total_range, self.consequent_indexes.copy(), remaining_params, earliest, consequent=True)
         self.num_whole_rule = num_true
+        #print("Num whole rule ", self.num_whole_rule)
         if total_applicable > 0:
             self.support = self.num_whole_rule/total_applicable
             self.total_records_all = total_applicable 
@@ -295,12 +296,17 @@ class rule:
         #Build the queries 
         self.build_rule_antecedent_query()
         self.build_consequent_query()
+        #print("Total num consequent", len(self.consequent_indexes))
         #Get the metrics you need for calculations
+        #print("Antecedent Support")
         self.calc_antecedent_support(df)
+        #print("Overall Support")
         self.calc_overall_support(df)
         #self.calc_antecedent_support(df)
         #We don't need the dataframe for the last one since we have already calculated what we need 
+        #print("Confidence")
         self.calc_confidence()
+        #print("Lift")
         self.calc_lift()
         #Never used this i think?
         #self.fitness = (2*self.support*(3*(self.num_whole_rule/self.num_consequent)))*(2*self.confidence)*(0.5*self.lift)
