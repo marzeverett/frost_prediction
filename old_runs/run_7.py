@@ -3,6 +3,7 @@ import run_experiments
 
 
 #Like run three but without range or sequence restriction (but penalty)
+#Also without the diversification of top rules for this one!! 
 param_dict_1 = {
     "mutation_rate": 20,
     "mutation_amount": 20,
@@ -18,12 +19,12 @@ param_dict_1 = {
     "population_size": 150, 
     "top_rules": 10,
     "generations": 100,
-    "tournament_size": 4,
+    "tournament_size": 8,
     "dominance": True,
     "sequence": True,
-    "sequence_limit": 20,
+    "sequence_limit": 12,
     "sequence_penalty": True,
-    "diversify_top_rules": True
+    "diversity_top_rules": False
 }
 
 npp_named_sites = ['npp_c_cali', 'npp_c_grav', 'npp_c_sand', 'npp_g_basn', 'npp_g_ibpe', 'npp_g_summ', 'npp_m_nort', 'npp_m_rabb', 'npp_m_well', 'npp_p_coll', 'npp_p_smal', 'npp_p_tobo', 'npp_t_east', 'npp_t_tayl', 'npp_t_west']
@@ -49,7 +50,7 @@ params_dicts = {
 }
 
 #NAME - {phase_name}_{parameter_index}_{Run}
-phase_name = "Sequence_5"
+phase_name = "Sequence_7"
 key="frost"
 for param_dict_index in list(params_dicts.keys()):
     for run_index in list(runs.keys()):

@@ -4,7 +4,6 @@ import random
 import math 
 import copy 
 import ga_parameter
-import numpy as np 
 
 
 #Not easy but fairly straightforward, at least. 
@@ -16,7 +15,6 @@ import numpy as np
 #This is probably the place where most of the optimizations will need to take place
 #Look at this article for queries: https://saturncloud.io/blog/the-fastest-way-to-perform-complex-search-on-pandas-dataframe/ 
 #https://stackoverflow.com/questions/41125909/find-elements-in-one-list-that-are-not-in-the-other
-#Numpy Help: https://numpy.org/doc/stable/reference/generated/numpy.intersect1d.html 
 
 #######################       RULE CLASS             #########################################
 class rule:
@@ -35,19 +33,7 @@ class rule:
         if "range_penalty" in list(default_parameter_dict.keys()):
             self.range_penalty = default_parameter_dict["range_penalty"]
         else:
-            self.range_penalty = False
-        if "fitness_function_index" in list(default_parameter_dict.keys()):
-            self.fitness_function_index = default_parameter_dict["fitness_function_index"]
-        else:
-            self.fitness_function_index = 0
-        if "sequence_penalty_index" in list(default_parameter_dict.keys()):
-            self.sequence_penalty_index = default_parameter_dict["sequence_penalty_index"]
-        else:
-            self.sequence_penalty_index = 0
-        if "range_penalty_index" in list(default_parameter_dict.keys()):
-            self.range_penalty_index = default_parameter_dict["range_penalty_index"]
-        else:
-            self.range_penalty_index = 0
+            self.sequence_penalty = False
         if "initial_rule_limit" in list(default_parameter_dict.keys()):
             self.init_max_params = default_parameter_dict["initial_rule_limit"]
         else:
@@ -60,7 +46,7 @@ class rule:
         self.consequent_dict = consequent
         self.consequent_support = consequent_support
         self.num_consequent = num_consequent
-        self.consequent_indexes = np.array(consequent_indexes)
+        self.consequent_indexes = consequent_indexes
         self.total_records = len(df.index)
         self.rule_dict = {}
         self.active_parameters = []
@@ -181,65 +167,45 @@ class rule:
         full_indexes = [*set(full_indexes)]
         return full_indexes
 
-    def get_indexes(self, param_name, df):
-        query = self.build_param_specific_query(param_name)
-        bool_df = df.eval(query)
-        indexes = bool_df[bool_df].index
-        index_list = indexes.tolist()
-        return index_list
-
-
-    def build_fulfilment_indexes(self, param_name, param_indexes, len_df):
-        overall_list = []
-        lower, upper = self.rule_dict[param_name].return_seq_bounds()
-        adding_list = list(range(lower, upper+1))
-        fulfilled_indexes = None
-        first = True
-        for add_val in adding_list:
-            raw_indexes = np.array(param_indexes)
-            added_indexes = raw_indexes + add_val
-            if first:
-                fulfilled_indexes = raw_indexes
-                first=False
-            else:
-                fulfilled_indexes = np.concatenate((fulfilled_indexes, raw_indexes), axis=0)
-        final = np.unique(fulfilled_indexes)
-
-        final = final[final < len_df]
-        final = final[final >= 0]
-        return final
-        #np.unique([1, 1, 2, 2, 3, 3])
-        #np.concatenate((a, b), axis=None)
-
-
-    
     #Get the support of the antecedent for a sequence. 
     def calc_antecedent_support_sequence(self, df):
-        final_indexes = None
-        first = True
-        for param_name in list(self.rule_dict.keys()):
-            #Get the indexes where the parameters are between those values
-            param_indexes = self.get_indexes(param_name, df)
-            #Get the indexes that the parameters alone would fulfill as potential consequents
-            fulfilled_indexes = self.build_fulfilment_indexes(param_name, param_indexes, len(df.index))
-            #Return the intersection of these and the existing fulfilled parameters. Must be in all. 
-            if first:
-                final_indexes = fulfilled_indexes
-                first=False
+        earliest, latest, earliest_param_name = self.get_rule_sequence_bounds_and_earliest_param()
+        #CHANGE HERE
+        total_range = (earliest - latest ) + 1
+        if earliest - latest > 0:
+            #total_applicable = math.floor(len(df.index)/(earliest-latest))
+            total_applicable = math.floor(len(df.index)-total_range)
+        else:
+            total_applicable = len(df.index)
+        #If there is only one parameter in the rule, or if somehow only one slice of the sequence is present 
+        if total_range == 1:
+            #Then its just going to be the normal non-sequence support calc
+            self.calc_antecedent_support_non_sequence(df)
+            if total_applicable > 0:
+                self.antecedent_support = self.num_antecedent/total_applicable
+        else:
+            #Find everywhere in the dataframe (each time sequence index) where it occurs
+            query = self.build_param_specific_query(earliest_param_name)
+            bool_df = df.eval(query)
+            indexes = bool_df[bool_df].index
+            index_list = indexes.tolist()
+            if self.sequence_antecedent_heuristic == False:
+                full_indexes = self.get_full_possible_indexes(index_list, total_range)
             else:
-                final_indexes = np.intersect1d(final_indexes, fulfilled_indexes, assume_unique=True)
-            #If it's ever the case the a new list doesn't have something in common with the current one:
-            if final_indexes.size == 0:
-                #Think we're ok here -- 
-                self.num_antecedent = 0
-                break 
-                #numpy.intersect1d(ar1, ar2, assume_unique=False, return_indices=False)
-        self.num_antecedent = final_indexes.size
-        max_lower_bound = self.get_outlier_sequence_bounds("lower", "max")
-        self.antecedent_applicable = len(df.index)-max_lower_bound
-        self.antecedent_support = self.num_antecedent/self.antecedent_applicable
-        self.antecedent_indexes = final_indexes
-        
+                full_indexes = index_list
+            remaining_params = self.active_parameters.copy()
+            num_true = self.count_params_fitting_indexes(df, total_range, full_indexes, remaining_params, earliest)
+            self.num_antecedent = num_true
+            #Change is here - Pseudometric!!!! 
+            #if self.sequence_antecedent_heuristic:
+            self.num_antecedent = self.num_antecedent*(total_range)
+            #print("Num antecedent", self.num_antecedent)
+            if total_applicable > 0:
+                self.antecedent_support = self.num_antecedent/total_applicable
+                self.total_records_antecedent = total_applicable
+            else:
+                self.antecedent_support = 0
+
 
     def calc_antecedent_support_non_sequence(self, df):
         #Takes in itself and the dataframe, and calculates its support 
@@ -257,11 +223,23 @@ class rule:
 
     
     def calc_overall_support_sequence(self, df):
-        same_indexes  = np.intersect1d(self.antecedent_indexes, self.consequent_indexes, assume_unique=True)
-        self.num_whole_rule = same_indexes.size
-        self.whole_rule_indexes = same_indexes
+        earliest, latest, earliest_param_name = self.get_rule_sequence_bounds_and_earliest_param()
+        if earliest - latest > 0:
+            #total_applicable = math.floor(len(df.index)/(earliest-latest))
+            total_applicable = math.floor(len(df.index)-(earliest-latest))
+        else:
+            total_applicable = len(df.index)
+        #Might want to make this something that is always calculated 
+        total_range = earliest - latest 
+        remaining_params = self.active_parameters.copy()
+        num_true = self.count_params_fitting_indexes(df, total_range, self.consequent_indexes.copy(), remaining_params, earliest, consequent=True)
+        self.num_whole_rule = num_true
         #print("Num whole rule ", self.num_whole_rule)
-        self.support = self.num_whole_rule/self.antecedent_applicable
+        if total_applicable > 0:
+            self.support = self.num_whole_rule/total_applicable
+            self.total_records_all = total_applicable 
+        else:
+            self.support = 0
 
     def calc_overall_support_non_sequence(self, df):
         #Assumes you have already built the antecedent and consequent support queries
@@ -297,44 +275,52 @@ class rule:
             divisor += 1
         return penalty/divisor
 
-
-    def run_sequence_penalty(self):
-        if self.sequence_penalty:
-                s_penalty = self.get_average_penalty("sequence")
-                #Need to think about this better. 
-                if s_penalty > 0:
-                    if self.sequence_penalty_index == 0:
-                        self.fitness = self.fitness-(1*(0.1*s_penalty))
-
-    def run_range_penalty(self):
-        if self.range_penalty:
-                r_penalty = self.get_average_penalty("range")
-                if r_penalty > 0:
-                    if self.range_penalty_index == 0:
-                        self.fitness = self.fitness-1*(0.1*r_penalty)
-
-
-    def run_fitness_function(self):
-        index = self.fitness_function_index
-        if index == 0:
-            self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))*self.confidence
-        if index == 1: 
-            self.fitness = (5*self.support * (self.num_whole_rule/self.num_consequent))+self.confidence
-        if index == 1: 
-            self.fitness = (5*self.support+0.5*self.confidence)
-
-        self.run_sequence_penalty()
-        self.run_range_penalty()
+    #This function is a waste of time - just use get average penalty NOTE 
+    #What were we thinking here exactly 
+    def calc_penalty(self, kind):
+        penalty = self.get_average_penalty(kind)
+        #Penalty gives us the percent of range. We want small ranges.
+        #So This returns a bigger number if percent is big, etc. 
+        return penalty
+        
 
     def calc_fitness(self, df):
+        #Build the queries 
         self.build_rule_antecedent_query()
         self.build_consequent_query()
+        #print("Total num consequent", len(self.consequent_indexes))
+        #Get the metrics you need for calculations
+        #print("Antecedent Support")
         self.calc_antecedent_support(df)
+        #print("Overall Support")
         self.calc_overall_support(df)
+        print("Num antecedent", self.num_antecedent)
+        print("Num whole rule", self.num_whole_rule)
+        print("-------------------")
+        #self.calc_antecedent_support(df)
+        #We don't need the dataframe for the last one since we have already calculated what we need 
+        #print("Confidence")
         self.calc_confidence()
+        #print("Lift")
         self.calc_lift()
-        self.run_fitness_function()
-   
+        #Never used this i think?
+        #self.fitness = (2*self.support*(3*(self.num_whole_rule/self.num_consequent)))*(2*self.confidence)*(0.5*self.lift)
+        #What we used for ALL except 5 and 6  
+        #self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))*self.confidence
+        #ONLY in 5 and 6 right now! 
+        self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))+self.confidence
+        #self.fitness = (2*self.support * (3*self.num_whole_rule/self.num_consequent))*(2*self.confidence)
+        
+        if self.fitness > 0.0:
+            if self.sequence_penalty:
+                s_penalty = self.calc_penalty("sequence")
+                #Need to think about this better. 
+                if s_penalty > 0:
+                    self.fitness = self.fitness-1*(0.1*self.calc_penalty("sequence"))
+            if self.range_penalty:
+                r_penalty = self.calc_penalty("range")
+                if r_penalty > 0:
+                    self.fitness = self.fitness-1*(0.1*self.calc_penalty("range"))
 
     #Gets the earliest sequence value (higher number), latest sequence value (lower number), and param with earliest sequence number 
     def get_rule_sequence_bounds_and_earliest_param(self):
@@ -357,30 +343,6 @@ class rule:
             return earliest, latest, earliest_param_name
         else:
             return False, False, False
-
-    #Gets the earliest sequence value (higher number), latest sequence value (lower number), and param with earliest sequence number 
-    def get_outlier_sequence_bounds(self, which, min_max):
-        if self.sequence:
-            curr_bound = None 
-            for item in list(self.rule_dict.keys()):
-                sub_latest, sub_earliest = self.rule_dict[item].return_seq_bounds()
-                if which == "upper":
-                    bound_of_interest = sub_earliest
-                else:
-                    bound_of_interest = sub_latest
-                if curr_bound == None:
-                    curr_bound = bound_of_interest
-                else:
-                    if min_max == "min":
-                        if bound_of_interest < curr_bound:
-                            curr_bound = bound_of_interest
-                    elif min_max == "max":
-                        if bound_of_interest > curr_bound:
-                            curr_bound = bound_of_interest
-            return curr_bound
-        else:
-            return False 
-        
     
     def get_fitness(self):
         return self.fitness
@@ -521,5 +483,3 @@ class rule:
     #I think we need this in order to be able to sort...
     def __lt__(self, other):
          return self.fitness < other.fitness
-
-
