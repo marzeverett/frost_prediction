@@ -1,4 +1,5 @@
 pickled_datasets/*
 frost_csvs/*
+vital_csvs/*
 generated_files/*
 data_analysis/generated_files/*
