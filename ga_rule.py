@@ -249,6 +249,7 @@ class rule:
         for param_name in list(self.rule_dict.keys()):
             #Get the indexes where the parameters are between those values
             param_indexes = self.get_indexes(param_name, df)
+            param_indexes = np.array(param_indexes)
             #Get the indexes that the parameters alone would fulfill as potential consequents
             #Return the intersection of these and the existing fulfilled parameters. Must be in all. 
             if first:
