@@ -120,12 +120,13 @@ params_dicts = {
 }
 
 #NAME - {phase_name}_{parameter_index}_{Run}
-phase_name = "Sequence_Jornada_2"
+phase_name = "Sequence_Jornada_3"
 key="frost"
+all_data=True
 for param_dict_index in list(params_dicts.keys()):
     for run_index in list(runs.keys()):
         name = f'{phase_name}_{param_dict_index}_{run_index}'
-        run_experiments.run_experiments(phase_name, params_dicts[param_dict_index], name, npp_named_sites, key=key, all_data=True)
+        run_experiments.run_experiments(phase_name, params_dicts[param_dict_index], name, npp_named_sites, key=key, all_data=all_data)
         print("Finished run...")
 
 
