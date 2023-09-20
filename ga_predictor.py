@@ -154,10 +154,13 @@ def evaluate_prediction_model(predict_df, key, model_index=0, first_valid_index=
     eval_dict["Accuracy"] = metrics.accuracy_score(true, pred)
     confusion_matrix = metrics.confusion_matrix(true, pred)
     values_array = confusion_matrix.ravel()
-    eval_dict["True_Negatives"] = values_array[0]
-    eval_dict["False_Positives"] = values_array[1] 
-    eval_dict["False_Negatives"] = values_array[2]
-    eval_dict["True_Positives"] = values_array[3]
+    if len(values_array) >1:
+        eval_dict["True_Negatives"] = values_array[0]
+        eval_dict["False_Positives"] = values_array[1] 
+        eval_dict["False_Negatives"] = values_array[2]
+        eval_dict["True_Positives"] = values_array[3]
+    else:
+        print(values_array)
     eval_dict["Precision"] = metrics.precision_score(true, pred, pos_label=1)
     eval_dict["Recall"] = metrics.recall_score(true, pred, pos_label=1)
     eval_dict["F1 Score"] = metrics.f1_score(true, pred, pos_label=1)
