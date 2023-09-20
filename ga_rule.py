@@ -243,10 +243,26 @@ class rule:
 
     def calc_antecedent_support_non_sequence(self, df):
         #Takes in itself and the dataframe, and calculates its support 
-        antecedent_support_query = self.build_rule_antecedent_query()
-        sub_df = df.eval(antecedent_support_query)
-        self.num_antecedent = sub_df.sum()
+        #Get the indexes of the parameters
+        final_indexes = None
+        first = True
+        for param_name in list(self.rule_dict.keys()):
+            #Get the indexes where the parameters are between those values
+            param_indexes = self.get_indexes(param_name, df)
+            #Get the indexes that the parameters alone would fulfill as potential consequents
+            #Return the intersection of these and the existing fulfilled parameters. Must be in all. 
+            if first:
+                final_indexes = param_indexes
+                first=False
+            else:
+                final_indexes = np.intersect1d(final_indexes, param_indexes, assume_unique=True)
+            if final_indexes.size == 0:
+                #Think we're ok here -- 
+                self.num_antecedent = 0
+                break 
+        self.num_antecedent = final_indexes.size
         self.antecedent_support = self.num_antecedent/self.total_records
+        self.antecedent_indexes = final_indexes
 
 
     def calc_antecedent_support(self, df):
@@ -264,10 +280,10 @@ class rule:
         self.support = self.num_whole_rule/self.antecedent_applicable
 
     def calc_overall_support_non_sequence(self, df):
-        #Assumes you have already built the antecedent and consequent support queries
-        overall_support_query =f"{self.antecedent_support_query} & {self.consequent_support_query}"
-        sub_df = df.eval(overall_support_query)
-        self.num_whole_rule = sub_df.sum()
+        same_indexes = np.intersect1d(self.antecedent_indexes, self.consequent_indexes, assume_unique=True)
+        self.num_whole_rule = same_indexes.size
+        self.whole_rule_indexes = same_indexes
+        #print("Num whole rule ", self.num_whole_rule)
         self.support = self.num_whole_rule/self.total_records
 
 
