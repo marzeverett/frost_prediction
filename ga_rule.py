@@ -68,7 +68,6 @@ class rule:
         #CHECK: Magic Number Alert 
         self.max_init_tries = 5
         
-        
         #Make sure we initialize the rule to something actually in the dataset 
         self.antecedent_support = 0
         init_initial = 0
@@ -128,66 +127,12 @@ class rule:
         query = f'{param_name} >= {lower} & {param_name} <= {upper}'
         return query  
 
-    #This is going to have to change for the consequent 
-    def check_all_in_slice(self, param_list, df, start_offset):
-        #For each other param
-        for param_name in param_list:
-            latest, earliest = self.rule_dict[param_name].return_seq_bounds()
-            param_range = earliest - latest
-            start_val = start_offset - earliest
-            end_val = start_val + param_range
-            #Get the slice that this param represents         
-            df_slice = df.iloc[start_val:end_val+1, :]
-            query = self.build_param_specific_query(param_name)
-            #If ANY are within the values for this slice, good to go. 
-            sub_df = df_slice.eval(query)
-            if sub_df.sum() < 1:
-                #If any of the parameters aren't in the slice, it's a no-go.
-                return False
-        return True
-
-    def count_params_fitting_indexes(self, df, total_range, index_list, param_list, earliest, consequent=False):
-        num_true = 0
-        #For each index that the initial parameters fit - each "sub_slice" of the df 
-        for index_val in index_list:
-            try:
-                #Get the slice for this initial parameter 
-                if consequent:
-                    start_val = index_val - total_range
-                    df_slice = df.iloc[start_val:index_val+1, :]
-                else:
-                    end_val = index_val + total_range
-                    #This DOES NOT WORK for the consequent 
-                    df_slice = df.iloc[index_val:end_val+1, :]
-                #Check to see if the other parameters are somehow also in the slice 
-                result = self.check_all_in_slice(param_list, df_slice, earliest)
-                if result:
-                    num_true += 1
-            except Exception as e:
-                pass 
-                #print(f"Couldn't slice this {index_val} {total_range+1}: {e}")
-        return num_true
-
-
-    #Change here - not sure if accurate 
-    def get_full_possible_indexes(self, indexes, total_range):
-        full_indexes = []
-        for index in indexes:
-            #This gives you the index up to the index+total_range-1, which is correct. 
-            index_range_1 = list(range(index, index+total_range))
-            #index_range_2 = list(range(index-total_range, index))
-            full_indexes = full_indexes + index_range_1
-            #full_indexes = full_indexes + index_range_2
-        full_indexes = [*set(full_indexes)]
-        return full_indexes
-
     def get_indexes(self, param_name, df):
         query = self.build_param_specific_query(param_name)
         bool_df = df.eval(query)
         indexes = bool_df[bool_df].index
         index_list = indexes.tolist()
         return index_list
-
 
     def build_fulfilment_indexes(self, param_name, param_indexes, len_df):
         overall_list = []
@@ -199,12 +144,11 @@ class rule:
             raw_indexes = np.array(param_indexes)
             added_indexes = raw_indexes + add_val
             if first:
-                fulfilled_indexes = raw_indexes
+                fulfilled_indexes = added_indexes
                 first=False
             else:
-                fulfilled_indexes = np.concatenate((fulfilled_indexes, raw_indexes), axis=0)
+                fulfilled_indexes = np.concatenate((fulfilled_indexes, added_indexes), axis=0)
         final = np.unique(fulfilled_indexes)
-
         final = final[final < len_df]
         final = final[final >= 0]
         return final
@@ -322,6 +266,9 @@ class rule:
                 if s_penalty > 0:
                     if self.sequence_penalty_index == 0:
                         self.fitness = self.fitness-(1*(0.1*s_penalty))
+                    if self.sequence_penalty_index == 1:
+                        self.fitness = self.fitness-(1*(0.5*s_penalty))
+
 
     def run_range_penalty(self):
         if self.range_penalty:
@@ -341,6 +288,8 @@ class rule:
             self.fitness = (5*self.support+0.5*self.confidence)
         if index == 3:
             self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))*self.confidence*self.lift
+        if index == 4:
+            self.fitness = (5*self.support * (self.num_whole_rule/self.num_consequent))+0.5*self.confidence
 
         self.run_sequence_penalty()
         self.run_range_penalty()

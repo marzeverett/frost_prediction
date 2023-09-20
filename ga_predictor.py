@@ -4,6 +4,7 @@ import random
 import math 
 import copy 
 import os 
+import numpy as np 
 
 from sklearn import metrics 
 
@@ -20,6 +21,73 @@ def load_rules(filename):
     #print(json.dumps(rules_list, indent=4))
 
 
+
+def get_outlier_sequence_bounds(which, min_max, rule):
+        curr_bound = None 
+        parameters_dict = rule["parameters"]
+        for item in list(rule["parameters"].keys()):
+            sub_latest = parameters_dict[item]["seq_lower_bound"]
+            sub_earliest = parameters_dict[item]["seq_upper_bound"]
+            if which == "upper":
+                bound_of_interest = sub_earliest
+            else:
+                bound_of_interest = sub_latest
+            if curr_bound == None:
+                curr_bound = bound_of_interest
+            else:
+                if min_max == "min":
+                    if bound_of_interest < curr_bound:
+                        curr_bound = bound_of_interest
+                elif min_max == "max":
+                    if bound_of_interest > curr_bound:
+                        curr_bound = bound_of_interest
+        return curr_bound
+
+
+def build_param_specific_query(param_name, rule):
+    parameters_dict = rule["parameters"]
+    lower = parameters_dict[param_name]["lower_bound"]
+    upper = parameters_dict[param_name]["upper_bound"]
+    query_string = f'{param_name} >= {lower} & {param_name} <= {upper}'
+    return query_string
+
+
+def get_indexes(param_name, rule, df):
+    query = build_param_specific_query(param_name, rule)
+    #print(query)
+    bool_df = df.eval(query)
+    indexes = bool_df[bool_df].index
+    index_list = indexes.tolist()
+    return index_list
+
+def build_fulfilment_indexes(param_name, param_indexes, rule, len_df):
+        overall_list = []
+        parameters_dict = rule["parameters"]
+        lower = parameters_dict[param_name]["seq_lower_bound"]
+        upper = parameters_dict[param_name]["seq_upper_bound"]
+        adding_list = list(range(lower, upper+1))
+        #print("Adding List")
+        #print(adding_list)
+        fulfilled_indexes = None
+        #print("Raw Indexes")
+        #print(param_indexes)
+        first = True
+        for add_val in adding_list:
+            raw_indexes = np.array(param_indexes)
+            added_indexes = raw_indexes + add_val
+            if first:
+                fulfilled_indexes = added_indexes
+                first=False
+            else:
+                fulfilled_indexes = np.concatenate((fulfilled_indexes, added_indexes), axis=0)
+        final = np.unique(fulfilled_indexes)
+
+        final = final[final < len_df]
+        final = final[final >= 0]
+        #print("Final Fulfulled")
+        #print(final)
+        return final
+
 def build_rule_prediction_query(rule):
     parameters_dict = rule["parameters"]
     query_string = ''
@@ -30,94 +98,35 @@ def build_rule_prediction_query(rule):
         if not first:
             query_string = query_string + ' & '
         query_string = query_string + f'{param} >= {lower} & {param} <= {upper}'
+        #print(query_string)
         first = 0
     return query_string
 
 
-#Build the query for a specific parameter 
-def build_specific_param_query(param_name, param):
-    lower = param["lower_bound"]
-    upper = param["upper_bound"]
-    query_string = f'{param_name} >= {lower} & {param_name} <= {upper}'
-    return query_string
-
-#Get rule sequence bounds and earliest parameter name 
-def get_rule_sequence_bounds_and_earliest(rule):
-    parameters_dict = rule["parameters"]
-    bounds = []
-    earliest = None
-    latest = None
-    earliest_param_name = None 
-    for param in list(parameters_dict.keys()):
-        sub_latest = parameters_dict[param]["seq_lower_bound"]
-        sub_earliest = parameters_dict[param]["seq_upper_bound"]
-        if earliest == None:
-            earliest = sub_earliest
-            latest = sub_latest
-            earliest_param_name = param
-        else:
-            if sub_earliest > earliest:
-                earliest = sub_earliest
-                earliest_param_name = param
-            if sub_latest < latest:
-                latest = sub_latest
-    return earliest, latest, earliest_param_name
-
-
-def count_parameter_matches(rule, sub_df, earliest):
-    parameters_dict = rule["parameters"]
-    return_val = True
-    for param in list(parameters_dict.keys()): 
-        sub_latest = parameters_dict[param]["seq_lower_bound"]
-        sub_earliest = parameters_dict[param]["seq_upper_bound"]
-        total_range = sub_earliest - sub_latest
-        start_val = earliest - sub_earliest
-        end_val = start_val + total_range
-        #Get the appropriate slice and evaluate 
-        df_slice = sub_df.iloc[start_val:end_val+1]
-        query = build_specific_param_query(param, parameters_dict[param])
-        bool_df = sub_df.eval(query)
-        if bool_df.sum() < 1:
-            return False
-    return True
-
-        
-#Takes in a sequence rules, a dataframe (to predict on)
-#Look at this for evaluations when it comes to ensemble rules as well. 
-def get_sequence_predictions(rule, test_df):
-    predict_df = test_df.copy()
-    predict_df = predict_df.assign(predictions=0)
-    #You'll have to get the outer bounds for the rule again
-    earliest, latest, earliest_param_name = get_rule_sequence_bounds_and_earliest(rule)
-    #Get each row 
-    total_range = earliest - latest 
-    #Have to think about how this is going to work when it comes to evaluations
-    start_val = 0 
-    end_val = start_val + total_range
-    first_valid_index = end_val
-    counter = 0
-    while end_val < len(test_df.index):
-        counter += 1
-        #Slice the dataframe: 
-        #iloc is exclusive on the end val 
-        sub_df = test_df.iloc[start_val:end_val+1]
-        #See if all the parameters match up 
-        result = count_parameter_matches(rule, sub_df, earliest)
-        if result == True:
-            #Note sure this is the correct syntax 
-            #predict_df.loc[end_val, "predictions"] = 1
-            predict_df.at[end_val, "predictions"] = 1
-        start_val += 1
-        end_val += 1
-    return predict_df, first_valid_index
-
 #Takes in a rule, a dataframe (to predict on), and returns predictions.
 def get_predictions_from_rule(rule, test_df, sequence=False):
     if sequence:
-        predict_df, first_valid_index = get_sequence_predictions(rule, test_df)
-        #Fill any NaN with 0  
+        final_indexes = None
+        first = True
+        for param_name in list(rule["parameters"].keys()):
+            #Get the indexes where the parameters are between those values
+            param_indexes = get_indexes(param_name, rule, test_df)
+            #Get the indexes that the parameters alone would fulfill as potential consequents
+            fulfilled_indexes = build_fulfilment_indexes(param_name, param_indexes, rule, len(test_df.index))
+            #Return the intersection of these and the existing fulfilled parameters. Must be in all. 
+            if first:
+                final_indexes = fulfilled_indexes
+                first=False
+            else:
+                final_indexes = np.intersect1d(final_indexes, fulfilled_indexes, assume_unique=True)
+            #If it's ever the case the a new list doesn't have something in common with the current one:
+            if final_indexes.size == 0:
+                break 
+        predict_df = test_df.assign(predictions=0)
+        for index in final_indexes:
+            predict_df.at[index, "predictions"] = 1
         predict_df.fillna(0, inplace=True)
-        predict_df["predictions"] = predict_df["predictions"].astype(int)
+        first_valid_index = get_outlier_sequence_bounds("lower", "max", rule)
     else:
         query = build_rule_prediction_query(rule)
         predict_df = test_df.assign(predictions=test_df.eval(query))
@@ -133,6 +142,7 @@ def evaluate_prediction_model(predict_df, key, model_index=0, first_valid_index=
     #predict_df.to_csv("Testing.csv")
     eval_dict = {}
     eval_dict["Rule Index"] = model_index
+    #print(first_valid_index)
     if first_valid_index:
         eval_df = predict_df.iloc[first_valid_index:]
     else:
@@ -151,7 +161,6 @@ def evaluate_prediction_model(predict_df, key, model_index=0, first_valid_index=
     eval_dict["Precision"] = metrics.precision_score(true, pred, pos_label=1)
     eval_dict["Recall"] = metrics.recall_score(true, pred, pos_label=1)
     eval_dict["F1 Score"] = metrics.f1_score(true, pred, pos_label=1)
-
     return eval_dict
 
 #This is a bit screwed up for average predictions 
@@ -241,8 +250,6 @@ def complete_eval_top_rules(filepath_start, key, df, sequence=False):
     eval_df = pd.DataFrame(eval_dict_list)
     save_name = f"{filepath_start}rule_predictor_evaluation.csv"
     eval_df.to_csv(save_name)
-
-
 
 #print(eval_dict)
 #complete_eval_top_rules("generated_files/None/", "frost")

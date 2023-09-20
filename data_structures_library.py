@@ -201,3 +201,44 @@ key = "frost"
 # print(len(test_df.index))
 
 #ga_predictor.complete_eval_top_rules(filename, key, df, sequence=True)
+
+
+# #Merge the dataframes together, prefixing columns with the dataset they came from 
+# def create_merged_df(specific_site, sites, parameter_dict, key):
+#     columns_list = []
+#     default_features_list = return_default_list_features_dict()
+#     merge_index = parameter_dict["index_key"]
+#     features_to_use = list(default_features_list.keys())
+#     full_df = pd.DataFrame()
+#     for site in sites:
+#         df_path = f"frost_csvs/{site}.csv"
+#         df = pd.read_csv(df_path)
+#         if site == specific_site:
+#             keep_column = df[key]
+        
+#         initial_cols = list(df.columns)
+#         features_to_use = list(set(features_to_use) & set(initial_cols))
+
+#         prefix_df = df[features_to_use]
+#         prefix_df = prefix_df.add_prefix(site)
+#         if site == specific_site:
+#             keep_column = df[key]
+#             prefix_df[key]=keep_column
+#         index_col = df[merge_index]
+#         prefix_df[merge_index] = index_col
+#         #Add these to the columns we are using
+#         columns_list = columns_list + (list(prefix_df.columns))
+#         if full_df.empty:
+#             full_df = prefix_df
+#         else:
+#             full_df = pd.merge(full_df, prefix_df, on=merge_index)
+#     list_features_dict = create_feature_dict(columns_list, key, merge_index)
+#     return full_df, list_features_dict
+   
+
+#     num_rows = len(df.index)
+#     #0.1 - 10 percent training set - kind of a magic number 
+#     split_index = num_rows - math.ceil(num_rows*0.2)
+#     train_df = df.iloc[:split_index, :]
+#     test_df = df.iloc[split_index:, :]
+#     test_df = test_df.reset_index()

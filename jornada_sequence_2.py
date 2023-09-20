@@ -13,19 +13,21 @@ param_dict_1 = {
     "max_mutation_tries": 5,
     "population_size": 150, 
     "top_rules": 10,
+    #CHANGE HERE
     "generations": 150,
     "tournament_size": 4,
     "dominance": True,
     "sequence": True,
-    "sequence_limit": 20,
+    "sequence_limit": 12,
     "sequence_penalty": True,
     "diversify_top_rules": True,
     "reseed_from_best": True,
     "sequence_antecedent_heuristic": False,
-    "fitness_function_index": 1,
-    "sequence_penalty_index": 0,
+    "fitness_function_index": 4,
+    "sequence_penalty_index": 1,
     "range_penalty_index": 0
 }
+
 
 param_dict_2 = {
     "mutation_rate": 20,
@@ -39,17 +41,18 @@ param_dict_2 = {
     "max_mutation_tries": 5,
     "population_size": 150, 
     "top_rules": 10,
+    #CHANGE HERE
     "generations": 150,
     "tournament_size": 4,
     "dominance": True,
     "sequence": True,
-    "sequence_limit": 20,
+    "sequence_limit": 12,
     "sequence_penalty": True,
     "diversify_top_rules": True,
     "reseed_from_best": True,
     "sequence_antecedent_heuristic": False,
     "fitness_function_index": 2,
-    "sequence_penalty_index": 0,
+    "sequence_penalty_index": 1,
     "range_penalty_index": 0
 }
 
@@ -66,19 +69,21 @@ param_dict_3 = {
     "max_mutation_tries": 5,
     "population_size": 200, 
     "top_rules": 10,
+    #CHANGE HERE
     "generations": 200,
     "tournament_size": 4,
     "dominance": True,
     "sequence": True,
-    "sequence_limit": 20,
+    "sequence_limit": 12,
     "sequence_penalty": True,
     "diversify_top_rules": True,
-    "reseed_from_best": False,
+    "reseed_from_best": True,
     "sequence_antecedent_heuristic": False,
-    "fitness_function_index": 1,
-    "sequence_penalty_index": 0,
+    "fitness_function_index": 4,
+    "sequence_penalty_index": 1,
     "range_penalty_index": 0
 }
+
 
 param_dict_4 = {
     "mutation_rate": 20,
@@ -92,17 +97,18 @@ param_dict_4 = {
     "max_mutation_tries": 5,
     "population_size": 200, 
     "top_rules": 10,
+    #CHANGE HERE
     "generations": 200,
     "tournament_size": 4,
     "dominance": True,
     "sequence": True,
-    "sequence_limit": 20,
+    "sequence_limit": 12,
     "sequence_penalty": True,
     "diversify_top_rules": True,
-    "reseed_from_best": False,
+    "reseed_from_best": True,
     "sequence_antecedent_heuristic": False,
     "fitness_function_index": 2,
-    "sequence_penalty_index": 0,
+    "sequence_penalty_index": 1,
     "range_penalty_index": 0
 }
 
@@ -118,17 +124,16 @@ params_dicts = {
     "3": param_dict_3,
     "4": param_dict_4
 }
-
 #NAME - {phase_name}_{parameter_index}_{Run}
 phase_name = "Sequence_Jornada_2"
 key="frost"
+sequence=True
 all_data=False
 for param_dict_index in list(params_dicts.keys()):
     for run_index in list(runs.keys()):
         name = f'{phase_name}_{param_dict_index}_{run_index}'
-        run_experiments.run_experiments(phase_name, params_dicts[param_dict_index], name, npp_named_sites, key=key, all_data=all_data)
+        run_experiments.run_experiments(phase_name, params_dicts[param_dict_index], name, npp_named_sites, key=key, all_data=all_data, sequence=True)
         print("Finished run...")
-
 
 #Same as run 2, but with diversity measures (non re-seeding with best, and 
 #diversifying the top rules.)

@@ -131,9 +131,10 @@ params_dicts = {
 #NAME - {phase_name}_{parameter_index}_{Run}
 phase_name = "Vital_Sequence_1"
 key="gluc_risk"
-for case in cases:
-    for param_dict_index in list(params_dicts.keys()):
-        for run_index in list(runs.keys()):
+
+for param_dict_index in list(params_dicts.keys()):
+    for run_index in list(runs.keys()):
+        for case in cases:
             name = f'{phase_name}_{param_dict_index}_{run_index}_{case}'
             sequence_val = params_dicts[param_dict_index]["sequence"]
             vital_run_experiments.run_experiments(phase_name, params_dicts[param_dict_index], name, case, key=key, sequence=sequence_val)
