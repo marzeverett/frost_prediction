@@ -21,7 +21,7 @@ default_parameter_dict = {
     "sequence": True,
     "sequence_limit": 12,
     "sequence_penalty": False,
-    "diversity_top_rules": True,
+    "diversify_top_rules": True,
     "reseed_from_best": True,
     "sequence_antecedent_heuristic": True,
     "fitness_function_index": 0,
