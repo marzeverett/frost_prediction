@@ -322,7 +322,8 @@ class rule:
             self.fitness = (5*self.support * (self.num_whole_rule/self.num_consequent))+self.confidence
         if index == 2: 
             self.fitness = (5*self.support+0.5*self.confidence)
-        #if index
+        if index == 3:
+            self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))*self.confidence*self.lift
 
         self.run_sequence_penalty()
         self.run_range_penalty()
