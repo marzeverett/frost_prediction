@@ -1,0 +1,2 @@
+,best_index,param_index,run,f1,accuracy,false_negatives,average_f1
+0,['0'],2,1,0.9919354838709676,[0.9952267303102624],[2],0.8197649045986841

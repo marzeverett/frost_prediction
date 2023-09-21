@@ -155,10 +155,7 @@ class rule:
         #np.unique([1, 1, 2, 2, 3, 3])
         #np.concatenate((a, b), axis=None)
 
-
-    
-    #Get the support of the antecedent for a sequence. 
-    def calc_antecedent_support_sequence(self, df):
+    def get_antecedent_indexes(self, df):
         final_indexes = None
         first = True
         for param_name in list(self.rule_dict.keys()):
@@ -178,6 +175,12 @@ class rule:
                 self.num_antecedent = 0
                 break 
                 #numpy.intersect1d(ar1, ar2, assume_unique=False, return_indices=False)
+        return final_indexes
+
+    
+    #Get the support of the antecedent for a sequence. 
+    def calc_antecedent_support_sequence(self, df):
+        final_indexes = self.get_antecedent_indexes(df)
         self.num_antecedent = final_indexes.size
         max_lower_bound = self.get_outlier_sequence_bounds("lower", "max")
         self.antecedent_applicable = len(df.index)-max_lower_bound
