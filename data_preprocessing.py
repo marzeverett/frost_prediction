@@ -54,10 +54,10 @@ def make_shifted_csvs():
     for name in npp_named_sites:
         path = f"frost_csvs/old/{name}.csv"
         df = pd.read_csv(path)
-        df["frost"].shift(-1)
+        df["frost"] = df["frost"].shift(-1)
         df = df[df["frost"].notna()]
         save_name = f"frost_csvs/{name}.csv"
         df.to_csv(save_name)
 
-#make_shifted_csvs()
+make_shifted_csvs()
 
