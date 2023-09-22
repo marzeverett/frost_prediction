@@ -75,9 +75,13 @@ def best_per_site(file_start, phase, params, runs, sites):
             whole_avg_list = []
             for param in params:
                 param_avg = []
+                param_best = []
                 param_avg_name = f"{param}_avg_f1"
+                param_best_name = f"{param}_best_f1"
                 if param_avg_name not in list(agg_dict.keys()):
-                    agg_dict[f"{param}_avg_f1"] = []
+                    agg_dict[param_avg_name] = []
+                if param_best_name not in list(agg_dict.keys()):
+                    agg_dict[param_best_name] = []
                 ##For each run, load in the performance csv
                 for run in runs:
                     df = pd.read_csv(f"{file_start}{phase}/{phase}_{param}_{run}_{site}/rule_predictor_evaluation.csv")
@@ -100,6 +104,7 @@ def best_per_site(file_start, phase, params, runs, sites):
                             best_param = param
                             best_run = run 
                 agg_dict[param_avg_name].append(sum(param_avg)/len(param_avg))
+                agg_dict[param_best_name].append(max(param_best))
             
             save_start = f"{phase}_analysis/"
             if not os.path.exists(save_start):
@@ -126,9 +131,10 @@ def best_per_site(file_start, phase, params, runs, sites):
 rules_indexes = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 ensemble_indexes = ["ensemble_avg", "ensemble_or", "ensemble_uniq_avg", "ensemble_uniq_or"]
 file_start = "generated_files/"
-#phase_name = "Initial_2"
+#phase_name = "Initial_6"
 phase_name = "Sequence_Jornada_3"
 param_indexes = [1, 2, 3, 4]
+#param_indexes = [1]
 #param_indexes = [1]
 run_indexes = [1, 2, 3]
 #run_indexes = [1]
