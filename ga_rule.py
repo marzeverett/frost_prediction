@@ -271,6 +271,14 @@ class rule:
                         self.fitness = self.fitness-(1*(0.1*s_penalty))
                     if self.sequence_penalty_index == 1:
                         self.fitness = self.fitness-(1*(0.5*s_penalty))
+                    if self.sequence_penalty_index == 2:
+                        earliest, latest, earliest_param_name = self.get_rule_sequence_bounds_and_earliest_param()
+                        #Gives a penalty if the function looking too far back at the end. 
+                        self.fitness = self.fitness -(1*(0.5*s_penalty) + (0.8*(earliest/self.sequence_limit)))
+                    if self.sequence_penalty_index == 3:
+                        earliest, latest, earliest_param_name = self.get_rule_sequence_bounds_and_earliest_param()
+                        #Gives a penalty if the function looking too far back at the beginning. 
+                        self.fitness = self.fitness -(1*(0.5*s_penalty) + (0.8*(latest/self.sequence_limit)))
 
 
     def run_range_penalty(self):

@@ -59,5 +59,5 @@ def make_shifted_csvs():
         save_name = f"frost_csvs/{name}.csv"
         df.to_csv(save_name)
 
-make_shifted_csvs()
+#make_shifted_csvs()
 
