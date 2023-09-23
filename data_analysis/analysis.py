@@ -55,6 +55,18 @@ def return_aggregate_dict():
     }
     return aggregate_dict.copy()
 
+
+def load_rules_or_rule(filestart, phase, site, param, run, indexes):
+    keep_rules_list = []
+    filename = f"{file_start}{phase}/{phase}_{param}_{run}_{site}/top_rules.json"
+    with open(filename) as f:
+        rules_list = json.load(f)
+    for index in indexes:
+        keep_rules_list.append(rules_list[int(index)])
+    return keep_rules_list
+
+
+
 check_slices = ["rule_wise", "ensemble_wise"]
 def best_per_site(file_start, phase, params, runs, sites):
     #Here we'll want to separate single rules from ensembles. 
@@ -65,6 +77,7 @@ def best_per_site(file_start, phase, params, runs, sites):
         else:
             check_index = ensemble_indexes
         agg_dict = return_aggregate_dict()
+        site_rules_dict = {}
         for site in sites:
             best_dict = return_best_dict()
             #For each parameter index
@@ -115,15 +128,25 @@ def best_per_site(file_start, phase, params, runs, sites):
             agg_dict["metric"].append(max_f1_rules)
             agg_dict["param_index"].append(best_param)
             agg_dict["run_index"].append(best_run)
-            agg_dict["indexes"].append(max_row_rules["Rule Index"].tolist())
+            best_indexes = max_row_rules["Rule Index"].tolist()
+            agg_dict["indexes"].append(best_indexes)
             agg_dict["accuracies"].append(max_row_rules["Accuracy"].tolist())
             agg_dict["false_negatives"].append(max_row_rules["False_Negatives"].tolist())
             agg_dict["average_f1"].append(sum(whole_avg_list)/len(whole_avg_list))
+            #print(type(best_indexes))
+            if slice_wise == "rule_wise":
+                site_keep_rules = load_rules_or_rule(file_start, phase, site, best_param, best_run, best_indexes)
+                site_rules_dict[site] = site_keep_rules
         
         save_agg_name = f'{phase}_analysis/{slice_wise}_aggregate_best.csv'
         save_agg_df = pd.DataFrame(agg_dict)
         save_agg_df.to_csv(save_agg_name)
         #print(json.dumps(agg_dict, indent=4))
+        if slice_wise == "rule_wise":
+            rules_save = json.dumps(site_rules_dict, indent=4)
+            save_string = f'{phase}_analysis/{slice_wise}_overall_top_rules.json'
+            with open(save_string, "w") as f:
+                f.write(rules_save)
 
 
 
@@ -133,7 +156,7 @@ rules_indexes = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 ensemble_indexes = ["ensemble_avg", "ensemble_or", "ensemble_uniq_avg", "ensemble_uniq_or"]
 file_start = "generated_files/"
 #phase_name = "Initial_6"
-phase_name = "Initial_B"
+phase_name = "Sequence_B"
 param_indexes = [1, 2, 3, 4]
 #param_indexes = [1]
 #param_indexes = [1]
