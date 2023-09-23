@@ -92,6 +92,7 @@ def best_per_site(file_start, phase, params, runs, sites):
                     rules_max = rules_df["F1 Score"].max()
                     whole_avg_list.append(rules_max) 
                     param_avg.append(rules_max)
+                    param_best.append(rules_max)
                     if max_f1_rules == None:
                         max_f1_rules = rules_max
                         max_row_rules = rules_df
@@ -132,7 +133,7 @@ rules_indexes = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 ensemble_indexes = ["ensemble_avg", "ensemble_or", "ensemble_uniq_avg", "ensemble_uniq_or"]
 file_start = "generated_files/"
 #phase_name = "Initial_6"
-phase_name = "Sequence_Jornada_3"
+phase_name = "Initial_B"
 param_indexes = [1, 2, 3, 4]
 #param_indexes = [1]
 #param_indexes = [1]
