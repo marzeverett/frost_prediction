@@ -44,12 +44,11 @@ class rule:
             self.sequence_penalty_index = default_parameter_dict["sequence_penalty_index"]
         else:
             self.sequence_penalty_index = 0
-
         if "sequence_limit" in list(default_parameter_dict.keys()):
             self.sequence_limit = default_parameter_dict["sequence_limit"]
         else:
             self.sequence_limit = False
-            
+
         if "range_penalty_index" in list(default_parameter_dict.keys()):
             self.range_penalty_index = default_parameter_dict["range_penalty_index"]
         else:
@@ -307,6 +306,8 @@ class rule:
             self.fitness = (2*self.support * (self.num_whole_rule/self.num_consequent))*self.confidence*self.lift
         if index == 4:
             self.fitness = (5*self.support * (self.num_whole_rule/self.num_consequent))+0.5*self.confidence
+        if index == 5: 
+            self.fitness = (5*self.support+0.5*self.confidence+0.1*self.lift)
 
         self.run_sequence_penalty()
         self.run_range_penalty()
