@@ -148,12 +148,24 @@ def run_experiments(phase_name, default_parameter_dict, name, case, key=None, al
     if key == None:
         key = return_default_key()
     consequent_dict = return_default_consequent_dict()
+    consequent_dict["name"] = key
     full_name = name
     list_features_dict = create_feature_dict(datastream_fields, key, "Time")
-    df = get_df(case)
-    train_df, test_df = split_training_test(df)
-    test_df.reset_index()
+
+    if df_list:
+        train_df = []
+        test_df = []
+        for df_name in case:
+            df = get_df(df_name)
+            sub_train_df, sub_test_df = split_training_test(df)
+            train_df.append(sub_train_df)
+            test_df.append(sub_test_df)
+    else:
+        df = get_df(case)
+        train_df, test_df = split_training_test(df)
+        test_df.reset_index()
     #Run the experiment
+    #CHANGE HERE! 
     pop = ga_population.population(default_dict, consequent_dict, list_features_dict, key, train_df)
     pop.run_experiment(name=full_name)
     #Going to have to change that 

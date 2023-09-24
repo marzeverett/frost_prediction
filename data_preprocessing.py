@@ -61,3 +61,18 @@ def make_shifted_csvs():
 
 #make_shifted_csvs()
 
+def make_shifted_csvs_vital():
+    cases = [4481, 3719, 1292, 2327, 5018, 6009, 1820, 2332, 4255, 1191, 1959, 553, 3631, 2738, 818, 1590, 55, 4283, 5693, 5442, 3524, 4684, 5837, 1231, 6227, 985, 3930, 2267, 4573, 5983, 2272, 6246, 5607, 1900, 3694, 1785, 1018, 251]
+    for case in cases:
+        print(case)
+        path = f"vital_csvs/Old/{case}_resampled.csv"
+        df = pd.read_csv(path)
+        params_list = ["emop", "dis_mortality_risk", "gluc_risk"]
+        for item in params_list:
+            if item in list(df.columns):
+                df[item] = df[item].shift(-1)
+                df = df[df[item].notna()]
+        save_name = f"vital_csvs/{case}_resampled.csv"
+        df.to_csv(save_name)
+
+#make_shifted_csvs_vital()

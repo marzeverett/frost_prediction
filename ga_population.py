@@ -6,6 +6,7 @@ import copy
 #from copy import deepcopy
 import ga_rule
 import os 
+import numpy as np 
 #d = deepcopy
 #https://stackoverflow.com/questions/5326112/how-to-round-each-item-in-a-list-of-floats-to-2-decimal-places 
 
@@ -22,11 +23,12 @@ class population:
         #Magic number for now 
         self.round_num = 2
         self.df = df 
+        self.df_columns = self.get_df_columns(df)
         self.default_parameter_dict = default_parameter_dict.copy()
         self.consequent_dict = consequent_dict.copy()
         self.key = key 
         for item in list(feature_dict.keys()):
-            if item not in list(self.df.columns):
+            if item not in list(self.df_columns):
                 feature_dict.pop(item) 
         self.features_dict = self.calc_parameters(feature_dict, self.default_parameter_dict, self.df, self.key)
          
@@ -56,7 +58,17 @@ class population:
         self.dominance_dict = {}
         self.dominance_fitness_dict = {}
         
-    
+    def get_df_columns(self, df):
+        if isinstance(df, list):
+            cols = []
+            for sub_df in df:
+                cols = cols + list(sub_df.columns)
+            columns = [*set(cols)]
+        else:
+            columns = list(df.columns)
+        return columns 
+
+
     def init_rules_pop(self):
         rules_pop = []
         for i in range(0, self.population_size):
@@ -70,69 +82,81 @@ class population:
         lower_bound = consequent_dict['lower_bound']
         upper_bound = consequent_dict['upper_bound']
         query = f'{param_name} >= {lower_bound} & {param_name} <= {upper_bound}'
-        sub_df = df.eval(query)
-        num_consequent = sub_df.sum()
-        consequent_support = num_consequent/len(df.index)
-        indexes = sub_df[sub_df].index
-        index_list = indexes.tolist()
+
+        if isinstance(df, list):
+            num_consequent = 0
+            index_list = []
+            df_possible = 0
+            for actual_df in df:
+                sub_df = actual_df.eval(query)
+                num_consequent += sub_df.sum()
+                df_possible += len(actual_df.index)
+                indexes = sub_df[sub_df].index
+                index_list.append(np.array(indexes.tolist()))
+        else:
+            sub_df = df.eval(query)
+            num_consequent = sub_df.sum()
+            df_possible = len(df.index)
+            indexes = sub_df[sub_df].index
+            index_list = np.array(indexes.tolist())
+
+        consequent_support = num_consequent/df_possible
         return consequent_support, num_consequent, index_list
+
+
+    def default_features(self, param_name, feature, default_parameter_dict, defaults_list):
+        for item in defaults_list:
+            if item not in list(feature.keys()):
+                if item == "name":
+                    feature["name"] = param_name
+                else:
+                    if item in list(default_parameter_dict.keys()):
+                        feature[item] = default_parameter_dict[item]
+                    else:
+                        feature[item] = False
+        if feature["sequence"] == False:
+            feature["sequence_limit"] = False
+            feature["sequence_penalty"] = False
+        return feature 
+
+
+    def make_df_list(self, df_list, name):
+        final_list = []
+        for sub_df in df_list:
+            if name in sub_df.columns:
+                final_list = final_list + sub_df[name].values.tolist()
+        return final_list
+
+
+    def calculated_params(self, feature, df):
+        if isinstance(df, list):
+            df_list = self.make_df_list(df, feature["name"])
+        else:
+            df_list = df[feature["name"]].values.tolist()
+        #Get max and min value for feature if they were not provided
+        if "lower_bound" not in list(feature.keys()):
+                feature["lower_bound"] = min(df_list)
+        if "upper_bound" not in list(feature.keys()):
+                feature["upper_bound"] = max(df_list)  
+        #Mean and Stdev 
+        if feature["type"] == "continuous" or feature["type"] == "nominal":
+            feature["mean"] = np.mean(df_list)
+            feature["stdev"] = np.std(df_list)
+        return feature
 
 
     def calc_parameters(self, feature_dict, default_parameter_dict, df, key):
         #For each 
+        defaults_list = ["name", "mutation_amount", "range_restriction", "range_penalty", "max_mutation_tries", "sequence", "sequence_limit", "sequence_penalty"]
         for item in list(feature_dict.keys()):
             feature = feature_dict[item]
             #Load in defaults that aren't already present 
-            if "name" not in list(feature.keys()):
-                feature["name"] = item
-            if "mutation_amount" not in list(feature.keys()):
-                feature["mutation_amount"] = default_parameter_dict["mutation_amount"]
-            if "range_restriction" not in list(feature.keys()):
-                if "range_restriction" not in list(default_parameter_dict.keys()):
-                    feature["range_restriction"] = False
-                else:
-                    feature["range_restriction"] = default_parameter_dict["range_restriction"]
-            if "range_penalty" not in list(feature.keys()):
-                if "range_penalty" not in list(default_parameter_dict.keys()):
-                    feature["range_penalty"] = False
-                else:
-                    feature["range_penalty"] = default_parameter_dict["range_penalty"]
-            
-            if "max_mutation_tries" not in list(feature.keys()):
-                feature["max_mutation_tries"] = default_parameter_dict["max_mutation_tries"]
-            if "sequence" not in list(feature.keys()):
-                feature["sequence"] = default_parameter_dict["sequence"]
-            if feature["sequence"]:
-                if "sequence_limit" not in list(feature.keys()):
-                    if "sequence_limit" not in list(default_parameter_dict.keys()):
-                        feature["sequence_limit"] = False
-                    else:
-                        feature["sequence_limit"] = default_parameter_dict["sequence_limit"]
-
-                if "sequence_penalty" not in list(feature.keys()):
-                    if "sequence_penalty" not in list(default_parameter_dict.keys()):
-                        feature["sequence_penalty"] = False
-                    else:
-                        feature["sequence_penalty"] = default_parameter_dict["sequence_penalty"]
-
+            feature = self.default_features(item, feature, default_parameter_dict, defaults_list)
             #Calculated Stuff!! 
-            #Get max and min value for feature if they were not provided
-            if "lower_bound" not in list(feature.keys()):
-                feature["lower_bound"] = df[feature["name"]].min()
-            if "upper_bound" not in list(feature.keys()):
-                feature["upper_bound"] = df[feature["name"]].max()   
-            #If continuous, calculate mean and stdev 
-            #NOTE: Not actually sure this would work for a nominal variable? 
-            if feature["type"] == "continuous" or feature["type"] == "nominal":
-                feature["mean"] = df[feature["name"]].mean() 
-                feature["stdev"] = df[feature["name"]].std() 
-            #Add the keys were the feature is present
-            #Need to fix this part 
-            df_keys = df[~df[feature["name"]].isna()]
+            feature = self.calculated_params(feature, df)
         return feature_dict
 
     
-
     def curb_diversify_top_rules(self):
         unique_rule_strings = {}
         #Get highest fitness for given parameter set 

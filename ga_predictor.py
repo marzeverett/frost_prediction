@@ -103,6 +103,7 @@ def build_rule_prediction_query(rule):
     return query_string
 
 
+
 #Takes in a rule, a dataframe (to predict on), and returns predictions.
 def get_predictions_from_rule(rule, test_df, sequence=False):
     if sequence:
@@ -116,7 +117,7 @@ def get_predictions_from_rule(rule, test_df, sequence=False):
             #Return the intersection of these and the existing fulfilled parameters. Must be in all. 
             if first:
                 final_indexes = fulfilled_indexes
-                first=False
+                first = False
             else:
                 final_indexes = np.intersect1d(final_indexes, fulfilled_indexes, assume_unique=True)
             #If it's ever the case the a new list doesn't have something in common with the current one:
@@ -134,6 +135,22 @@ def get_predictions_from_rule(rule, test_df, sequence=False):
         predict_df["predictions"] = predict_df["predictions"].astype(int)
         first_valid_index = False
     return predict_df, first_valid_index
+
+
+def get_empty_eval_dict():
+    eval_dict = {
+        "Rule Index": [],
+        "Accuracy": [],
+        "True_Negatives": [],
+        "False_Positives": [],
+        "False_Negatives": [],
+        "True_Positives": [],
+        "Precision": [],
+        "Recall": [],
+        "F1 Score": []
+    }
+    return eval_dict.copy()
+
 
 
 #Evaluate the prediction model 
@@ -217,38 +234,75 @@ def get_unique_fitness_rules(list_of_rules):
     return unique_fitness_rules
 
 
+
+def get_eval_dict(rules, kind, model_index, key, df, unique=False, sequence=False):
+    if "uniq" in str(model_index) or unique == True:
+        use_rules = get_unique_fitness_rules(rules)
+    else:
+        use_rules = rules
+    if "avg" in str(model_index):
+        ensemble_type = "avg"
+    else:
+        ensemble_type = "or"
+    if kind == "rule":
+        rule = use_rules[model_index]
+        predict_df, first_valid_index = get_predictions_from_rule(rule, df, sequence=sequence)
+    elif kind == "ensemble":
+        if ensemble_type == "or":
+            predict_df, first_valid_index = ensemble_learn_or(use_rules, df, sequence=sequence)
+        else:
+            predict_df, first_valid_index = ensemble_learn(use_rules, df, sequence=sequence)
+    eval_dict = evaluate_prediction_model(predict_df, key, model_index=model_index, first_valid_index=first_valid_index)
+    return eval_dict
+
+
+def get_combo_eval_dict(eval_dict_list):
+    sub_eval_dict = get_empty_eval_dict()
+    empty_dict = {}
+    #For each dictionary
+    for sub_dict in eval_dict_list:
+        #Append its value to this dictionary's list 
+        for key, value in sub_dict.items():
+            sub_eval_dict[key].append(value)
+    #Rule index should be exactly the same 
+    empty_dict["Rule Index"] =sub_eval_dict["Rule Index"][0]
+    #Get mean of 
+    empty_dict["Accuracy"] = sum(sub_eval_dict["Accuracy"])/len(sub_eval_dict["Accuracy"])
+    sum_list = ["True_Negatives", "False_Positives", "False_Negatives", "True_Positives"]
+    for sum_name in sum_list:
+        empty_dict[sum_name] = sum(sub_eval_dict[sum_name])
+    avg_list = ["Precision", "Recall", "F1 Score"]
+    for avg_name in avg_list:
+        empty_dict[avg_name] = sum(sub_eval_dict[avg_name])/len(sub_eval_dict[avg_name])
+    return empty_dict
+
+
+
 def complete_eval_top_rules(filepath_start, key, df, sequence=False):
     filename = f"{filepath_start}top_rules.json"
     if not os.path.exists(filepath_start):
         os.makedirs(filepath_start)
     rules_list = load_rules(filename)
+    ensemble_indexes = ["ensemble_avg", "ensemble_uniq_avg", "ensemble_or", "ensemble_uniq_or"]
+    model_indexes = [*range(0, len(rules_list))]
+    both_indexes = model_indexes + ensemble_indexes
+
     eval_dict_list = []
-    #The individual rules 
-    model_index = 0
-    for rule in rules_list: 
-        predict_df, first_valid_index = get_predictions_from_rule(rule, df, sequence=sequence)
-        eval_dict = evaluate_prediction_model(predict_df, key, model_index=model_index, first_valid_index=first_valid_index)
+    for single_index in both_indexes:
+        if "ensemble" in str(single_index):
+            kind = "ensemble"
+        else:
+            kind = "rule"
+        if isinstance(df, list):
+            sub_eval_dict_list = []
+            for sub_df in df:
+                sub_eval_dict = get_eval_dict(rules_list, kind, single_index, key, sub_df, sequence=sequence)
+                sub_eval_dict_list.append(sub_eval_dict)
+            eval_dict = get_combo_eval_dict(sub_eval_dict_list)
+        else:
+            eval_dict = get_eval_dict(rules_list, kind, single_index, key, df, sequence=sequence)
         eval_dict_list.append(eval_dict)
-        model_index += 1
-    best_unique_rules = get_unique_fitness_rules(rules_list)
-    #if not sequence:
-    #Ensemble of best rules - voting 
-    predict_df, first_valid_index = ensemble_learn(rules_list, df, sequence=sequence)
-    eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_avg", first_valid_index=first_valid_index)
-    eval_dict_list.append(eval_dict)
-    #Get best rules with unique fitness 
-    #Ensemble of best unique rules - average
-    predict_df, first_valid_index = ensemble_learn(best_unique_rules, df, sequence=sequence)
-    eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_uniq_avg", first_valid_index=first_valid_index)
-    eval_dict_list.append(eval_dict)
-    #Ensemble of best rules - Or 
-    predict_df, first_valid_index = ensemble_learn_or(rules_list, df, sequence=sequence)
-    eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_or", first_valid_index=first_valid_index)
-    eval_dict_list.append(eval_dict)
-    #Ensemble of best unique rules - or
-    predict_df, first_valid_index = ensemble_learn_or(best_unique_rules, df, sequence=sequence)
-    eval_dict = evaluate_prediction_model(predict_df, key, model_index="ensemble_uniq_or", first_valid_index=first_valid_index)
-    eval_dict_list.append(eval_dict)
+    
 
     eval_df = pd.DataFrame(eval_dict_list)
     save_name = f"{filepath_start}rule_predictor_evaluation.csv"
@@ -256,3 +310,6 @@ def complete_eval_top_rules(filepath_start, key, df, sequence=False):
 
 #print(eval_dict)
 #complete_eval_top_rules("generated_files/None/", "frost")
+
+
+
