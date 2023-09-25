@@ -58,7 +58,10 @@ def return_aggregate_dict():
 
 def load_rules_or_rule(filestart, phase, site, param, run, indexes):
     keep_rules_list = []
-    filename = f"{file_start}{phase}/{phase}_{param}_{run}_{site}/top_rules.json"
+    if site != '':
+        filename = f"{file_start}{phase}/{phase}_{param}_{run}_{site}/top_rules.json"
+    else:
+        filename = f"{file_start}{phase}/{phase}_{param}_{run}/top_rules.json"
     with open(filename) as f:
         rules_list = json.load(f)
     for index in indexes:
@@ -97,7 +100,10 @@ def best_per_site(file_start, phase, params, runs, sites):
                     agg_dict[param_best_name] = []
                 ##For each run, load in the performance csv
                 for run in runs:
-                    df = pd.read_csv(f"{file_start}{phase}/{phase}_{param}_{run}_{site}/rule_predictor_evaluation.csv")
+                    if site != '':
+                        df = pd.read_csv(f"{file_start}{phase}/{phase}_{param}_{run}_{site}/rule_predictor_evaluation.csv")
+                    else:
+                        df = pd.read_csv(f"{file_start}{phase}/{phase}_{param}_{run}/rule_predictor_evaluation.csv")
                     #Get the best rules models 
                     rules_df = df[df["Rule Index"].isin(check_index)]
 
@@ -156,13 +162,14 @@ rules_indexes = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 ensemble_indexes = ["ensemble_avg", "ensemble_or", "ensemble_uniq_avg", "ensemble_uniq_or"]
 file_start = "generated_files/"
 #phase_name = "Initial_6"
-phase_name = "Sequence_B"
+phase_name = "Vital_Sequence_A"
 param_indexes = [1, 2, 3, 4]
 #param_indexes = [1]
 #param_indexes = [1]
 run_indexes = [1, 2, 3]
 #run_indexes = [1]
-sites = ['npp_c_cali', 'npp_c_grav', 'npp_c_sand', 'npp_g_basn', 'npp_g_ibpe', 'npp_g_summ', 'npp_m_nort', 'npp_m_rabb', 'npp_m_well', 'npp_p_coll', 'npp_p_smal', 'npp_p_tobo', 'npp_t_east', 'npp_t_tayl', 'npp_t_west']
+sites =['']
+#sites = ['npp_c_cali', 'npp_c_grav', 'npp_c_sand', 'npp_g_basn', 'npp_g_ibpe', 'npp_g_summ', 'npp_m_nort', 'npp_m_rabb', 'npp_m_well', 'npp_p_coll', 'npp_p_smal', 'npp_p_tobo', 'npp_t_east', 'npp_t_tayl', 'npp_t_west']
 
 best_per_site(file_start, phase_name, param_indexes, run_indexes, sites)
 #best_per_param(file_start, phase_name, param_indexes, run_indexes, sites)

@@ -1,0 +1,18 @@
+{
+    "": [
+        {
+            "parameters": {
+                "SNUADC_ECG_V5": {
+                    "lower_bound": 0.010487802889113287,
+                    "upper_bound": 0.08318787841079,
+                    "seq_lower_bound": 3,
+                    "seq_upper_bound": 11
+                }
+            },
+            "support": 0.33644285769127413,
+            "confidence": 0.35846779966051084,
+            "lift": 1.0024038754610611,
+            "fitness": 1.3869443121321372
+        }
+    ]
+}
