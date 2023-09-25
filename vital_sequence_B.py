@@ -122,7 +122,7 @@ params_dicts = {
 
 #SAME as A -- but EMOP 
 #NAME - {phase_name}_{parameter_index}_{Run}
-phase_name = "Vital_Sequence_A"
+phase_name = "Vital_Sequence_B"
 key="emop"
 df_list=True
 #cases = ["3719", "1292", "2327", "5018", "6009", "1820", "4255", "1191", "1959", "553", "3631", "2738", "818", "1590", "4283", "5693", "3524", "4684", "5837", "1231", "3930", "2267", "4573", "5983", "2272", "6246", "5607", "1900", "3694", "1785", "1018", "251"]
