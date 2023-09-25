@@ -124,7 +124,7 @@ class population:
         final_list = []
         for sub_df in df_list:
             if name in sub_df.columns:
-                final_list = final_list + sub_df[name].values.tolist()
+                final_list = final_list + sub_df[name].notna().values.tolist()
         return final_list
 
 
@@ -132,7 +132,7 @@ class population:
         if isinstance(df, list):
             df_list = self.make_df_list(df, feature["name"])
         else:
-            df_list = df[feature["name"]].values.tolist()
+            df_list = df[feature["name"]].notna().values.tolist()
         #Get max and min value for feature if they were not provided
         if "lower_bound" not in list(feature.keys()):
                 feature["lower_bound"] = min(df_list)
