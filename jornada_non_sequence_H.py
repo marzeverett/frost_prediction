@@ -127,9 +127,9 @@ params_dicts = {
 }
 
 #NAME - {phase_name}_{parameter_index}_{Run}
-phase_name = "Initial_G"
+phase_name = "Initial_H"
 key="frost"
-all_data=False
+all_data=True
 for param_dict_index in list(params_dicts.keys()):
     for run_index in list(runs.keys()):
         name = f'{phase_name}_{param_dict_index}_{run_index}'
