@@ -278,7 +278,7 @@ class rule:
 
 
     def calc_overall_support(self, df):
-        if self.sequence:
+        if self.sequence:value
             self.calc_overall_support_sequence(df)
         else:
             self.calc_overall_support_non_sequence(df)
