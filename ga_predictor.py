@@ -156,7 +156,7 @@ def get_empty_eval_dict():
 #Evaluate the prediction model 
 def evaluate_prediction_model(predict_df, key, model_index=0, first_valid_index=False):
     #Change here - Sanity Checks 
-    #predict_df.to_csv("Testing.csv")
+    predict_df.to_csv("Testing.csv")
     eval_dict = {}
     eval_dict["Rule Index"] = model_index
     #print(first_valid_index)
@@ -302,6 +302,8 @@ def complete_eval_top_rules(filepath_start, key, df, sequence=False):
         else:
             eval_dict = get_eval_dict(rules_list, kind, single_index, key, df, sequence=sequence)
         eval_dict_list.append(eval_dict)
+        #Change here 
+        break 
     
 
     eval_df = pd.DataFrame(eval_dict_list)

@@ -169,11 +169,8 @@ param_indexes = [1, 2, 3, 4]
 run_indexes = [1, 2, 3]
 #run_indexes = [1]
 #sites =['']
-#sites = ['npp_c_cali', 'npp_c_grav', 'npp_c_sand', 'npp_g_basn', 'npp_g_ibpe', 'npp_g_summ', 'npp_m_nort', 'npp_m_rabb', 'npp_m_well', 'npp_p_coll', 'npp_p_smal', 'npp_p_tobo', 'npp_t_east', 'npp_t_tayl', 'npp_t_west']
-
-best_per_site(file_start, phase_name, param_indexes, run_indexes, sites)
-#best_per_param(file_start, phase_name, param_indexes, run_indexes, sites)
-#best_per_param(file_start, phase_name, param_indexes, ensemble_indexes, sites)
+max_rules = 10
+best_per_site(file_start, phase_name, param_indexes, run_indexes, max_rules)
 
 
 

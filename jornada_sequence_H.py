@@ -22,7 +22,6 @@ param_dict_1 = {
     #"diversify_top_rules": True,
     "diversify_top_rules": True,
     "reseed_from_best": False,
-    "sequence_antecedent_heuristic": False,
     "fitness_function_index": 2,
     "sequence_penalty_index": 3,
     "range_penalty_index": 0
@@ -49,8 +48,7 @@ param_dict_2 = {
     "sequence_penalty": True,
     #"diversify_top_rules": True,
     "diversify_top_rules": True,
-    "reseed_from_best": True
-    "sequence_antecedent_heuristic": False,
+    "reseed_from_best": True,
     "fitness_function_index": 2,
     "sequence_penalty_index": 3,
     "range_penalty_index": 0
@@ -77,8 +75,7 @@ param_dict_3 = {
     "sequence_penalty": True,
     #"diversify_top_rules": True,
     "diversify_top_rules": False,
-    "reseed_from_best": True
-    "sequence_antecedent_heuristic": False,
+    "reseed_from_best": True,
     "fitness_function_index": 2,
     "sequence_penalty_index": 3,
     "range_penalty_index": 0
@@ -105,8 +102,7 @@ param_dict_4 = {
     "sequence_penalty": True,
     #"diversify_top_rules": True,
     "diversify_top_rules": False,
-    "reseed_from_best": False
-    "sequence_antecedent_heuristic": False,
+    "reseed_from_best": False,
     "fitness_function_index": 2,
     "sequence_penalty_index": 3,
     "range_penalty_index": 0
@@ -121,9 +117,9 @@ runs = {
     }
 params_dicts = {
     "1": param_dict_1,
-    #"2": param_dict_2,
-    #"3": param_dict_3,
-    #"4": param_dict_4
+    "2": param_dict_2,
+    "3": param_dict_3,
+    "4": param_dict_4
 }
 #NAME - {phase_name}_{parameter_index}_{Run}
 phase_name = "Sequence_H"
