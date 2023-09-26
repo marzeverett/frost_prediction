@@ -1,0 +1,18 @@
+{
+    "": [
+        {
+            "parameters": {
+                "Solar8000_VENT_MAWP": {
+                    "lower_bound": 7.9678852243992635,
+                    "upper_bound": 8.013895554500056,
+                    "seq_lower_bound": 11,
+                    "seq_upper_bound": 11
+                }
+            },
+            "support": 0.037421395779483814,
+            "confidence": 0.6434494195688225,
+            "lift": 4.1421064386994475,
+            "fitness": -0.002371210015636921
+        }
+    ]
+}
