@@ -303,8 +303,6 @@ def complete_eval_top_rules(filepath_start, key, df, sequence=False):
             eval_dict = get_eval_dict(rules_list, kind, single_index, key, df, sequence=sequence)
         eval_dict_list.append(eval_dict)
         #Change here 
-        break 
-    
 
     eval_df = pd.DataFrame(eval_dict_list)
     save_name = f"{filepath_start}rule_predictor_evaluation.csv"
