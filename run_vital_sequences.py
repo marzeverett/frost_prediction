@@ -1,6 +1,6 @@
 #Lazy cheating
-import Vital_Sequence_B
-import Vital_Sequence_D
-import Vital_Sequence_E
-import Vital_Sequence_F
+import vital_sequence_B
+import vital_sequence_D
+import vital_sequence_E
+import vital_sequence_F
 
