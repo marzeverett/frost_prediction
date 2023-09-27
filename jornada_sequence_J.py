@@ -123,7 +123,7 @@ params_dicts = {
 phase_name = "Sequence_J"
 key="frost"
 sequence=True
-all_data=False
+all_data=True
 for param_dict_index in list(params_dicts.keys()):
     for run_index in list(runs.keys()):
         name = f'{phase_name}_{param_dict_index}_{run_index}'
