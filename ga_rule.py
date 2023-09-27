@@ -345,6 +345,8 @@ class rule:
             self.fitness = (5*self.support * (self.num_whole_rule/self.num_consequent))+0.5*self.confidence
         if index == 5: 
             self.fitness = (5*self.support+0.5*self.confidence+0.1*self.lift)
+        if index == 6:
+            self.fitness = (2*self.support*2*self.confidence*5*(1-self.lift))
 
         self.run_sequence_penalty()
         self.run_range_penalty()
