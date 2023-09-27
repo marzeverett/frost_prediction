@@ -329,6 +329,8 @@ class rule:
                 if r_penalty > 0:
                     if self.range_penalty_index == 0:
                         self.fitness = self.fitness-1*(0.1*r_penalty)
+                    if self.range_penalty_index == 1:
+                        self.fitness = self.fitness-0.2*(0.1*r_penalty)
 
 
     def run_fitness_function(self):

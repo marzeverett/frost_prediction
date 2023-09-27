@@ -24,7 +24,7 @@ param_dict_1 = {
     "reseed_from_best": False,
     "fitness_function_index": 2,
     "sequence_penalty_index": 3,
-    "range_penalty_index": 0
+    "range_penalty_index": 1
 }
 
 
@@ -51,7 +51,7 @@ param_dict_2 = {
     "reseed_from_best": True,
     "fitness_function_index": 2,
     "sequence_penalty_index": 3,
-    "range_penalty_index": 0
+    "range_penalty_index": 1
 }
 
 
@@ -78,7 +78,7 @@ param_dict_3 = {
     "reseed_from_best": True,
     "fitness_function_index": 2,
     "sequence_penalty_index": 3,
-    "range_penalty_index": 0
+    "range_penalty_index": 1
 }
 
 
@@ -105,7 +105,7 @@ param_dict_4 = {
     "reseed_from_best": False,
     "fitness_function_index": 2,
     "sequence_penalty_index": 3,
-    "range_penalty_index": 0
+    "range_penalty_index": 1
 }
 
 

@@ -156,7 +156,7 @@ def get_empty_eval_dict():
 #Evaluate the prediction model 
 def evaluate_prediction_model(predict_df, key, model_index=0, first_valid_index=False):
     #Change here - Sanity Checks 
-    predict_df.to_csv("Testing.csv")
+    #predict_df.to_csv("Testing.csv")
     eval_dict = {}
     eval_dict["Rule Index"] = model_index
     #print(first_valid_index)
