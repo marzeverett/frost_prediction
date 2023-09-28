@@ -2,43 +2,43 @@
     "npp_c_cali": [
         {
             "parameters": {
-                "npp_p_smalPpt_mm_Tot": {
+                "npp_m_rabbPpt_mm_Tot": {
                     "lower_bound": 0.0,
-                    "upper_bound": 0.0037808142954163185
+                    "upper_bound": 0.0007290725958637389
                 }
             },
-            "support": 0.09085475194261805,
-            "confidence": 0.1095890410958904,
-            "lift": 1.0659445683338642,
-            "fitness": 0.5086901988314938
+            "support": 0.08906156604901375,
+            "confidence": 0.10704022988505747,
+            "lift": 1.041152933707565,
+            "fitness": 0.49875503792801107
         }
     ],
     "npp_c_grav": [
         {
             "parameters": {
-                "npp_m_wellPpt_mm_Tot": {
+                "npp_m_rabbPpt_mm_Tot": {
                     "lower_bound": 0.0,
-                    "upper_bound": 0.0008970148031829384
+                    "upper_bound": 0.0
                 }
             },
-            "support": 0.12074118350268978,
-            "confidence": 0.14397719173200285,
-            "lift": 1.0611182456724264,
-            "fitness": 0.675604811899132
+            "support": 0.11835026897788405,
+            "confidence": 0.14224137931034483,
+            "lift": 1.0483252316572993,
+            "fitness": 0.6628720345445926
         }
     ],
     "npp_c_sand": [
         {
             "parameters": {
-                "npp_g_summPpt_mm_Tot": {
+                "npp_g_ibpePpt_mm_Tot": {
                     "lower_bound": 0.0,
-                    "upper_bound": 0.0011171797967550762
+                    "upper_bound": 0.0001517273353524029
                 }
             },
-            "support": 0.1159593544530783,
-            "confidence": 0.1388690050107373,
-            "lift": 1.0560356608316521,
-            "fitness": 0.6491195567910847
+            "support": 0.11237298266586969,
+            "confidence": 0.13895048041389504,
+            "lift": 1.0566552442383927,
+            "fitness": 0.6313249808027607
         }
     ],
     "npp_g_basn": [
@@ -46,55 +46,55 @@
             "parameters": {
                 "npp_g_basnPpt_mm_Tot": {
                     "lower_bound": 0.0,
-                    "upper_bound": 0.0
+                    "upper_bound": 0.001340155810709679
                 }
             },
             "support": 0.18051404662283324,
             "confidence": 0.21931735657225854,
             "lift": 1.0791704045452604,
-            "fitness": 1.0122289114002954
+            "fitness": 1.0208780774631823
         }
     ],
     "npp_g_ibpe": [
         {
             "parameters": {
-                "npp_g_summPpt_mm_Tot": {
+                "npp_g_basnPpt_mm_Tot": {
                     "lower_bound": 0.0,
-                    "upper_bound": 0.0
+                    "upper_bound": 0.0014047104189794934
                 }
             },
-            "support": 0.20621637776449492,
-            "confidence": 0.24695776664280603,
-            "lift": 1.0648462463747796,
-            "fitness": 1.1545607721438778
+            "support": 0.2044231918708906,
+            "confidence": 0.24836601307189543,
+            "lift": 1.0709184017249511,
+            "fitness": 1.1491628051723246
         }
     ],
     "npp_g_summ": [
         {
             "parameters": {
-                "npp_t_westAir_TempC_Min": {
-                    "lower_bound": 0.02672213329203444,
-                    "upper_bound": 0.030439708942099686
+                "npp_p_collAir_TempC_Avg": {
+                    "lower_bound": 0.105614298890394,
+                    "upper_bound": 0.11019081014875642
                 }
             },
             "support": 0.0005977286312014345,
             "confidence": 1.0,
             "lift": 13.71311475409836,
-            "fitness": 0.49994467226179723
+            "fitness": 0.9890054160601736
         }
     ],
     "npp_m_nort": [
         {
             "parameters": {
-                "npp_g_summPpt_mm_Tot": {
+                "npp_g_basnPpt_mm_Tot": {
                     "lower_bound": 0.0,
-                    "upper_bound": 0.003776347046472117
+                    "upper_bound": 0.004784227701016164
                 }
             },
-            "support": 0.19127316198445907,
-            "confidence": 0.2290622763063708,
-            "lift": 1.0734487066122083,
-            "fitness": 1.0705193133708337
+            "support": 0.19067543335325762,
+            "confidence": 0.23166303558460422,
+            "lift": 1.0856365785239295,
+            "fitness": 1.0830818570678526
         }
     ],
     "npp_m_rabb": [
@@ -102,27 +102,27 @@
             "parameters": {
                 "npp_g_basnPpt_mm_Tot": {
                     "lower_bound": 0.0,
-                    "upper_bound": 0.0008472603472519102
+                    "upper_bound": 7.085422164399002e-05
                 }
             },
             "support": 0.200836820083682,
             "confidence": 0.2440087145969499,
             "lift": 1.0915149185045379,
-            "fitness": 1.1261037316821598
+            "fitness": 1.146156329015924
         }
     ],
     "npp_m_well": [
         {
             "parameters": {
-                "npp_g_basnPpt_mm_Tot": {
+                "npp_g_ibpePpt_mm_Tot": {
                     "lower_bound": 0.0,
-                    "upper_bound": 0.0025343599304359365
+                    "upper_bound": 0.001441545987316939
                 }
             },
-            "support": 0.20382546323968917,
-            "confidence": 0.2476397966594045,
-            "lift": 1.0817268402380775,
-            "fitness": 1.1426937785351046
+            "support": 0.20023909145248056,
+            "confidence": 0.24759793052475979,
+            "lift": 1.0815439628405303,
+            "fitness": 1.1231730401111586
         }
     ],
     "npp_p_coll": [
@@ -130,13 +130,13 @@
             "parameters": {
                 "npp_g_summPpt_mm_Tot": {
                     "lower_bound": 0.0,
-                    "upper_bound": 0.0015645254294592847
+                    "upper_bound": 0.0
                 }
             },
             "support": 0.21876867901972505,
             "confidence": 0.2619899785254116,
             "lift": 1.0716607190049234,
-            "fitness": 1.2246819318183852
+            "fitness": 1.2408327232835945
         }
     ],
     "npp_p_smal": [
@@ -144,13 +144,13 @@
             "parameters": {
                 "npp_g_summPpt_mm_Tot": {
                     "lower_bound": 0.0,
-                    "upper_bound": 0.00041703469229714685
+                    "upper_bound": 0.0033307999352271134
                 }
             },
             "support": 0.23132098027495518,
             "confidence": 0.2770221904080172,
             "lift": 1.0629773498913138,
-            "fitness": 1.2950742931095547
+            "fitness": 1.3033085985613713
         }
     ],
     "npp_p_tobo": [
@@ -158,27 +158,27 @@
             "parameters": {
                 "npp_g_summPpt_mm_Tot": {
                     "lower_bound": 0.0,
-                    "upper_bound": 0.005933180361065382
+                    "upper_bound": 0.0
                 }
             },
             "support": 0.24686192468619247,
             "confidence": 0.2956335003579098,
             "lift": 1.070551614932431,
-            "fitness": 1.3815330555738106
+            "fitness": 1.3990314970613458
         }
     ],
     "npp_t_east": [
         {
             "parameters": {
-                "npp_p_smalPpt_mm_Tot": {
+                "npp_g_summPpt_mm_Tot": {
                     "lower_bound": 0.0,
-                    "upper_bound": 0.018314132300326746
+                    "upper_bound": 0.0027866088561178115
                 }
             },
             "support": 0.1954572624028691,
-            "confidence": 0.2357606344628695,
-            "lift": 1.0865772491911312,
-            "fitness": 1.0933352160157475
+            "confidence": 0.23407301360057264,
+            "lift": 1.0787993161260552,
+            "fitness": 1.1141597081659
         }
     ],
     "npp_t_tayl": [
@@ -186,13 +186,13 @@
             "parameters": {
                 "npp_g_summPpt_mm_Tot": {
                     "lower_bound": 0.0,
-                    "upper_bound": 0.008351634876776926
+                    "upper_bound": 0.0013413112490454045
                 }
             },
             "support": 0.2127913927077107,
             "confidence": 0.25483178239083754,
             "lift": 1.065833929849678,
-            "fitness": 1.1905376912462946
+            "fitness": 1.2016193488152456
         }
     ],
     "npp_t_west": [
@@ -200,13 +200,13 @@
             "parameters": {
                 "npp_g_basnPpt_mm_Tot": {
                     "lower_bound": 0.0,
-                    "upper_bound": 0.0009543769702586805
+                    "upper_bound": 0.002120775725535373
                 }
             },
             "support": 0.19485953377166768,
             "confidence": 0.23674655047204066,
             "lift": 1.0851424080540384,
-            "fitness": 1.0925755063973328
+            "fitness": 1.1067291031674824
         }
     ]
 }

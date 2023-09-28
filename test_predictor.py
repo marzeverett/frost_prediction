@@ -12,7 +12,6 @@ sequence=True
 
 df_path = f"frost_csvs/npp_c_cali.csv"
 df = pd.read_csv(df_path)
-
 #print(list_features_dict)
 #Split into training and test df 
 num_rows = len(df.index)
