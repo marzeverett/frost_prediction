@@ -218,9 +218,7 @@ class rule:
         self.antecedent_indexes = antecedent_indexes
 
 
-    def calc_antecedent_support_non_sequence(self, df):
-        #Takes in itself and the dataframe, and calculates its support 
-        #Get the indexes of the parameters
+    def get_non_sequence_indexes_and_applicability(self, df):
         final_indexes = None
         first = True
         for param_name in list(self.rule_dict.keys()):
@@ -235,12 +233,29 @@ class rule:
             else:
                 final_indexes = np.intersect1d(final_indexes, param_indexes, assume_unique=True)
             if final_indexes.size == 0:
-                #Think we're ok here -- 
-                self.num_antecedent = 0
                 break 
-        self.num_antecedent = final_indexes.size
-        self.antecedent_support = self.num_antecedent/self.total_records
-        self.antecedent_indexes = final_indexes
+        return final_indexes, len(df.index)
+
+    def calc_antecedent_support_non_sequence(self, df):
+        #Takes in itself and the dataframe, and calculates its support 
+        #Get the indexes of the parameters
+        if isinstance(df, list):
+            total_indexes = 0
+            total_applicable = 0
+            antecedent_indexes = []
+            for sub_df in df:
+                sub_indexes, sub_total = self.get_non_sequence_indexes_and_applicability(sub_df)
+                total_indexes += sub_indexes.size
+                antecedent_indexes.append(antecedent_indexes)
+                total_applicable += sub_total
+
+        else:
+            antecedent_indexes, total_applicable = self.get_non_sequence_indexes_and_applicability(df)
+            total_indexes = antecedent_indexes.size 
+        #Recalc 
+        self.num_antecedent = total_indexes
+        self.antecedent_support = total_indexes/total_applicable
+        self.antecedent_indexes = antecedent_indexes
 
 
     def calc_antecedent_support(self, df):
@@ -268,13 +283,29 @@ class rule:
         self.support = self.num_whole_rule/self.antecedent_applicable
 
 
-
+    #CHANGE IS HERE, CHECK 
     def calc_overall_support_non_sequence(self, df):
-        same_indexes = np.intersect1d(self.antecedent_indexes, self.consequent_indexes, assume_unique=True)
-        self.num_whole_rule = same_indexes.size
+        # same_indexes = np.intersect1d(self.antecedent_indexes, self.consequent_indexes, assume_unique=True)
+        # self.num_whole_rule = same_indexes.size
+        # self.whole_rule_indexes = same_indexes
+        # #print("Num whole rule ", self.num_whole_rule)
+        # self.support = self.num_whole_rule/self.total_records
+
+        if isinstance(df, list):
+            same_indexes =  []
+            sub_num_whole_rule = 0
+            for i in range(0, len(self.antecedent_indexes)):
+                sub_same_indexes = np.intersect1d(self.antecedent_indexes[i], self.consequent_indexes[i], assume_unique=True)
+                same_indexes.append(sub_same_indexes)
+                sub_num_whole_rule += sub_same_indexes.size
+        else:
+            same_indexes = np.intersect1d(self.antecedent_indexes, self.consequent_indexes, assume_unique=True)
+            sub_num_whole_rule = same_indexes.size
+        
+        self.num_whole_rule = sub_num_whole_rule
         self.whole_rule_indexes = same_indexes
         #print("Num whole rule ", self.num_whole_rule)
-        self.support = self.num_whole_rule/self.total_records
+        self.support = self.num_whole_rule/self.antecedent_applicable
 
 
     def calc_overall_support(self, df):

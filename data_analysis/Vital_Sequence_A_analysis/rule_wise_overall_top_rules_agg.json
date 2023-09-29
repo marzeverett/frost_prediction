@@ -1,0 +1,162 @@
+{
+    "0": [
+        {
+            "parameters": {
+                "SNUADC_ECG_V5": {
+                    "lower_bound": -0.006328959147884158,
+                    "upper_bound": 0.0954748546167726,
+                    "seq_lower_bound": 2,
+                    "seq_upper_bound": 4
+                }
+            },
+            "support": 0.2898714751582582,
+            "confidence": 0.36131701018602647,
+            "lift": 1.0103712847387873,
+            "fitness": 1.3394998727363212
+        }
+    ],
+    "1": [
+        {
+            "parameters": {
+                "SNUADC_ECG_II": {
+                    "lower_bound": 0.020492470955392535,
+                    "upper_bound": 0.07995338460175486,
+                    "seq_lower_bound": 1,
+                    "seq_upper_bound": 5
+                }
+            },
+            "support": 0.2921667113991028,
+            "confidence": 0.3599688215981293,
+            "lift": 1.006601268389647,
+            "fitness": 1.1916229372968876
+        }
+    ],
+    "2": [
+        {
+            "parameters": {
+                "SNUADC_ECG_II": {
+                    "lower_bound": -0.01621644285698754,
+                    "upper_bound": 0.03144284448088985,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 6
+                }
+            },
+            "support": 0.29386519523316856,
+            "confidence": 0.36375278660532184,
+            "lift": 1.0171825847349676,
+            "fitness": 1.053545692614899
+        }
+    ],
+    "3": [
+        {
+            "parameters": {
+                "SNUADC_ECG_V5": {
+                    "lower_bound": 0.02098780148540212,
+                    "upper_bound": 0.07164699070276004,
+                    "seq_lower_bound": 2,
+                    "seq_upper_bound": 9
+                }
+            },
+            "support": 0.3037214655668521,
+            "confidence": 0.3579049685790497,
+            "lift": 1.000829998929275,
+            "fitness": 0.864698786203905
+        }
+    ],
+    "4": [
+        {
+            "parameters": {
+                "SNUADC_ECG_V5": {
+                    "lower_bound": 0.03096763947357132,
+                    "upper_bound": 0.08167904713995444,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 9
+                }
+            },
+            "support": 0.3099973176993524,
+            "confidence": 0.35554969565121847,
+            "lift": 0.9942438154202892,
+            "fitness": 1.410792350316326
+        }
+    ],
+    "5": [
+        {
+            "parameters": {
+                "SNUADC_ECG_II": {
+                    "lower_bound": 0.058957918796318176,
+                    "upper_bound": 0.13964834853753424,
+                    "seq_lower_bound": 3,
+                    "seq_upper_bound": 10
+                }
+            },
+            "support": 0.3030826519252179,
+            "confidence": 0.36252181100192854,
+            "lift": 1.0137403377141527,
+            "fitness": 1.2559354345454812
+        }
+    ],
+    "6": [
+        {
+            "parameters": {
+                "SNUADC_ECG_V5": {
+                    "lower_bound": -0.009463931786537629,
+                    "upper_bound": 0.03258133535672991,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 10
+                }
+            },
+            "support": 0.3118174502816416,
+            "confidence": 0.35654821890198485,
+            "lift": 0.997036042720075,
+            "fitness": 1.3795730750137172
+        }
+    ],
+    "7": [
+        {
+            "parameters": {
+                "SNUADC_ECG_V5": {
+                    "lower_bound": 0.005689738141552617,
+                    "upper_bound": 0.04536822153070446,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 11
+                }
+            },
+            "support": 0.3160708127370962,
+            "confidence": 0.3589191306050519,
+            "lift": 1.00366595782481,
+            "fitness": 1.3608736759042832
+        }
+    ],
+    "8": [
+        {
+            "parameters": {
+                "SNUADC_ECG_II": {
+                    "lower_bound": 0.06983621331005777,
+                    "upper_bound": 0.13405688910908403,
+                    "seq_lower_bound": 1,
+                    "seq_upper_bound": 10
+                }
+            },
+            "support": 0.29021126490548677,
+            "confidence": 0.3606432400238237,
+            "lift": 1.0084871829522344,
+            "fitness": 1.2401692502025965
+        }
+    ],
+    "9": [
+        {
+            "parameters": {
+                "SNUADC_FEM": {
+                    "lower_bound": 61.991160102966525,
+                    "upper_bound": 68.7807210346291,
+                    "seq_lower_bound": 1,
+                    "seq_upper_bound": 12
+                }
+            },
+            "support": 0.24596449522641003,
+            "confidence": 0.3801594121307298,
+            "lift": 1.0630613638763093,
+            "fitness": 0.9416033398725379
+        }
+    ]
+}

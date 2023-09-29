@@ -1,7 +1,7 @@
 import json
 import vital_run_experiments 
 
-
+#150/150
 param_dict_1 = {
     "mutation_rate": 20,
     "mutation_amount": 20,
@@ -12,18 +12,18 @@ param_dict_1 = {
     "add_subtract_percent": 30,
     "change_percent": 70,
     "max_mutation_tries": 5,
-    "population_size": 150, 
+    "population_size": 30, 
     "top_rules": 10,
-    "generations": 150,
+    "generations": 10,
     "tournament_size": 4,
     "dominance": True,
-    "sequence": True,
-    "sequence_limit": 12,
-    "sequence_penalty": True,
+    "sequence": False,
+    "sequence_limit": False,
+    "sequence_penalty": False,
     "diversify_top_rules": True,
     "reseed_from_best": False,
     "sequence_antecedent_heuristic": False,
-    "fitness_function_index": 6,
+    "fitness_function_index": 3,
     "sequence_penalty_index": 2,
     "range_penalty_index": 0
 }
@@ -43,13 +43,13 @@ param_dict_2 = {
     "generations": 150,
     "tournament_size": 4,
     "dominance": True,
-    "sequence": True,
-    "sequence_limit": 12,
-    "sequence_penalty": True,
+    "sequence": False,
+    "sequence_limit": False,
+    "sequence_penalty": False,
     "diversify_top_rules": True,
     "reseed_from_best": False,
     "sequence_antecedent_heuristic": False,
-    "fitness_function_index": 6,
+    "fitness_function_index": 3,
     "sequence_penalty_index": 3,
     "range_penalty_index": 0
 }
@@ -64,18 +64,18 @@ param_dict_3 = {
     "add_subtract_percent": 30,
     "change_percent": 70,
     "max_mutation_tries": 5,
-    "population_size": 200, 
+    "population_size": 150, 
     "top_rules": 10,
-    "generations": 200,
+    "generations": 150,
     "tournament_size": 4,
     "dominance": True,
-    "sequence": True,
-    "sequence_limit": 12,
-    "sequence_penalty": True,
+    "sequence": False,
+    "sequence_limit": False,
+    "sequence_penalty": False,
     "diversify_top_rules": True,
     "reseed_from_best": False,
     "sequence_antecedent_heuristic": False,
-    "fitness_function_index": 6,
+    "fitness_function_index": 5,
     "sequence_penalty_index": 2,
     "range_penalty_index": 0
 }
@@ -90,24 +90,21 @@ param_dict_4 = {
     "add_subtract_percent": 30,
     "change_percent": 70,
     "max_mutation_tries": 5,
-    "population_size": 200, 
+    "population_size": 150, 
     "top_rules": 10,
-    "generations": 200,
+    "generations": 150,
     "tournament_size": 4,
     "dominance": True,
-    "sequence": True,
-    "sequence_limit": 12,
-    "sequence_penalty": True,
+    "sequence": False,
+    "sequence_limit": False,
+    "sequence_penalty": False,
     "diversify_top_rules": True,
     "reseed_from_best": False,
     "sequence_antecedent_heuristic": False,
-    "fitness_function_index": 6,
+    "fitness_function_index": 5,
     "sequence_penalty_index": 3,
     "range_penalty_index": 0
 }
-
-
-
 
 cases = ["3719", "1292", "2327", "5018", "6009", "1820", "4255", "1191", "1959", "553", "3631", "2738", "818", "1590", "4283", "5693", "3524", "4684", "5837", "1231", "3930", "2267", "4573", "5983", "2272", "6246", "5607", "1900", "3694", "1785", "1018", "251"]
 
@@ -124,7 +121,7 @@ params_dicts = {
 }
 
 #NAME - {phase_name}_{parameter_index}_{Run}
-phase_name = "Vital_Sequence_D"
+phase_name = "Vital_Initial_A"
 key="gluc_risk"
 df_list=True
 #cases = ["3719", "1292", "2327", "5018", "6009", "1820", "4255", "1191", "1959", "553", "3631", "2738", "818", "1590", "4283", "5693", "3524", "4684", "5837", "1231", "3930", "2267", "4573", "5983", "2272", "6246", "5607", "1900", "3694", "1785", "1018", "251"]

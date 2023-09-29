@@ -24,7 +24,7 @@ param_dict_1 = {
     "reseed_from_best": False,
     "sequence_antecedent_heuristic": False,
     "fitness_function_index": 6,
-    "sequence_penalty_index": 3,
+    "sequence_penalty_index": 2,
     "range_penalty_index": 0
 }
 
@@ -76,7 +76,7 @@ param_dict_3 = {
     "reseed_from_best": False,
     "sequence_antecedent_heuristic": False,
     "fitness_function_index": 6,
-    "sequence_penalty_index": 3,
+    "sequence_penalty_index": 2,
     "range_penalty_index": 0
 }
 

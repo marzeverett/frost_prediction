@@ -17,9 +17,9 @@ param_dict_1 = {
     "generations": 150,
     "tournament_size": 4,
     "dominance": True,
-    "sequence": True,
-    "sequence_limit": 12,
-    "sequence_penalty": True,
+    "sequence": False,
+    "sequence_limit": False,
+    "sequence_penalty": False,
     "diversify_top_rules": True,
     "reseed_from_best": False,
     "sequence_antecedent_heuristic": False,
@@ -43,9 +43,9 @@ param_dict_2 = {
     "generations": 150,
     "tournament_size": 4,
     "dominance": True,
-    "sequence": True,
-    "sequence_limit": 12,
-    "sequence_penalty": True,
+    "sequence": False,
+    "sequence_limit": False,
+    "sequence_penalty": False,
     "diversify_top_rules": True,
     "reseed_from_best": False,
     "sequence_antecedent_heuristic": False,
@@ -69,9 +69,9 @@ param_dict_3 = {
     "generations": 200,
     "tournament_size": 4,
     "dominance": True,
-    "sequence": True,
-    "sequence_limit": 12,
-    "sequence_penalty": True,
+    "sequence": False,
+    "sequence_limit": False,
+    "sequence_penalty": False,
     "diversify_top_rules": True,
     "reseed_from_best": False,
     "sequence_antecedent_heuristic": False,
@@ -95,9 +95,9 @@ param_dict_4 = {
     "generations": 200,
     "tournament_size": 4,
     "dominance": True,
-    "sequence": True,
-    "sequence_limit": 12,
-    "sequence_penalty": True,
+    "sequence": False,
+    "sequence_limit": False,
+    "sequence_penalty": False,
     "diversify_top_rules": True,
     "reseed_from_best": False,
     "sequence_antecedent_heuristic": False,
@@ -124,7 +124,7 @@ params_dicts = {
 }
 
 #NAME - {phase_name}_{parameter_index}_{Run}
-phase_name = "Vital_Sequence_D"
+phase_name = "Vital_Initial_D"
 key="gluc_risk"
 df_list=True
 #cases = ["3719", "1292", "2327", "5018", "6009", "1820", "4255", "1191", "1959", "553", "3631", "2738", "818", "1590", "4283", "5693", "3524", "4684", "5837", "1231", "3930", "2267", "4573", "5983", "2272", "6246", "5607", "1900", "3694", "1785", "1018", "251"]
