@@ -1,7 +1,6 @@
 import json
 import vital_run_experiments 
 
-#150/150
 param_dict_1 = {
     "mutation_rate": 20,
     "mutation_amount": 20,
@@ -12,9 +11,9 @@ param_dict_1 = {
     "add_subtract_percent": 30,
     "change_percent": 70,
     "max_mutation_tries": 5,
-    "population_size": 30, 
+    "population_size": 150, 
     "top_rules": 10,
-    "generations": 10,
+    "generations": 150,
     "tournament_size": 4,
     "dominance": True,
     "sequence": False,
