@@ -256,6 +256,7 @@ class rule:
         self.num_antecedent = total_indexes
         self.antecedent_support = total_indexes/total_applicable
         self.antecedent_indexes = antecedent_indexes
+        self.antecedent_applicable = total_applicable
 
 
     def calc_antecedent_support(self, df):
