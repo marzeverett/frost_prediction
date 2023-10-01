@@ -158,6 +158,7 @@ def run_experiments(phase_name, default_parameter_dict, name, case, key=None, al
         for df_name in case:
             df = get_df(df_name)
             sub_train_df, sub_test_df = split_training_test(df)
+            sub_test_df.reset_index()
             train_df.append(sub_train_df)
             test_df.append(sub_test_df)
     else:
