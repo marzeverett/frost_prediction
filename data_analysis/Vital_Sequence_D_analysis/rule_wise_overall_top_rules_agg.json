@@ -1,0 +1,162 @@
+{
+    "0": [
+        {
+            "parameters": {
+                "Solar8000_VENT_MAWP": {
+                    "lower_bound": 2.91158457141722,
+                    "upper_bound": 3.18222470764428,
+                    "seq_lower_bound": 2,
+                    "seq_upper_bound": 2
+                }
+            },
+            "support": 0.141070400920775,
+            "confidence": 0.30682576769025366,
+            "lift": 0.8579943272877096,
+            "fitness": 0.10734424815004737
+        }
+    ],
+    "1": [
+        {
+            "parameters": {
+                "Solar8000_VENT_MAWP": {
+                    "lower_bound": 2.931825359695649,
+                    "upper_bound": 3.1200792694992554,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 0
+                }
+            },
+            "support": 0.14087826186918037,
+            "confidence": 0.3065027094622759,
+            "lift": 0.8570909412094311,
+            "fitness": 0.1082716078482479
+        }
+    ],
+    "2": [
+        {
+            "parameters": {
+                "Solar8000_VENT_MAWP": {
+                    "lower_bound": 2.9464005468613745,
+                    "upper_bound": 3.0146676431448065,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 2
+                }
+            },
+            "support": 0.14603211097060964,
+            "confidence": 0.306559948517878,
+            "lift": 0.8572510020327954,
+            "fitness": 0.030086774111611824
+        }
+    ],
+    "3": [
+        {
+            "parameters": {
+                "Solar8000_VENT_MAWP": {
+                    "lower_bound": 2.8817703568772988,
+                    "upper_bound": 3.0389191455749005,
+                    "seq_lower_bound": 2,
+                    "seq_upper_bound": 2
+                }
+            },
+            "support": 0.141070400920775,
+            "confidence": 0.30682576769025366,
+            "lift": 0.8579943272877096,
+            "fitness": 0.10836785930768579
+        }
+    ],
+    "4": [
+        {
+            "parameters": {
+                "Orchestra_RFTN20_RATE": {
+                    "lower_bound": 19.76795258474408,
+                    "upper_bound": 34.71750424611395,
+                    "seq_lower_bound": 2,
+                    "seq_upper_bound": 2
+                }
+            },
+            "support": 0.1014003452906196,
+            "confidence": 0.3202859912748425,
+            "lift": 0.8956339152745314,
+            "fitness": 0.06489705114750419
+        }
+    ],
+    "5": [
+        {
+            "parameters": {
+                "Solar8000_VENT_MAWP": {
+                    "lower_bound": 2.9412752096674555,
+                    "upper_bound": 3.0132609833924175,
+                    "seq_lower_bound": 2,
+                    "seq_upper_bound": 2
+                }
+            },
+            "support": 0.141070400920775,
+            "confidence": 0.30682576769025366,
+            "lift": 0.8579943272877096,
+            "fitness": 0.10855113189470353
+        }
+    ],
+    "6": [
+        {
+            "parameters": {
+                "Solar8000_VENT_MAWP": {
+                    "lower_bound": 2.7456746654945476,
+                    "upper_bound": 3.0854915056685983,
+                    "seq_lower_bound": 3,
+                    "seq_upper_bound": 3
+                }
+            },
+            "support": 0.1411762447694729,
+            "confidence": 0.3070083900321409,
+            "lift": 0.8585050045184872,
+            "fitness": 0.10775797923378351
+        }
+    ],
+    "7": [
+        {
+            "parameters": {
+                "Solar8000_VENT_MAWP": {
+                    "lower_bound": 2.938907041200567,
+                    "upper_bound": 3.18590417626279,
+                    "seq_lower_bound": 2,
+                    "seq_upper_bound": 2
+                }
+            },
+            "support": 0.141070400920775,
+            "confidence": 0.30682576769025366,
+            "lift": 0.8579943272877096,
+            "fitness": 0.10731796623134372
+        }
+    ],
+    "8": [
+        {
+            "parameters": {
+                "Solar8000_VENT_MAWP": {
+                    "lower_bound": 2.93693978859935,
+                    "upper_bound": 3.1661403866740487,
+                    "seq_lower_bound": 5,
+                    "seq_upper_bound": 5
+                }
+            },
+            "support": 0.14140754122304647,
+            "confidence": 0.30740307486631013,
+            "lift": 0.859608684145309,
+            "fitness": 0.10658128807608945
+        }
+    ],
+    "9": [
+        {
+            "parameters": {
+                "Solar8000_VENT_MAWP": {
+                    "lower_bound": 2.6798207918405827,
+                    "upper_bound": 3.0165435597582264,
+                    "seq_lower_bound": 3,
+                    "seq_upper_bound": 3
+                }
+            },
+            "support": 0.1411762447694729,
+            "confidence": 0.3070083900321409,
+            "lift": 0.8585050045184872,
+            "fitness": 0.10825046456171475
+        }
+    ]
+}

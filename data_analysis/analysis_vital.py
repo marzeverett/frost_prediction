@@ -152,14 +152,81 @@ def best_per_site(file_start, phase, params, runs, max_rules):
                 f.write(rules_save)
 
 
+def save_to_csv(file_name, dict_object):
+    df = pd.DataFrame(dict_object)
+    df.to_csv(file_name)
 
 
+def avg_and_best_per_param(file_start, phase, params, runs, max_rules):
+    #Here we'll want to separate single rules from ensembles. 
+    #For every site:
+    avg_dict = {}
+    best_dict = {}
+    save_start = f"{phase}_analysis/"
+    if not os.path.exists(save_start):
+        os.makedirs(save_start)
+
+    for slice_wise in check_slices:
+        if slice_wise == "rule_wise":
+            check_index = rules_indexes
+        else:
+            check_index = ensemble_indexes
+        agg_dict = return_aggregate_dict()
+        site_rules_dict = {}
+        best_rules_list = []
+        best_fitness_list = []
+        for param in params:
+            ##For each run, load in the performance csv
+            param_best_runs = []
+            for run in runs:
+                #print("PARAM ", param)
+                #print("RUN ", run)
+                rules_list = []
+                fitness_list = []
+                df = pd.read_csv(f"{file_start}{phase}/{phase}_{param}_{run}/rule_predictor_evaluation.csv")
+                #Get the best rules models 
+                rules_df = df[df["Rule Index"].isin(check_index)]
+                rules_max = rules_df["F1 Score"].max()
+                param_best_runs.append(rules_max)
+
+
+
+                # for sub_index in check_index:
+                #     #sub_rule_row = rules_df[df["Rule Index"] == sub_index]
+                #     sub_rule_row = rules_df.loc[df["Rule Index"] == sub_index]
+                #     #my_dataframe. loc[my_dataframe["column_name"] == my_value]
+                #     if not sub_rule_row.empty:
+                #         rule_dict = make_dict_from_rule_row(sub_rule_row, param, run)
+                #         rules_list.append(rule_dict)
+                #         fitness_list.append(rule_dict["metric"])
+                # if best_rules_list == []:
+                #     best_rules_list = rules_list
+                #     best_fitness_list = fitness_list
+                # else:
+                #     for i in range(0, len(rules_list)):
+                #         sub_rule_dict = rules_list[i]
+                #         if sub_rule_dict["metric"] > min(best_fitness_list):
+                #             kill_index = best_fitness_list.index(min(best_fitness_list))
+                #             best_fitness_list.pop(kill_index)
+                #             best_rules_list.pop(kill_index)
+                #             best_rules_list.append(sub_rule_dict)
+                #             best_fitness_list.append(sub_rule_dict["metric"])
+
+                    
+            avg_dict[param] = [sum(param_best_runs)/len(param_best_runs)]
+            best_dict[param] = [max(param_best_runs)]
+
+        avg_name = f'{phase}_analysis/{slice_wise}_average_best_run_param.csv'
+        best_name = f'{phase}_analysis/{slice_wise}_best_per_param.csv'
+        save_to_csv(avg_name, avg_dict)
+        save_to_csv(best_name, best_dict)
+        #print(json.dumps(agg_dict, indent=4))
 
 rules_indexes = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 ensemble_indexes = ["ensemble_avg", "ensemble_or", "ensemble_uniq_avg", "ensemble_uniq_or"]
 file_start = "generated_files/"
 #phase_name = "Initial_6"
-phase_name = "Vital_Sequence_C"
+phase_name = "Vital_Sequence_D"
 param_indexes = [1, 2, 3, 4]
 #param_indexes = [1]
 #param_indexes = [1]
@@ -168,8 +235,7 @@ run_indexes = [1, 2, 3]
 #sites =['']
 max_rules = 10
 best_per_site(file_start, phase_name, param_indexes, run_indexes, max_rules)
-
-
+avg_and_best_per_param(file_start, phase_name, param_indexes, run_indexes, max_rules)
 
 
 
