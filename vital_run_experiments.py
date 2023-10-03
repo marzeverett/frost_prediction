@@ -165,6 +165,20 @@ def run_experiments(phase_name, default_parameter_dict, name, case, key=None, al
         df = get_df(case)
         train_df, test_df = split_training_test(df)
         test_df.reset_index()
+
+    # records = 0
+    # max_records = None
+    # for item in train_df:
+    #     sub_records = len(item.index)
+    #     records += sub_records
+    #     if max_records == None:
+    #         max_records = sub_records
+    #     else:
+    #         if sub_records > max_records:
+    #             max_records = sub_records
+    # print(records)
+    # print(sub_records)
+    
     #Run the experiment
     #CHANGE HERE! 
     pop = ga_population.population(default_dict, consequent_dict, list_features_dict, key, train_df)

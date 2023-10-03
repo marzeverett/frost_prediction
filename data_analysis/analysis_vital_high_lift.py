@@ -72,7 +72,7 @@ def get_high_lift_rules_from_list(filestart, phase, param, run, threshold):
     with open(filename) as f:
         rules_list = json.load(f)
     for single_rule in rules_list: 
-        if single_rule["lift"] >= threshold:
+        if single_rule["lift"] >= threshold and single_rule["support"] >= 0.01:
             keep_rules_list.append(single_rule)
     return keep_rules_list
 

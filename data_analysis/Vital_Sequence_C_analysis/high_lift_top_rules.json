@@ -29,20 +29,6 @@
     },
     {
         "parameters": {
-            "Solar8000_BT": {
-                "lower_bound": 3.2000000476837163,
-                "upper_bound": 3.2131171138793047,
-                "seq_lower_bound": 12,
-                "seq_upper_bound": 12
-            }
-        },
-        "support": 1.8424010170053613e-05,
-        "confidence": 1.0,
-        "lift": 1.8723892350886802,
-        "fitness": -3.857724332880002e-05
-    },
-    {
-        "parameters": {
             "Solar8000_VENT_INSP_TM": {
                 "lower_bound": 1.0903106009297607,
                 "upper_bound": 1.1103258850397084,
@@ -99,20 +85,6 @@
     },
     {
         "parameters": {
-            "Orchestra_RFTN20_VOL": {
-                "lower_bound": 0.0,
-                "upper_bound": 0.0,
-                "seq_lower_bound": 4,
-                "seq_upper_bound": 4
-            }
-        },
-        "support": 0.0011365927881354378,
-        "confidence": 1.0,
-        "lift": 1.8723892350886802,
-        "fitness": 9.035467662358543e-06
-    },
-    {
-        "parameters": {
             "SNUADC_FEM": {
                 "lower_bound": 95.46352258693517,
                 "upper_bound": 104.00994272738527,
@@ -161,34 +133,6 @@
     },
     {
         "parameters": {
-            "Solar8000_VENT_TV": {
-                "lower_bound": 37.0,
-                "upper_bound": 38.189949056965894,
-                "seq_lower_bound": 3,
-                "seq_upper_bound": 3
-            }
-        },
-        "support": 1.8320722569298134e-05,
-        "confidence": 1.0,
-        "lift": 1.8723892350886802,
-        "fitness": -4.003631367747508e-05
-    },
-    {
-        "parameters": {
-            "SNUADC_ART": {
-                "lower_bound": -263.57400512695307,
-                "upper_bound": -261.7989170022078,
-                "seq_lower_bound": 9,
-                "seq_upper_bound": 9
-            }
-        },
-        "support": 1.838945181044153e-05,
-        "confidence": 1.0,
-        "lift": 1.8723892350886802,
-        "fitness": -0.00027741020357020764
-    },
-    {
-        "parameters": {
             "Solar8000_VENT_INSP_TM": {
                 "lower_bound": 1.0564570540366214,
                 "upper_bound": 1.1056151807891863,
@@ -214,34 +158,6 @@
         "confidence": 1.0,
         "lift": 1.8723892350886802,
         "fitness": 0.0017306564960518633
-    },
-    {
-        "parameters": {
-            "Orchestra_RFTN20_CE": {
-                "lower_bound": 0.0,
-                "upper_bound": 0.03224581157056187,
-                "seq_lower_bound": 3,
-                "seq_upper_bound": 3
-            }
-        },
-        "support": 0.00961837934888152,
-        "confidence": 1.0,
-        "lift": 1.8723892350886802,
-        "fitness": 0.0002447431816244116
-    },
-    {
-        "parameters": {
-            "Solar8000_VENT_MV": {
-                "lower_bound": 1.9467234105230373,
-                "upper_bound": 2.2528348230288486,
-                "seq_lower_bound": 10,
-                "seq_upper_bound": 10
-            }
-        },
-        "support": 3.6801913699512374e-05,
-        "confidence": 1.0,
-        "lift": 1.8723892350886802,
-        "fitness": -0.007940280994066648
     },
     {
         "parameters": {
@@ -273,34 +189,6 @@
     },
     {
         "parameters": {
-            "Orchestra_RFTN20_CE": {
-                "lower_bound": 0.00539749129618119,
-                "upper_bound": 0.053236237460255686,
-                "seq_lower_bound": 7,
-                "seq_upper_bound": 7
-            }
-        },
-        "support": 0.009624038055356585,
-        "confidence": 1.0,
-        "lift": 1.8723892350886802,
-        "fitness": -1.8260833042959353e-05
-    },
-    {
-        "parameters": {
-            "SNUADC_ART": {
-                "lower_bound": -263.57400512695307,
-                "upper_bound": -262.2827109551875,
-                "seq_lower_bound": 11,
-                "seq_upper_bound": 11
-            }
-        },
-        "support": 1.841247629393677e-05,
-        "confidence": 1.0,
-        "lift": 1.8723892350886802,
-        "fitness": -0.0002018023939732338
-    },
-    {
-        "parameters": {
             "Solar8000_VENT_INSP_TM": {
                 "lower_bound": 1.0708077656213424,
                 "upper_bound": 1.1005298888534103,
@@ -329,34 +217,6 @@
     },
     {
         "parameters": {
-            "Orchestra_RFTN20_CE": {
-                "lower_bound": 0.0,
-                "upper_bound": 0.02534901351988794,
-                "seq_lower_bound": 6,
-                "seq_upper_bound": 6
-            }
-        },
-        "support": 0.008443310511921587,
-        "confidence": 1.0,
-        "lift": 1.8723892350886802,
-        "fitness": 0.0001814089534251951
-    },
-    {
-        "parameters": {
-            "SNUADC_ART": {
-                "lower_bound": -263.57400512695307,
-                "upper_bound": -263.57400512695307,
-                "seq_lower_bound": 8,
-                "seq_upper_bound": 8
-            }
-        },
-        "support": 1.837796114899013e-05,
-        "confidence": 1.0,
-        "lift": 1.8723892350886802,
-        "fitness": 2.35641283422907e-09
-    },
-    {
-        "parameters": {
             "Solar8000_VENT_INSP_TM": {
                 "lower_bound": 1.0838534136777314,
                 "upper_bound": 1.108941594320013,
@@ -382,26 +242,6 @@
         "confidence": 0.9670487106017192,
         "lift": 1.8106915955370475,
         "fitness": 0.834935331975447
-    },
-    {
-        "parameters": {
-            "Orchestra_RFTN20_VOL": {
-                "lower_bound": 110.86575593767179,
-                "upper_bound": 117.01486956544002,
-                "seq_lower_bound": 12,
-                "seq_upper_bound": 12
-            },
-            "Orchestra_RFTN20_CP": {
-                "lower_bound": 10.93338900416944,
-                "upper_bound": 11.239223954769257,
-                "seq_lower_bound": 10,
-                "seq_upper_bound": 10
-            }
-        },
-        "support": 1.8424010170053613e-05,
-        "confidence": 1.0,
-        "lift": 1.8723892350886802,
-        "fitness": 0.6299268488748184
     },
     {
         "parameters": {
