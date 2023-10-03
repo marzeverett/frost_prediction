@@ -1,3 +1,5 @@
 #Lazy cheating
-import vital_non_sequence_C
+#import vital_non_sequence_C
 import vital_non_sequence_D
+
+import vital_non_sequence_C

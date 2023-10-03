@@ -167,6 +167,8 @@ class parameter:
         #Mutate 1-2 days at a time, only. 
         tries = 0
         success = 0
+        old_curr_seq_upper = self.curr_sequence_upper
+        old_curr_seq_lower = self.curr_sequence_lower
         while success == 0 and tries < self.max_mutation_tries:
             tries += 1
             #Eventually may want to change this. 
@@ -188,6 +190,9 @@ class parameter:
                 #Latter half is extratemporaneous 
                 if upper_bound > self.sequence_limit or lower_bound < 0:
                     success = 0
+                    #Change is here!
+                    self.curr_sequence_upper = old_curr_seq_upper
+                    self.curr_sequence_lower = old_curr_seq_lower
             else:
                 success = 1
                 self.curr_sequence_lower = lower_bound

@@ -1,0 +1,1286 @@
+[
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CT": {
+                "lower_bound": 0.0,
+                "upper_bound": 0.06108558775989881,
+                "seq_lower_bound": 2,
+                "seq_upper_bound": 2
+            }
+        },
+        "support": 0.018364245564567807,
+        "confidence": 0.9269870609981515,
+        "lift": 6.2521321448796146,
+        "fitness": 0.02556893065043826
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CE": {
+                "lower_bound": 0.006904498730275301,
+                "upper_bound": 0.3181121957791861,
+                "seq_lower_bound": 5,
+                "seq_upper_bound": 5
+            }
+        },
+        "support": 0.015775474640007336,
+        "confidence": 0.9976798143851509,
+        "lift": 6.728924599118398,
+        "fitness": 0.018493499817958347
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CP": {
+                "lower_bound": 0.0,
+                "upper_bound": 0.2347718503013766,
+                "seq_lower_bound": 10,
+                "seq_upper_bound": 10
+            }
+        },
+        "support": 0.015548808538043978,
+        "confidence": 0.9135135135135135,
+        "lift": 6.1612588167842235,
+        "fitness": 0.016695474359485322
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_MAWP": {
+                "lower_bound": 6.901997556628691,
+                "upper_bound": 7.191949062119614,
+                "seq_lower_bound": 0,
+                "seq_upper_bound": 0
+            }
+        },
+        "support": 0.02797842187071409,
+        "confidence": 0.9244712990936556,
+        "lift": 6.235164404407566,
+        "fitness": 0.016637439378973315
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_PIP": {
+                "lower_bound": 4.0,
+                "upper_bound": 4.041071635510959,
+                "seq_lower_bound": 12,
+                "seq_upper_bound": 12
+            }
+        },
+        "support": 1.8424010170053613e-05,
+        "confidence": 0.3333333333333333,
+        "lift": 2.2481910869922705,
+        "fitness": -8.73830527869195e-05
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_RATE": {
+                "lower_bound": 0.6218854868174106,
+                "upper_bound": 1.8044576191416084,
+                "seq_lower_bound": 12,
+                "seq_upper_bound": 12
+            }
+        },
+        "support": 5.527203051016084e-05,
+        "confidence": 0.3,
+        "lift": 2.0233719782930435,
+        "fitness": -0.00015034664036590878
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_TV": {
+                "lower_bound": 37.0,
+                "upper_bound": 46.0461946224306,
+                "seq_lower_bound": 11,
+                "seq_upper_bound": 11
+            }
+        },
+        "support": 5.5237428881810315e-05,
+        "confidence": 0.375,
+        "lift": 2.529214972866305,
+        "fitness": -0.00030434193804800946
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CT": {
+                "lower_bound": 0.0,
+                "upper_bound": 0.12657568740814806,
+                "seq_lower_bound": 10,
+                "seq_upper_bound": 10
+            }
+        },
+        "support": 0.018308952065507405,
+        "confidence": 0.9264432029795159,
+        "lift": 6.248464054629356,
+        "fitness": 0.024431070947924568
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CP": {
+                "lower_bound": 0.0,
+                "upper_bound": 0.3716360641383761,
+                "seq_lower_bound": 7,
+                "seq_upper_bound": 7
+            }
+        },
+        "support": 0.017007364960420226,
+        "confidence": 0.9204771371769384,
+        "lift": 6.208225486744064,
+        "fitness": 0.019752674286641937
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_MAWP": {
+                "lower_bound": 6.8975848084092615,
+                "upper_bound": 7.230602070403095,
+                "seq_lower_bound": 6,
+                "seq_upper_bound": 6
+            }
+        },
+        "support": 0.027862924689341238,
+        "confidence": 0.923919659160073,
+        "lift": 6.231443828461839,
+        "fitness": 0.015562931717816593
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CE": {
+                "lower_bound": 0.0,
+                "upper_bound": 0.10717563685121394,
+                "seq_lower_bound": 9,
+                "seq_upper_bound": 9
+            }
+        },
+        "support": 0.011953143676786996,
+        "confidence": 0.8879781420765027,
+        "lift": 5.989033633381049,
+        "fitness": 0.008853742451439663
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_INSP_TM": {
+                "lower_bound": 0.8999999761581421,
+                "upper_bound": 0.9051809646036691,
+                "seq_lower_bound": 10,
+                "seq_upper_bound": 10
+            }
+        },
+        "support": 0.0028889502254117213,
+        "confidence": 0.5880149812734082,
+        "lift": 3.9659101197504105,
+        "fitness": -8.449130427130034e-05
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CT": {
+                "lower_bound": 0.0,
+                "upper_bound": 0.001895464748800535,
+                "seq_lower_bound": 10,
+                "seq_upper_bound": 10
+            }
+        },
+        "support": 0.018308952065507405,
+        "confidence": 0.9264432029795159,
+        "lift": 6.248464054629356,
+        "fitness": 0.02598957373116641
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CE": {
+                "lower_bound": 0.009957690979660205,
+                "upper_bound": 0.48558090748416505,
+                "seq_lower_bound": 11,
+                "seq_upper_bound": 11
+            }
+        },
+        "support": 0.016902653237833958,
+        "confidence": 0.996742671009772,
+        "lift": 6.7226039669671165,
+        "fitness": 0.019582416610845314
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_MAWP": {
+                "lower_bound": 6.849975927374907,
+                "upper_bound": 7.189021947620084,
+                "seq_lower_bound": 0,
+                "seq_upper_bound": 0
+            }
+        },
+        "support": 0.02797842187071409,
+        "confidence": 0.9244712990936556,
+        "lift": 6.235164404407566,
+        "fitness": 0.016658347339684243
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CP": {
+                "lower_bound": 0.01314102325900459,
+                "upper_bound": 0.2677635020861508,
+                "seq_lower_bound": 8,
+                "seq_upper_bound": 8
+            }
+        },
+        "support": 0.01407751824012644,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 0.016177136749573304
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_INSP_TM": {
+                "lower_bound": 0.8999999761581421,
+                "upper_bound": 0.9001745781905532,
+                "seq_lower_bound": 3,
+                "seq_upper_bound": 3
+            }
+        },
+        "support": 0.003004598501364894,
+        "confidence": 0.5985401459854015,
+        "lift": 4.036897864234297,
+        "fitness": 0.0002820488088695091
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CT": {
+                "lower_bound": 0.0,
+                "upper_bound": 0.1400623812865449,
+                "seq_lower_bound": 3,
+                "seq_upper_bound": 3
+            }
+        },
+        "support": 0.01835736401443673,
+        "confidence": 0.9269195189639223,
+        "lift": 6.2516766026815604,
+        "fitness": 0.024541777502092653
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CP": {
+                "lower_bound": 0.0,
+                "upper_bound": 0.3921604466391163,
+                "seq_lower_bound": 0,
+                "seq_upper_bound": 0
+            }
+        },
+        "support": 0.017189357227758984,
+        "confidence": 0.9215686274509803,
+        "lift": 6.215587122860984,
+        "fitness": 0.02024836202461698
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_MAWP": {
+                "lower_bound": 6.882781361420334,
+                "upper_bound": 7.008862739627467,
+                "seq_lower_bound": 0,
+                "seq_upper_bound": 0
+            }
+        },
+        "support": 0.02797842187071409,
+        "confidence": 0.9244712990936556,
+        "lift": 6.235164404407566,
+        "fitness": 0.017945198825345794
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CE": {
+                "lower_bound": 0.005492865370285624,
+                "upper_bound": 0.28661149888951487,
+                "seq_lower_bound": 11,
+                "seq_upper_bound": 11
+            }
+        },
+        "support": 0.015411242658025077,
+        "confidence": 0.9976162097735399,
+        "lift": 6.728495613155652,
+        "fitness": 0.017778501154130582
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_TV": {
+                "lower_bound": 51.90704066460755,
+                "upper_bound": 56.43177323399944,
+                "seq_lower_bound": 12,
+                "seq_upper_bound": 12
+            }
+        },
+        "support": 5.527203051016084e-05,
+        "confidence": 0.25,
+        "lift": 1.6861433152442031,
+        "fitness": -0.000653810929132395
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CE": {
+                "lower_bound": 0.000817924736245923,
+                "upper_bound": 0.31327693680261676,
+                "seq_lower_bound": 2,
+                "seq_upper_bound": 2
+            }
+        },
+        "support": 0.01576432246370178,
+        "confidence": 0.9976825028968713,
+        "lift": 6.728942731982659,
+        "fitness": 0.018564231919092483
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CP": {
+                "lower_bound": 0.0,
+                "upper_bound": 0.22253776356487653,
+                "seq_lower_bound": 6,
+                "seq_upper_bound": 6
+            }
+        },
+        "support": 0.015418219195682899,
+        "confidence": 0.9130434782608695,
+        "lift": 6.158088629587525,
+        "fitness": 0.01649729429036751
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_INSP_TM": {
+                "lower_bound": 0.8999999761581421,
+                "upper_bound": 0.9048409514334463,
+                "seq_lower_bound": 2,
+                "seq_upper_bound": 2
+            }
+        },
+        "support": 0.0030210374059358807,
+        "confidence": 0.6,
+        "lift": 4.046743956586087,
+        "fitness": -2.4184268734464868e-05
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_TV": {
+                "lower_bound": 37.0,
+                "upper_bound": 44.19583377245226,
+                "seq_lower_bound": 0,
+                "seq_upper_bound": 0
+            }
+        },
+        "support": 5.485965072689037e-05,
+        "confidence": 0.6,
+        "lift": 4.046743956586087,
+        "fitness": -0.00024202235038264715
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CT": {
+                "lower_bound": 0.0,
+                "upper_bound": 0.07613965073448714,
+                "seq_lower_bound": 12,
+                "seq_upper_bound": 12
+            }
+        },
+        "support": 0.018295042098863238,
+        "confidence": 0.9263059701492538,
+        "lift": 6.247538477751842,
+        "fitness": 0.024981825226877766
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CP": {
+                "lower_bound": 0.010321497573743114,
+                "upper_bound": 0.3291349783412401,
+                "seq_lower_bound": 5,
+                "seq_upper_bound": 5
+            }
+        },
+        "support": 0.016655966247821702,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 0.022993841378051178
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_MAWP": {
+                "lower_bound": 6.866801418342695,
+                "upper_bound": 7.013457294420861,
+                "seq_lower_bound": 4,
+                "seq_upper_bound": 4
+            }
+        },
+        "support": 0.027901519734550587,
+        "confidence": 0.9241044323011536,
+        "lift": 6.232690044448518,
+        "fitness": 0.01737979324992394
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_RATE": {
+                "lower_bound": 0.0,
+                "upper_bound": 3.091700112845868,
+                "seq_lower_bound": 7,
+                "seq_upper_bound": 7
+            }
+        },
+        "support": 0.03355556779987878,
+        "confidence": 0.3837429111531191,
+        "lift": 2.588182177652728,
+        "fitness": 0.01476182816528856
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CE": {
+                "lower_bound": 0.06887535178355086,
+                "upper_bound": 0.40809296789195615,
+                "seq_lower_bound": 7,
+                "seq_upper_bound": 7
+            }
+        },
+        "support": 0.005987474057340166,
+        "confidence": 0.9969418960244648,
+        "lift": 6.723947654674131,
+        "fitness": 1.195706381262945
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CE": {
+                "lower_bound": 0.06887535178355086,
+                "upper_bound": 0.40809296789195615,
+                "seq_lower_bound": 7,
+                "seq_upper_bound": 7
+            }
+        },
+        "support": 0.005987474057340166,
+        "confidence": 0.9969418960244648,
+        "lift": 6.723947654674131,
+        "fitness": 1.195706381262945
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CP": {
+                "lower_bound": 0.13896696562090657,
+                "upper_bound": 0.37091848446410286,
+                "seq_lower_bound": 10,
+                "seq_upper_bound": 10
+            }
+        },
+        "support": 0.0034041770172048946,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1890360299144684
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_MAWP": {
+                "lower_bound": 6.935876164878181,
+                "upper_bound": 7.13117689062918,
+                "seq_lower_bound": 5,
+                "seq_upper_bound": 5
+            }
+        },
+        "support": 0.02788223424745483,
+        "confidence": 0.9240121580547113,
+        "lift": 6.232067694033286,
+        "fitness": 1.180829899020607
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CT": {
+                "lower_bound": 0.0,
+                "upper_bound": 0.024264498235945453,
+                "seq_lower_bound": 5,
+                "seq_upper_bound": 5
+            }
+        },
+        "support": 0.01834357516279923,
+        "confidence": 0.9267840593141798,
+        "lift": 6.250762985149966,
+        "fitness": 1.1798828977581333
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_PIP": {
+                "lower_bound": 20.914745993215224,
+                "upper_bound": 21.014873374600416,
+                "seq_lower_bound": 12,
+                "seq_upper_bound": 12
+            }
+        },
+        "support": 0.008677708790095252,
+        "confidence": 0.9978813559322034,
+        "lift": 6.730283910847624,
+        "fitness": 1.1791557547575098
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_RATE": {
+                "lower_bound": 147.03217222892047,
+                "upper_bound": 149.07424000192466,
+                "seq_lower_bound": 8,
+                "seq_upper_bound": 8
+            }
+        },
+        "support": 1.837796114899013e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1621263625699323
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_TV": {
+                "lower_bound": 611.6555096794021,
+                "upper_bound": 615.1760868769511,
+                "seq_lower_bound": 8,
+                "seq_upper_bound": 8
+            }
+        },
+        "support": 1.837796114899013e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.155095108000433
+    },
+    {
+        "parameters": {
+            "SNUADC_ECG_II": {
+                "lower_bound": -2.4979113120391965,
+                "upper_bound": -2.454380802874061,
+                "seq_lower_bound": 6,
+                "seq_upper_bound": 6
+            }
+        },
+        "support": 1.835502285200345e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1497821629171323
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_VOL": {
+                "lower_bound": 86.67364154318189,
+                "upper_bound": 88.24495752323547,
+                "seq_lower_bound": 7,
+                "seq_upper_bound": 7
+            },
+            "Solar8000_VENT_MAWP": {
+                "lower_bound": 6.841207231403217,
+                "upper_bound": 7.120249803279851,
+                "seq_lower_bound": 6,
+                "seq_upper_bound": 6
+            }
+        },
+        "support": 0.00020203133322313442,
+        "confidence": 0.8461538461538461,
+        "lift": 5.706946605441918,
+        "fitness": 0.9575364554231767
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CP": {
+                "lower_bound": 0.009713092441594962,
+                "upper_bound": 0.3104478641379231,
+                "seq_lower_bound": 7,
+                "seq_upper_bound": 7
+            }
+        },
+        "support": 0.016438003930427755,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.254603311843104
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CT": {
+                "lower_bound": 0.0,
+                "upper_bound": 0.01647420434816116,
+                "seq_lower_bound": 8,
+                "seq_upper_bound": 8
+            }
+        },
+        "support": 0.01832282726554316,
+        "confidence": 0.9265799256505576,
+        "lift": 6.249386190700633,
+        "fitness": 1.179636790668706
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_PIP": {
+                "lower_bound": 20.794707995568736,
+                "upper_bound": 21.26954131504592,
+                "seq_lower_bound": 9,
+                "seq_upper_bound": 9
+            }
+        },
+        "support": 0.00866143180271796,
+        "confidence": 0.9978813559322034,
+        "lift": 6.730283910847624,
+        "fitness": 1.1785325231388242
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CE": {
+                "lower_bound": 0.3408513953262711,
+                "upper_bound": 0.36211144880901214,
+                "seq_lower_bound": 5,
+                "seq_upper_bound": 5
+            }
+        },
+        "support": 0.0001834357516279923,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1708520688599533
+    },
+    {
+        "parameters": {
+            "Solar8000_BT": {
+                "lower_bound": 5.076017788448402,
+                "upper_bound": 5.3033826168315,
+                "seq_lower_bound": 12,
+                "seq_upper_bound": 12
+            }
+        },
+        "support": 1.8424010170053613e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.168363026957652
+    },
+    {
+        "parameters": {
+            "SNUADC_ECG_V5": {
+                "lower_bound": -2.242470844706968,
+                "upper_bound": -2.2115769073982725,
+                "seq_lower_bound": 6,
+                "seq_upper_bound": 6
+            }
+        },
+        "support": 1.835502285200345e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1596971793351651
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_TV": {
+                "lower_bound": 637.4883122844674,
+                "upper_bound": 641.8018668914833,
+                "seq_lower_bound": 10,
+                "seq_upper_bound": 10
+            }
+        },
+        "support": 3.6801913699512374e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1542913401449308
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_PPLAT": {
+                "lower_bound": 18.886813299922046,
+                "upper_bound": 19.038522586830506,
+                "seq_lower_bound": 12,
+                "seq_upper_bound": 12
+            }
+        },
+        "support": 0.009543637268087771,
+        "confidence": 0.9923371647509579,
+        "lift": 6.692890707252853,
+        "fitness": 1.1536804563573577
+    },
+    {
+        "parameters": {
+            "SNUADC_ECG_II": {
+                "lower_bound": -2.4984691012485896,
+                "upper_bound": -2.473417693250504,
+                "seq_lower_bound": 6,
+                "seq_upper_bound": 6
+            }
+        },
+        "support": 1.835502285200345e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1499706154416651
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_MAWP": {
+                "lower_bound": 10.9036253032958,
+                "upper_bound": 11.032428172524288,
+                "seq_lower_bound": 5,
+                "seq_upper_bound": 5
+            }
+        },
+        "support": 0.009355223333027607,
+        "confidence": 0.9941520467836257,
+        "lift": 6.705131312082211,
+        "fitness": 1.1427050700328556
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CE": {
+                "lower_bound": 0.029490941391136966,
+                "upper_bound": 0.3234052776889242,
+                "seq_lower_bound": 2,
+                "seq_upper_bound": 2
+            }
+        },
+        "support": 0.008165955654832744,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.2112480725381802
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CE": {
+                "lower_bound": 0.05391979366247942,
+                "upper_bound": 0.29548736775903756,
+                "seq_lower_bound": 10,
+                "seq_upper_bound": 10
+            }
+        },
+        "support": 0.005961910019321005,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.2005765131508837
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_MAWP": {
+                "lower_bound": 6.747872275239193,
+                "upper_bound": 7.062945416503996,
+                "seq_lower_bound": 0,
+                "seq_upper_bound": 0
+            }
+        },
+        "support": 0.02797842187071409,
+        "confidence": 0.9244712990936556,
+        "lift": 6.235164404407566,
+        "fitness": 1.1823374463661265
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_MAWP": {
+                "lower_bound": 6.747872275239193,
+                "upper_bound": 7.062945416503996,
+                "seq_lower_bound": 0,
+                "seq_upper_bound": 0
+            }
+        },
+        "support": 0.02797842187071409,
+        "confidence": 0.9244712990936556,
+        "lift": 6.235164404407566,
+        "fitness": 1.1823374463661265
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CT": {
+                "lower_bound": 0.0,
+                "upper_bound": 0.29407185282182713,
+                "seq_lower_bound": 11,
+                "seq_upper_bound": 11
+            }
+        },
+        "support": 0.01830200143617315,
+        "confidence": 0.9263746505125815,
+        "lift": 6.248001697493897,
+        "fitness": 1.1758216040262732
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CP": {
+                "lower_bound": 0.1930428539545058,
+                "upper_bound": 0.42800477191476827,
+                "seq_lower_bound": 8,
+                "seq_upper_bound": 8
+            }
+        },
+        "support": 0.0024626467939646776,
+        "confidence": 0.9925925925925926,
+        "lift": 6.694613459043651,
+        "fitness": 1.175252830478789
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_PIP": {
+                "lower_bound": 19.76803103469051,
+                "upper_bound": 20.186462699852363,
+                "seq_lower_bound": 9,
+                "seq_upper_bound": 9
+            }
+        },
+        "support": 0.00959929384505048,
+        "confidence": 0.9867674858223062,
+        "lift": 6.655325599678442,
+        "fitness": 1.1724734897641385
+    },
+    {
+        "parameters": {
+            "Solar8000_BT": {
+                "lower_bound": 5.017365515831105,
+                "upper_bound": 5.4133886079791464,
+                "seq_lower_bound": 11,
+                "seq_upper_bound": 11
+            }
+        },
+        "support": 1.841247629393677e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1680394222622905
+    },
+    {
+        "parameters": {
+            "Solar8000_BT": {
+                "lower_bound": 5.017365515831105,
+                "upper_bound": 5.4133886079791464,
+                "seq_lower_bound": 11,
+                "seq_upper_bound": 11
+            }
+        },
+        "support": 1.841247629393677e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1680394222622905
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_RATE": {
+                "lower_bound": 146.71977884699697,
+                "upper_bound": 148.1416407369285,
+                "seq_lower_bound": 10,
+                "seq_upper_bound": 10
+            }
+        },
+        "support": 1.8400956849756187e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1622041941538528
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_MAWP": {
+                "lower_bound": 9.736974083113116,
+                "upper_bound": 10.061729511914793,
+                "seq_lower_bound": 6,
+                "seq_upper_bound": 6
+            }
+        },
+        "support": 0.02197096235384813,
+        "confidence": 0.9966694421315571,
+        "lift": 6.722110069433176,
+        "fitness": 1.215673900407517
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CE": {
+                "lower_bound": 0.025836843745975724,
+                "upper_bound": 0.3230195845761415,
+                "seq_lower_bound": 8,
+                "seq_upper_bound": 8
+            }
+        },
+        "support": 0.008931689118409204,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.21508155680516
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CP": {
+                "lower_bound": 0.15582780892285847,
+                "upper_bound": 0.30179349528855587,
+                "seq_lower_bound": 2,
+                "seq_upper_bound": 2
+            }
+        },
+        "support": 0.0023252833366900418,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1840966904981043
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CT": {
+                "lower_bound": 0.0,
+                "upper_bound": 0.0445636911702281,
+                "seq_lower_bound": 4,
+                "seq_upper_bound": 4
+            }
+        },
+        "support": 0.018350473885864086,
+        "confidence": 0.9268518518518518,
+        "lift": 6.251220216886842,
+        "fitness": 1.1797432709043028
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_PIP": {
+                "lower_bound": 20.58467528835485,
+                "upper_bound": 21.040172677502575,
+                "seq_lower_bound": 7,
+                "seq_upper_bound": 7
+            }
+        },
+        "support": 0.008650614358917846,
+        "confidence": 0.9978813559322034,
+        "lift": 6.730283910847624,
+        "fitness": 1.1789664542975755
+    },
+    {
+        "parameters": {
+            "Solar8000_BT": {
+                "lower_bound": 5.057987175073228,
+                "upper_bound": 5.430609107711616,
+                "seq_lower_bound": 0,
+                "seq_upper_bound": 0
+            }
+        },
+        "support": 1.8286550242296792e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.167988144104473
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_RR": {
+                "lower_bound": 8.818094730891882,
+                "upper_bound": 9.117463006156683,
+                "seq_lower_bound": 6,
+                "seq_upper_bound": 6
+            },
+            "Orchestra_RFTN20_CP": {
+                "lower_bound": 0.6823011100722504,
+                "upper_bound": 0.8102719002970882,
+                "seq_lower_bound": 3,
+                "seq_upper_bound": 3
+            }
+        },
+        "support": 0.0001468401828160276,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1668053543502572
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CP": {
+                "lower_bound": 0.08301965336380257,
+                "upper_bound": 0.42566888872409514,
+                "seq_lower_bound": 2,
+                "seq_upper_bound": 2
+            },
+            "Solar8000_VENT_INSP_TM": {
+                "lower_bound": 1.4904043101857072,
+                "upper_bound": 1.5364780937573617,
+                "seq_lower_bound": 1,
+                "seq_upper_bound": 1
+            }
+        },
+        "support": 0.0015746013146090046,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.159713064155058
+    },
+    {
+        "parameters": {
+            "SNUADC_ECG_V5": {
+                "lower_bound": -1.821485185365519,
+                "upper_bound": -1.7871744361997994,
+                "seq_lower_bound": 11,
+                "seq_upper_bound": 11
+            }
+        },
+        "support": 1.841247629393677e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.154785543208026
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_VOL": {
+                "lower_bound": 159.67797323885122,
+                "upper_bound": 165.62893689743913,
+                "seq_lower_bound": 3,
+                "seq_upper_bound": 3
+            },
+            "Orchestra_RFTN20_CP": {
+                "lower_bound": 3.0559711628984725,
+                "upper_bound": 3.2345816370082203,
+                "seq_lower_bound": 0,
+                "seq_upper_bound": 4
+            }
+        },
+        "support": 9.160361284649066e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.052052858944852
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CP": {
+                "lower_bound": 0.0833365424461977,
+                "upper_bound": 0.15664321224663544,
+                "seq_lower_bound": 11,
+                "seq_upper_bound": 11
+            }
+        },
+        "support": 0.002412034394505717,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.185486136369661
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CE": {
+                "lower_bound": 0.08428927543028286,
+                "upper_bound": 0.12132002133915529,
+                "seq_lower_bound": 9,
+                "seq_upper_bound": 9
+            }
+        },
+        "support": 0.0011033671086264918,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1784589871459774
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CT": {
+                "lower_bound": 0.0,
+                "upper_bound": 0.13553377671001687,
+                "seq_lower_bound": 12,
+                "seq_upper_bound": 12
+            }
+        },
+        "support": 0.018295042098863238,
+        "confidence": 0.9263059701492538,
+        "lift": 6.247538477751842,
+        "fitness": 1.177687871135252
+    },
+    {
+        "parameters": {
+            "SNUADC_ECG_V5": {
+                "lower_bound": -1.8214032710174375,
+                "upper_bound": -1.7916472844131897,
+                "seq_lower_bound": 12,
+                "seq_upper_bound": 12
+            }
+        },
+        "support": 1.8424010170053613e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1548373684548117
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_PIP": {
+                "lower_bound": 21.848855539310446,
+                "upper_bound": 22.299254968968654,
+                "seq_lower_bound": 11,
+                "seq_upper_bound": 11
+            }
+        },
+        "support": 0.005118668409714423,
+        "confidence": 0.9928571428571429,
+        "lift": 6.696397737684121,
+        "fitness": 1.1527271022051968
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_RATE": {
+                "lower_bound": 298.66798081412173,
+                "upper_bound": 303.69118206175824,
+                "seq_lower_bound": 9,
+                "seq_upper_bound": 9
+            }
+        },
+        "support": 1.838945181044153e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.149241674851587
+    },
+    {
+        "parameters": {
+            "SNUADC_ECG_II": {
+                "lower_bound": -1.9062941783801928,
+                "upper_bound": -1.9041175089929059,
+                "seq_lower_bound": 11,
+                "seq_upper_bound": 11
+            }
+        },
+        "support": 1.841247629393677e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1443352103862914
+    },
+    {
+        "parameters": {
+            "SNUADC_FEM": {
+                "lower_bound": -97.1363908103375,
+                "upper_bound": -92.47445795394268,
+                "seq_lower_bound": 10,
+                "seq_upper_bound": 10
+            }
+        },
+        "support": 1.8400956849756187e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1439503172928185
+    },
+    {
+        "parameters": {
+            "SNUADC_FEM": {
+                "lower_bound": -97.1363908103375,
+                "upper_bound": -92.47445795394268,
+                "seq_lower_bound": 10,
+                "seq_upper_bound": 10
+            }
+        },
+        "support": 1.8400956849756187e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1439503172928185
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_PPLAT": {
+                "lower_bound": 19.662371534981933,
+                "upper_bound": 20.127247343767607,
+                "seq_lower_bound": 3,
+                "seq_upper_bound": 3
+            }
+        },
+        "support": 0.0054595753256508435,
+        "confidence": 0.9966555183946488,
+        "lift": 6.722016159769533,
+        "fitness": 1.1349296038532581
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CE": {
+                "lower_bound": 0.007554613440552265,
+                "upper_bound": 0.26995020244111,
+                "seq_lower_bound": 1,
+                "seq_upper_bound": 1
+            }
+        },
+        "support": 0.015297066842326764,
+        "confidence": 0.9976133651551312,
+        "lift": 6.7284764274183955,
+        "fitness": 1.2447682319867654
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_MAWP": {
+                "lower_bound": 9.890564404049043,
+                "upper_bound": 10.086482569807927,
+                "seq_lower_bound": 1,
+                "seq_upper_bound": 1
+            }
+        },
+        "support": 0.021902618433331505,
+        "confidence": 0.9966694421315571,
+        "lift": 6.722110069433176,
+        "fitness": 1.2151553732485545
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CP": {
+                "lower_bound": 0.14839834997772283,
+                "upper_bound": 0.2692894749608149,
+                "seq_lower_bound": 4,
+                "seq_upper_bound": 4
+            }
+        },
+        "support": 0.002163192725806156,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1835002486427602
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_CT": {
+                "lower_bound": 0.0,
+                "upper_bound": 0.0,
+                "seq_lower_bound": 4,
+                "seq_upper_bound": 4
+            }
+        },
+        "support": 0.018350473885864086,
+        "confidence": 0.9268518518518518,
+        "lift": 6.251220216886842,
+        "fitness": 1.1803003170439306
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_VOL": {
+                "lower_bound": 1.6914907105996433,
+                "upper_bound": 2.1094445843808662,
+                "seq_lower_bound": 7,
+                "seq_upper_bound": 7
+            }
+        },
+        "support": 0.00014693187870773412,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.174456338905159
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_PIP": {
+                "lower_bound": 19.595363483875502,
+                "upper_bound": 20.135990218014932,
+                "seq_lower_bound": 12,
+                "seq_upper_bound": 12
+            }
+        },
+        "support": 0.009617333308767986,
+        "confidence": 0.9867674858223062,
+        "lift": 6.655325599678442,
+        "fitness": 1.1726710753419545
+    },
+    {
+        "parameters": {
+            "Solar8000_VENT_PIP": {
+                "lower_bound": 19.595363483875502,
+                "upper_bound": 20.135990218014932,
+                "seq_lower_bound": 12,
+                "seq_upper_bound": 12
+            }
+        },
+        "support": 0.009617333308767986,
+        "confidence": 0.9867674858223062,
+        "lift": 6.655325599678442,
+        "fitness": 1.1726710753419545
+    },
+    {
+        "parameters": {
+            "Solar8000_BT": {
+                "lower_bound": 4.942368101397262,
+                "upper_bound": 5.3805810712557385,
+                "seq_lower_bound": 4,
+                "seq_upper_bound": 4
+            }
+        },
+        "support": 1.8332141744119964e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1681355133425804
+    },
+    {
+        "parameters": {
+            "SNUADC_ECG_V5": {
+                "lower_bound": -1.8032042478541672,
+                "upper_bound": -1.7896652185611357,
+                "seq_lower_bound": 1,
+                "seq_upper_bound": 1
+            }
+        },
+        "support": 1.8297926844888474e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1548137981255122
+    },
+    {
+        "parameters": {
+            "Orchestra_RFTN20_RATE": {
+                "lower_bound": 330.57747474517333,
+                "upper_bound": 332.04776403004826,
+                "seq_lower_bound": 5,
+                "seq_upper_bound": 5
+            }
+        },
+        "support": 1.834357516279923e-05,
+        "confidence": 1.0,
+        "lift": 6.7445732609768125,
+        "fitness": 1.1468783969709913
+    }
+]

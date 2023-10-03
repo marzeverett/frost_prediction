@@ -222,11 +222,15 @@ def avg_and_best_per_param(file_start, phase, params, runs, max_rules):
         save_to_csv(best_name, best_dict)
         #print(json.dumps(agg_dict, indent=4))
 
+
+ 
+
+
 rules_indexes = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 ensemble_indexes = ["ensemble_avg", "ensemble_or", "ensemble_uniq_avg", "ensemble_uniq_or"]
 file_start = "generated_files/"
 #phase_name = "Initial_6"
-phase_name = "Vital_Sequence_D"
+phase_name = "Vital_Initial_E"
 param_indexes = [1, 2, 3, 4]
 #param_indexes = [1]
 #param_indexes = [1]

@@ -1,0 +1,16 @@
+[
+    {
+        "parameters": {
+            "Solar8000_VENT_PIP": {
+                "lower_bound": 4.0,
+                "upper_bound": 4.0099792683256945,
+                "seq_lower_bound": 0,
+                "seq_upper_bound": 0
+            }
+        },
+        "support": 1.8286550242296792e-05,
+        "confidence": 0.3333333333333333,
+        "lift": 2.2481910869922705,
+        "fitness": -0.00017339987929449138
+    }
+]

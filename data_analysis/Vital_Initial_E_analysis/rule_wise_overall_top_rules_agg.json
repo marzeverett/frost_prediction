@@ -1,0 +1,162 @@
+{
+    "0": [
+        {
+            "parameters": {
+                "Orchestra_RFTN20_RATE": {
+                    "lower_bound": 9.51902406224269,
+                    "upper_bound": 17.327345076603887,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 0
+                }
+            },
+            "support": 0.018158544390600714,
+            "confidence": 0.08748127918245088,
+            "lift": 0.5900238964100057,
+            "fitness": 0.011581263441704423
+        }
+    ],
+    "1": [
+        {
+            "parameters": {
+                "Orchestra_RFTN20_RATE": {
+                    "lower_bound": 14.242136924999961,
+                    "upper_bound": 22.87308836577293,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 0
+                }
+            },
+            "support": 0.028161287373137056,
+            "confidence": 0.11396433064456449,
+            "lift": 0.76864077717045,
+            "fitness": 0.01294431303735097
+        }
+    ],
+    "2": [
+        {
+            "parameters": {
+                "Orchestra_RFTN20_RATE": {
+                    "lower_bound": 13.300450244608868,
+                    "upper_bound": 21.779841815980117,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 0
+                }
+            },
+            "support": 0.027393252262960594,
+            "confidence": 0.10326761340135117,
+            "lift": 0.6964959840716438,
+            "fitness": 0.015356273601935908
+        }
+    ],
+    "3": [
+        {
+            "parameters": {
+                "Orchestra_RFTN20_RATE": {
+                    "lower_bound": 12.110661940366224,
+                    "upper_bound": 19.759563554061117,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 0
+                }
+            },
+            "support": 0.026021760994788333,
+            "confidence": 0.1010438116878506,
+            "lift": 0.6814973904970535,
+            "fitness": 0.01510238946515615
+        }
+    ],
+    "4": [
+        {
+            "parameters": {
+                "Orchestra_RFTN20_RATE": {
+                    "lower_bound": 17.824783664930344,
+                    "upper_bound": 28.166446248318557,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 0
+                }
+            },
+            "support": 0.030629971655847126,
+            "confidence": 0.10036551021631014,
+            "lift": 0.6769225365292205,
+            "fitness": 0.01751684395490294
+        }
+    ],
+    "5": [
+        {
+            "parameters": {
+                "Orchestra_RFTN20_RATE": {
+                    "lower_bound": 20.114307900624073,
+                    "upper_bound": 27.691892993716987,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 0
+                }
+            },
+            "support": 0.019383743256834597,
+            "confidence": 0.09403832505322925,
+            "lift": 0.6342483726610558,
+            "fitness": 0.01102629146719142
+        }
+    ],
+    "6": [
+        {
+            "parameters": {
+                "Orchestra_RFTN20_RATE": {
+                    "lower_bound": 11.701442527408506,
+                    "upper_bound": 20.998469300370836,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 0
+                }
+            },
+            "support": 0.028709883880405962,
+            "confidence": 0.0983278010897476,
+            "lift": 0.6631790580405584,
+            "fitness": 0.017266901538971185
+        }
+    ],
+    "7": [
+        {
+            "parameters": {
+                "Orchestra_RFTN20_RATE": {
+                    "lower_bound": 12.696742011137818,
+                    "upper_bound": 20.069473966753826,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 0
+                }
+            },
+            "support": 0.026296059248422786,
+            "confidence": 0.10314158657294506,
+            "lift": 0.6956459868946103,
+            "fitness": 0.01483702805599017
+        }
+    ],
+    "8": [
+        {
+            "parameters": {
+                "Orchestra_RFTN20_RATE": {
+                    "lower_bound": 18.509627983794083,
+                    "upper_bound": 28.572717143320435,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 0
+                }
+            },
+            "support": 0.030282527201243484,
+            "confidence": 0.10543069968803719,
+            "lift": 0.7110850780020119,
+            "fitness": 0.016067360073692586
+        }
+    ],
+    "9": [
+        {
+            "parameters": {
+                "Orchestra_RFTN20_RATE": {
+                    "lower_bound": 14.765066517187835,
+                    "upper_bound": 24.925451357064166,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 0
+                }
+            },
+            "support": 0.02722867331077992,
+            "confidence": 0.09359482054183167,
+            "lift": 0.6312571239923612,
+            "fitness": 0.016717429040833946
+        }
+    ]
+}
