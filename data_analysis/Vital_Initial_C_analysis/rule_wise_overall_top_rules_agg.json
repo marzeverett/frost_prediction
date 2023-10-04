@@ -2,161 +2,161 @@
     "0": [
         {
             "parameters": {
-                "SNUADC_ECG_II": {
-                    "lower_bound": 0.029283621637889112,
-                    "upper_bound": 0.06729106263726566,
+                "SNUADC_ECG_V5": {
+                    "lower_bound": 0.03945101289163766,
+                    "upper_bound": 0.08138147195753681,
                     "seq_lower_bound": 0,
                     "seq_upper_bound": 1
                 }
             },
-            "support": 0.21042333363810917,
-            "confidence": 0.5589992713140637,
-            "lift": 1.0466642180308694,
-            "fitness": 0.0472837739770508
+            "support": 0.23798116485325044,
+            "confidence": 0.5038327526132405,
+            "lift": 0.9433710222781295,
+            "fitness": 0.05941454877447623
         }
     ],
     "1": [
         {
             "parameters": {
-                "SNUADC_ECG_II": {
-                    "lower_bound": 0.027512295230859074,
-                    "upper_bound": 0.0666625303249658,
+                "SNUADC_ECG_V5": {
+                    "lower_bound": 0.022663713582587786,
+                    "upper_bound": 0.05850368275126914,
                     "seq_lower_bound": 0,
-                    "seq_upper_bound": 1
+                    "seq_upper_bound": 2
                 }
             },
-            "support": 0.21042333363810917,
-            "confidence": 0.5589992713140637,
-            "lift": 1.0466642180308694,
-            "fitness": 0.04728999602795624
+            "support": 0.23006308859833594,
+            "confidence": 0.5061147316759192,
+            "lift": 0.947643775309787,
+            "fitness": 0.05393832725341655
         }
     ],
     "2": [
         {
             "parameters": {
-                "SNUADC_ECG_V5": {
-                    "lower_bound": 0.019594720259666045,
-                    "upper_bound": 0.08017953356055596,
+                "SNUADC_ECG_II": {
+                    "lower_bound": -0.005093748262875231,
+                    "upper_bound": 0.0366399561583582,
                     "seq_lower_bound": 0,
-                    "seq_upper_bound": 2
+                    "seq_upper_bound": 1
                 }
             },
-            "support": 0.36732193471701563,
-            "confidence": 0.5065822657116917,
-            "lift": 0.948519181005405,
-            "fitness": 0.2014055925058126
+            "support": 0.19345341501325775,
+            "confidence": 0.5513916397373084,
+            "lift": 1.0324197705620322,
+            "fitness": 0.03035387211234194
         }
     ],
     "3": [
         {
             "parameters": {
-                "SNUADC_ECG_II": {
-                    "lower_bound": 0.01061882438072978,
-                    "upper_bound": 0.07806867460124547,
+                "SNUADC_ECG_V5": {
+                    "lower_bound": 0.01254174382044173,
+                    "upper_bound": 0.047136082209835894,
                     "seq_lower_bound": 0,
-                    "seq_upper_bound": 0
+                    "seq_upper_bound": 2
                 }
             },
-            "support": 0.1972935905641401,
-            "confidence": 0.5573982227733003,
-            "lift": 1.0436664319782896,
-            "fitness": 0.03496028362639533
+            "support": 0.2136417664807534,
+            "confidence": 0.503621001810501,
+            "lift": 0.9429745423545587,
+            "fitness": 0.04017757717467989
         }
     ],
     "4": [
         {
             "parameters": {
-                "SNUADC_ECG_II": {
-                    "lower_bound": -0.04071599568880344,
-                    "upper_bound": 0.033373489350666044,
+                "SNUADC_ECG_V5": {
+                    "lower_bound": 0.01579776577505022,
+                    "upper_bound": 0.08033345369904854,
                     "seq_lower_bound": 0,
                     "seq_upper_bound": 0
                 }
             },
-            "support": 0.17513029167047636,
-            "confidence": 0.5427599886653443,
-            "lift": 1.0162579600138446,
-            "fitness": 0.013957971283579604
+            "support": 0.2034927310962787,
+            "confidence": 0.5029149907353008,
+            "lift": 0.9416526148175005,
+            "fitness": 1.3217085183298833
         }
     ],
     "5": [
         {
             "parameters": {
                 "SNUADC_ECG_II": {
-                    "lower_bound": 0.016767908153713762,
-                    "upper_bound": 0.05629389002207705,
+                    "lower_bound": 0.01544245071770673,
+                    "upper_bound": 0.043300980060205774,
                     "seq_lower_bound": 0,
-                    "seq_upper_bound": 1
+                    "seq_upper_bound": 2
                 }
             },
-            "support": 0.22035293041967632,
-            "confidence": 0.5552739505091931,
-            "lift": 1.0396889674585779,
-            "fitness": 0.05535131110205665
+            "support": 0.23105056231141996,
+            "confidence": 0.5518190155915622,
+            "lift": 1.0332199845108736,
+            "fitness": 1.4849919948393908
         }
     ],
     "6": [
         {
             "parameters": {
-                "SNUADC_FEM": {
-                    "lower_bound": 49.9552536294206,
-                    "upper_bound": 59.180662235843954,
+                "SNUADC_ECG_II": {
+                    "lower_bound": -0.028861144193109055,
+                    "upper_bound": 0.05308384251603382,
                     "seq_lower_bound": 0,
-                    "seq_upper_bound": 2
+                    "seq_upper_bound": 0
                 }
             },
-            "support": 0.16322574746274116,
-            "confidence": 0.5463337005753458,
-            "lift": 1.0229493397234397,
-            "fitness": 1.1337123647372416
+            "support": 0.23006308859833594,
+            "confidence": 0.5518466532151943,
+            "lift": 1.033271732899846,
+            "fitness": 1.4799767761077316
         }
     ],
     "7": [
         {
             "parameters": {
-                "SNUADC_ECG_V5": {
-                    "lower_bound": 0.007371653920202448,
-                    "upper_bound": 0.04839597038682777,
+                "SNUADC_ECG_II": {
+                    "lower_bound": 0.018306584565130214,
+                    "upper_bound": 0.04146069853975476,
                     "seq_lower_bound": 0,
                     "seq_upper_bound": 2
                 }
             },
-            "support": 0.25261040504708787,
-            "confidence": 0.5061556500073282,
-            "lift": 0.947720390353035,
-            "fitness": 1.5698936313667902
+            "support": 0.23105056231141996,
+            "confidence": 0.5518190155915622,
+            "lift": 1.0332199845108736,
+            "fitness": 1.485010212399692
         }
     ],
     "8": [
         {
             "parameters": {
-                "SNUADC_ECG_II": {
-                    "lower_bound": 0.0044992603555816,
-                    "upper_bound": 0.055085066582845066,
+                "SNUADC_ECG_V5": {
+                    "lower_bound": 0.005498186320242373,
+                    "upper_bound": 0.0778622105386666,
                     "seq_lower_bound": 0,
-                    "seq_upper_bound": 1
+                    "seq_upper_bound": 0
                 }
             },
-            "support": 0.2568345981530584,
-            "confidence": 0.5534539149623675,
-            "lift": 1.0362811524932227,
-            "fitness": 1.6149190859300442
+            "support": 0.20413276035475908,
+            "confidence": 0.5047476939772111,
+            "lift": 0.9450841486387656,
+            "fitness": 1.3261967711484886
         }
     ],
     "9": [
         {
             "parameters": {
-                "SNUADC_ECG_V5": {
-                    "lower_bound": 0.056745238073597264,
-                    "upper_bound": 0.09484778027520147,
+                "SNUADC_ECG_II": {
+                    "lower_bound": -0.015413284774730876,
+                    "upper_bound": 0.024300040775195875,
                     "seq_lower_bound": 0,
                     "seq_upper_bound": 2
                 }
             },
-            "support": 0.20029258480387674,
-            "confidence": 0.5039569338363854,
-            "lift": 0.9436035378635463,
-            "fitness": 1.3062558656967762
+            "support": 0.2352747554173905,
+            "confidence": 0.5465358311031817,
+            "lift": 1.0233278067478426,
+            "fitness": 1.5026702469814432
         }
     ]
 }

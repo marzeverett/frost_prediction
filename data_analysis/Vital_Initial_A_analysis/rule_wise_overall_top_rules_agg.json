@@ -3,40 +3,8 @@
         {
             "parameters": {
                 "Solar8000_VENT_MAWP": {
-                    "lower_bound": 3.7465994094084714,
-                    "upper_bound": 4.005410835381423,
-                    "seq_lower_bound": 0,
-                    "seq_upper_bound": 1
-                }
-            },
-            "support": 0.14737326129440165,
-            "confidence": 0.39821909297991304,
-            "lift": 1.1135626755421153,
-            "fitness": 0.032396545894509785
-        }
-    ],
-    "1": [
-        {
-            "parameters": {
-                "SNUADC_ECG_V5": {
-                    "lower_bound": 0.02106833908688266,
-                    "upper_bound": 0.05166131694606152,
-                    "seq_lower_bound": 0,
-                    "seq_upper_bound": 2
-                }
-            },
-            "support": 0.1667433038280262,
-            "confidence": 0.3689118731719724,
-            "lift": 1.03160923162807,
-            "fitness": 0.01813153511234742
-        }
-    ],
-    "2": [
-        {
-            "parameters": {
-                "Solar8000_VENT_MAWP": {
-                    "lower_bound": 3.984811308521122,
-                    "upper_bound": 4.015094030847283,
+                    "lower_bound": 3.9730739652339015,
+                    "upper_bound": 4.103861986729368,
                     "seq_lower_bound": 0,
                     "seq_upper_bound": 2
                 }
@@ -44,15 +12,47 @@
             "support": 0.14925087174771046,
             "confidence": 0.39704383282364936,
             "lift": 1.1102762287917254,
-            "fitness": 0.03338302011787266
+            "fitness": 0.032748963290143485
+        }
+    ],
+    "1": [
+        {
+            "parameters": {
+                "SNUADC_ECG_II": {
+                    "lower_bound": 0.03116709348929996,
+                    "upper_bound": 0.07367510483538453,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 2
+                }
+            },
+            "support": 0.16385025098670344,
+            "confidence": 0.36396135676894925,
+            "lift": 1.0177658213339693,
+            "fitness": 0.005825579274013844
+        }
+    ],
+    "2": [
+        {
+            "parameters": {
+                "SNUADC_ECG_V5": {
+                    "lower_bound": 0.022303427138298915,
+                    "upper_bound": 0.10137501245616637,
+                    "seq_lower_bound": 0,
+                    "seq_upper_bound": 1
+                }
+            },
+            "support": 0.2141433881289037,
+            "confidence": 0.3651421104214309,
+            "lift": 1.0210676298599606,
+            "fitness": 0.053998491132826086
         }
     ],
     "3": [
         {
             "parameters": {
                 "Solar8000_VENT_MAWP": {
-                    "lower_bound": 3.862927391351982,
-                    "upper_bound": 4.014642485320304,
+                    "lower_bound": 3.8611623241407287,
+                    "upper_bound": 4.012027654787094,
                     "seq_lower_bound": 0,
                     "seq_upper_bound": 2
                 }
@@ -60,15 +60,15 @@
             "support": 0.14925087174771046,
             "confidence": 0.39704383282364936,
             "lift": 1.1102762287917254,
-            "fitness": 0.03338624544306537
+            "fitness": 0.03340492280401687
         }
     ],
     "4": [
         {
             "parameters": {
                 "Solar8000_VENT_MAWP": {
-                    "lower_bound": 3.7662496139529633,
-                    "upper_bound": 4.106451196235929,
+                    "lower_bound": 3.9185650178587825,
+                    "upper_bound": 4.132654919470202,
                     "seq_lower_bound": 0,
                     "seq_upper_bound": 2
                 }
@@ -76,87 +76,87 @@
             "support": 0.14925087174771046,
             "confidence": 0.39704383282364936,
             "lift": 1.1102762287917254,
-            "fitness": 0.032730468936525196
+            "fitness": 0.032543299484851816
         }
     ],
     "5": [
         {
             "parameters": {
-                "SNUADC_ECG_V5": {
-                    "lower_bound": -0.00397767872794344,
-                    "upper_bound": 0.10233362647772104,
+                "Solar8000_VENT_MAWP": {
+                    "lower_bound": 3.963412855349233,
+                    "upper_bound": 4.119979139697175,
                     "seq_lower_bound": 0,
-                    "seq_upper_bound": 0
+                    "seq_upper_bound": 2
                 }
             },
-            "support": 0.1869946737172855,
-            "confidence": 0.3640975900917705,
-            "lift": 1.0181467783150213,
-            "fitness": 0.030862681571134733
+            "support": 0.14925087174771046,
+            "confidence": 0.39704383282364936,
+            "lift": 1.1102762287917254,
+            "fitness": 1.0335183327459982
         }
     ],
     "6": [
         {
             "parameters": {
-                "Solar8000_VENT_MAWP": {
-                    "lower_bound": 3.8990144682432453,
-                    "upper_bound": 4.186861385632893,
+                "SNUADC_ECG_V5": {
+                    "lower_bound": 0.04559585426824331,
+                    "upper_bound": 0.0797992307338037,
                     "seq_lower_bound": 0,
                     "seq_upper_bound": 2
                 }
             },
-            "support": 0.14925087174771046,
-            "confidence": 0.39704383282364936,
-            "lift": 1.1102762287917254,
-            "fitness": 1.033040602417886
+            "support": 0.18172586887381692,
+            "confidence": 0.3679065978821613,
+            "lift": 1.0287981232178691,
+            "fitness": 1.1540907445881612
         }
     ],
     "7": [
         {
             "parameters": {
-                "Solar8000_VENT_MAWP": {
-                    "lower_bound": 3.748778229497061,
-                    "upper_bound": 4.036968594286254,
+                "SNUADC_ECG_II": {
+                    "lower_bound": -0.0017041305457871497,
+                    "upper_bound": 0.03588151014152441,
                     "seq_lower_bound": 0,
                     "seq_upper_bound": 2
                 }
             },
-            "support": 0.14925087174771046,
-            "confidence": 0.39704383282364936,
-            "lift": 1.1102762287917254,
-            "fitness": 1.034111265213219
+            "support": 0.17247193163965208,
+            "confidence": 0.3662029127003498,
+            "lift": 1.0240340115447126,
+            "fitness": 1.0984456405446263
         }
     ],
     "8": [
         {
             "parameters": {
-                "Solar8000_VENT_MAWP": {
-                    "lower_bound": 3.919630584795935,
-                    "upper_bound": 4.0192558940165615,
+                "SNUADC_ECG_V5": {
+                    "lower_bound": 0.03418989754959911,
+                    "upper_bound": 0.07338937925291322,
                     "seq_lower_bound": 0,
                     "seq_upper_bound": 2
                 }
             },
-            "support": 0.14925087174771046,
-            "confidence": 0.39704383282364936,
-            "lift": 1.1102762287917254,
-            "fitness": 1.0342377845008597
+            "support": 0.1956738322412538,
+            "confidence": 0.3682616377600692,
+            "lift": 1.0297909414009672,
+            "fitness": 1.2241815491301002
         }
     ],
     "9": [
         {
             "parameters": {
-                "Solar8000_VENT_MAWP": {
-                    "lower_bound": 3.9452947750386542,
-                    "upper_bound": 4.102623370957691,
+                "SNUADC_ECG_V5": {
+                    "lower_bound": 0.010284391893397353,
+                    "upper_bound": 0.09595128073767459,
                     "seq_lower_bound": 0,
-                    "seq_upper_bound": 2
+                    "seq_upper_bound": 0
                 }
             },
-            "support": 0.14925087174771046,
-            "confidence": 0.39704383282364936,
-            "lift": 1.1102762287917254,
-            "fitness": 1.0336423025227088
+            "support": 0.1648656933747174,
+            "confidence": 0.3635096316323082,
+            "lift": 1.0165026366684542,
+            "fitness": 1.066174895703192
         }
     ]
 }

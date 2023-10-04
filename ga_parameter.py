@@ -53,6 +53,11 @@ class parameter:
             self.curr_sequence_upper = bound_2
             self.curr_sequence_lower = bound_1
 
+        #CHANGE HERE
+        if self.sequence_limit == 0:
+            self.curr_sequence_upper = 0
+            self.curr_sequence_lower = 0
+
     def random_bool(self):
         self.upper_bound = random.randint((0,1))
         self.lower_bound = self.upper_bound
@@ -122,7 +127,11 @@ class parameter:
         if self.sequence:
             choice = random.choice(["sequence", "value"])
             if choice == "sequence":
-                self.mutate_sequence()
+                #CHANGE HERE
+                if self.sequence_limit != 0:
+                    self.mutate_sequence()
+                else:
+                    self.mutate_value()
             else:
                 self.mutate_value()
         #Otherwise just mutate the rule value 
